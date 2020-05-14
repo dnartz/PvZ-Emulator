@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{8FB9DC86-306A-4107-984B-F8245EB15D40}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>PvZEmulator</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);$(ProjectDir)\lib</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);$(ProjectDir)\lib</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);$(ProjectDir)\lib</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir);$(ProjectDir)\lib</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="object\common.cpp" />
+    <ClCompile Include="object\plant.cpp" />
+    <ClCompile Include="object\plant_reanim_data.cpp" />
+    <ClCompile Include="object\projectile.cpp" />
+    <ClCompile Include="object\scene.cpp" />
+    <ClCompile Include="object\zombie.cpp" />
+    <ClCompile Include="object\zombie_reanim_data.cpp" />
+    <ClCompile Include="system\damage.cpp" />
+    <ClCompile Include="system\debuff.cpp" />
+    <ClCompile Include="system\griditem_factory.cpp" />
+    <ClCompile Include="system\plant\blover.cpp" />
+    <ClCompile Include="system\plant\cactus.cpp" />
+    <ClCompile Include="system\plant\chomper.cpp" />
+    <ClCompile Include="system\plant\cob_cannon.cpp" />
+    <ClCompile Include="system\plant\coffee_bean.cpp" />
+    <ClCompile Include="system\plant\grave_buster.cpp" />
+    <ClCompile Include="system\plant\imitater.cpp" />
+    <ClCompile Include="system\plant\mushroom_family.cpp" />
+    <ClCompile Include="system\plant\plant_system.cpp" />
+    <ClCompile Include="system\plant\shield_plants.cpp" />
+    <ClCompile Include="system\plant\plant_base.cpp" />
+    <ClCompile Include="system\plant\potato_mine.cpp" />
+    <ClCompile Include="system\plant\spike_family.cpp" />
+    <ClCompile Include="system\plant\pea_family.cpp" />
+    <ClCompile Include="system\plant\squash.cpp" />
+    <ClCompile Include="system\plant\starfruit.cpp" />
+    <ClCompile Include="system\plant\tangle_kelp.cpp" />
+    <ClCompile Include="system\plant\torchwood.cpp" />
+    <ClCompile Include="system\plant\umbrella_leaf.cpp" />
+    <ClCompile Include="system\plant\plant_factory.cpp" />
+    <ClCompile Include="system\projectile\projectile_factory.cpp" />
+    <ClCompile Include="system\projectile\projectile_system.cpp" />
+    <ClCompile Include="system\reanim.cpp" />
+    <ClCompile Include="system\spawn.cpp" />
+    <ClCompile Include="system\sun.cpp" />
+    <ClCompile Include="system\util.cpp" />
+    <ClCompile Include="system\zombie\backup_dancer.cpp" />
+    <ClCompile Include="system\zombie\balloon.cpp" />
+    <ClCompile Include="system\zombie\bungee.cpp" />
+    <ClCompile Include="system\zombie\catapult.cpp" />
+    <ClCompile Include="system\zombie\common_zombie.cpp" />
+    <ClCompile Include="system\zombie\dancing.cpp" />
+    <ClCompile Include="system\zombie\digger.cpp" />
+    <ClCompile Include="system\zombie\dolphin_rider.cpp" />
+    <ClCompile Include="system\zombie\football.cpp" />
+    <ClCompile Include="system\zombie\gargantuar.cpp" />
+    <ClCompile Include="system\zombie\imp.cpp" />
+    <ClCompile Include="system\zombie\jack_in_the_box.cpp" />
+    <ClCompile Include="system\zombie\ladder.cpp" />
+    <ClCompile Include="system\zombie\newspaper.cpp" />
+    <ClCompile Include="system\zombie\pogo.cpp" />
+    <ClCompile Include="system\zombie\pole_vaulting.cpp" />
+    <ClCompile Include="system\zombie\snorkel.cpp" />
+    <ClCompile Include="system\zombie\yeti.cpp" />
+    <ClCompile Include="system\zombie\zombie_system.cpp" />
+    <ClCompile Include="system\zombie\zombie_factory.cpp" />
+    <ClCompile Include="system\zombie\zomboni.cpp" />
+    <ClCompile Include="system\zombie\_ground.cpp" />
+    <ClCompile Include="world.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\httplib.h" />
+    <ClInclude Include="lib\rapidjson\allocators.h" />
+    <ClInclude Include="lib\rapidjson\cursorstreamwrapper.h" />
+    <ClInclude Include="lib\rapidjson\document.h" />
+    <ClInclude Include="lib\rapidjson\encodedstream.h" />
+    <ClInclude Include="lib\rapidjson\encodings.h" />
+    <ClInclude Include="lib\rapidjson\error\en.h" />
+    <ClInclude Include="lib\rapidjson\error\error.h" />
+    <ClInclude Include="lib\rapidjson\filereadstream.h" />
+    <ClInclude Include="lib\rapidjson\filewritestream.h" />
+    <ClInclude Include="lib\rapidjson\fwd.h" />
+    <ClInclude Include="lib\rapidjson\internal\biginteger.h" />
+    <ClInclude Include="lib\rapidjson\internal\clzll.h" />
+    <ClInclude Include="lib\rapidjson\internal\diyfp.h" />
+    <ClInclude Include="lib\rapidjson\internal\dtoa.h" />
+    <ClInclude Include="lib\rapidjson\internal\ieee754.h" />
+    <ClInclude Include="lib\rapidjson\internal\itoa.h" />
+    <ClInclude Include="lib\rapidjson\internal\meta.h" />
+    <ClInclude Include="lib\rapidjson\internal\pow10.h" />
+    <ClInclude Include="lib\rapidjson\internal\regex.h" />
+    <ClInclude Include="lib\rapidjson\internal\stack.h" />
+    <ClInclude Include="lib\rapidjson\internal\strfunc.h" />
+    <ClInclude Include="lib\rapidjson\internal\strtod.h" />
+    <ClInclude Include="lib\rapidjson\internal\swap.h" />
+    <ClInclude Include="lib\rapidjson\istreamwrapper.h" />
+    <ClInclude Include="lib\rapidjson\memorybuffer.h" />
+    <ClInclude Include="lib\rapidjson\memorystream.h" />
+    <ClInclude Include="lib\rapidjson\msinttypes\inttypes.h" />
+    <ClInclude Include="lib\rapidjson\msinttypes\stdint.h" />
+    <ClInclude Include="lib\rapidjson\ostreamwrapper.h" />
+    <ClInclude Include="lib\rapidjson\pointer.h" />
+    <ClInclude Include="lib\rapidjson\prettywriter.h" />
+    <ClInclude Include="lib\rapidjson\rapidjson.h" />
+    <ClInclude Include="lib\rapidjson\reader.h" />
+    <ClInclude Include="lib\rapidjson\schema.h" />
+    <ClInclude Include="lib\rapidjson\stream.h" />
+    <ClInclude Include="lib\rapidjson\stringbuffer.h" />
+    <ClInclude Include="lib\rapidjson\writer.h" />
+    <ClInclude Include="object\common.h" />
+    <ClInclude Include="object\griditem.h" />
+    <ClInclude Include="object\plant.h" />
+    <ClInclude Include="object\projectile.h" />
+    <ClInclude Include="object\scene.h" />
+    <ClInclude Include="object\zombie.h" />
+    <ClInclude Include="object\obj_list.h" />
+    <ClInclude Include="scene\fog.h" />
+    <ClInclude Include="scene\pool.h" />
+    <ClInclude Include="system\damage.h" />
+    <ClInclude Include="system\debuff.h" />
+    <ClInclude Include="system\endgame.h" />
+    <ClInclude Include="system\griditem.h" />
+    <ClInclude Include="system\griditem_factory.h" />
+    <ClInclude Include="system\ice_path.h" />
+    <ClInclude Include="system\plant\plant.h" />
+    <ClInclude Include="system\plant\plant_system.h" />
+    <ClInclude Include="system\plant\plant_factory.h" />
+    <ClInclude Include="system\projectile\projectile_factory.h" />
+    <ClInclude Include="system\projectile\projectile_system.h" />
+    <ClInclude Include="system\reanim.h" />
+    <ClInclude Include="system\sun.h" />
+    <ClInclude Include="system\rng.h" />
+    <ClInclude Include="system\spawn.h" />
+    <ClInclude Include="system\util.h" />
+    <ClInclude Include="system\zombie\zombie.h" />
+    <ClInclude Include="system\zombie\zombie_system.h" />
+    <ClInclude Include="system\zombie\zombie_factory.h" />
+    <ClInclude Include="world.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
