@@ -1,0 +1,69 @@
+#main-frame {
+    margin: auto;
+    display: flex;
+}
+
+#scene-frame {
+    width: 1180px;
+    height: 600px;
+    background-position: left -220px bottom 0px;
+    position: relative;
+}
+
+.griditem {
+    position: absolute;
+}
+
+.griditem-ladder {
+    background-image: url("ladder.png");
+    width: 77px;
+    height: 121px;
+}
+
+.griditem-crater {
+    background-image: url("crater.png");
+    margin-top: 30px;
+    width: 90px;
+    height: 60px;
+}
+
+.ice-path {
+    position: absolute;
+    background-color: #DFF6FB;
+    right: 380px;
+    opacity: 0.5;
+}
+
+.background-day {
+    background-image: url("day.jpg");
+}
+
+.background-night {
+    background-image: url("night.jpg");
+}
+
+.background-roof {
+    background-image: url("roof.jpg");
+}
+
+.background-pool {
+    background-image: url("pool.jpg");
+}
+
+.background-fog {
+    background-image: url("fog.jpg");
+}
+
+.background-moon-night {
+    background-image: url("moon_night.jpg");
+}
+
+#play-btn {
+    position: relative;
+    left: 10px;
+    bottom: -550px;
+}
+
+.object-rect {
+    position: absolute;
+}

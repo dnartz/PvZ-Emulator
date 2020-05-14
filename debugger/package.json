@@ -1,0 +1,33 @@
+{
+  "name": "pv-z-emulator-debugger",
+  "version": "0.0.0",
+  "description": "PvZ-Emulator-Debugger",
+  "main": "index.ts",
+  "author": {
+    "name": ""
+  },
+  "scripts": {
+    "build": "webpack",
+    "clean": "tsc --build --clean"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14",
+    "css-loader": "^3.5.3",
+    "html-webpack-plugin": "^4.3.0",
+    "react-dev-utils": "^10.2.1",
+    "source-map-loader": "^0.2.4",
+    "style-loader": "^1.2.1",
+    "ts-loader": "^7.0.2",
+    "typescript": "^3.8.3",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "classnames": "^2.2.6",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
