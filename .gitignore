@@ -338,6 +338,9 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+/out
+/debugger/dist
 /debugger/src/assets/roof.jpg
 /debugger/src/assets/pool.jpg
 /debugger/src/assets/night.jpg

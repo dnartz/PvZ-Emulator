@@ -188,7 +188,7 @@ static void start_server(char** argv, pvz_emulator::world& w) {
 
 int main(int argc, char** argv) {
     if (argc < 2) {
-        std::cout << "Usage: PvZ-Emulator index.html" << std::endl;
+        std::cout << "Usage: PvZ-Emulator path to index.html" << std::endl;
         exit(0);
     }
 
