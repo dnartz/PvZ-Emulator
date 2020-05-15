@@ -11,7 +11,7 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system/zombie ZOMB_SYS_SRC)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system/projectile PROJ_SYS_SRC)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system/plant PLANT_SYS_SRC)
 
-add_library(lib STATIC
+add_library(pvzemu STATIC
     ${OBJ_SRC}
     ${SYS_SRC}
     ${ZOMB_SYS_SRC}
@@ -19,7 +19,7 @@ add_library(lib STATIC
     ${PLANT_SYS_SRC}
     world.cpp)
 
-target_include_directories(lib 
+target_include_directories(pvzemu 
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/system
@@ -37,4 +37,4 @@ add_executable(debug-server ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 add_dependencies(debug-server debugger-ui)
 
-target_link_libraries(debug-server lib)
+target_link_libraries(debug-server pvzemu)
