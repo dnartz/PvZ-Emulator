@@ -73,8 +73,11 @@ void zombie_pole_vaulting::update(zombie &z) {
         z.status = zombie_status::pole_valuting_jumpping;
         reanim.set(z, "anim_jump", reanim_type::once, 24);
         z.has_item_or_walk_left = false;
-        z.dx = static_cast<double>(z.int_x - plant->x - 80) /
-            (z.reanim.n_frames / z.reanim.fps * 100);
+        z.dx = static_cast<float>(
+            (static_cast<double>(z.int_x) -
+                static_cast<double>(plant->x) -
+                80.0) /
+            (z.reanim.n_frames / z.reanim.fps * 100.0));
     }
 }
 

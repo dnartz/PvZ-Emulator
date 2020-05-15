@@ -456,7 +456,10 @@ void projectile_system::do_other_motion(projectile& proj) {
 
         proj.row = std::max(
             0,
-            get_row_by_x_and_y(scene.type, std::max(40.0f, proj.x), proj.y));
+            get_row_by_x_and_y(
+                scene.type,
+                static_cast<int>(std::max(40.0f, proj.x)),
+                static_cast<int>(proj.y)));
 
         break;
 

@@ -34,7 +34,7 @@ bool plant_cob_cannon::launch(plant& p, int x, int y) {
     p.countdown.launch = 206;
     p.set_reanim("anim_shooting", reanim_type::once, 12);
 
-    p.cannon.x = x - 47.0;
+    p.cannon.x = static_cast<int>(x - 47.0);
     p.cannon.y = y;
 
     return true;

@@ -54,7 +54,7 @@ bool plant_starfruit::has_target(object::plant& p) {
             return true;
         }
 
-        int x_predict = predict + zr.width / 2 - px;
+        int x_predict = static_cast<int>(predict + zr.width / 2 - px);
         int y_predict = static_cast<int>(zr.y + zr.height / 2 - py);
 
         auto deg = atan2(y_predict, x_predict) * 57.2957763671875;
