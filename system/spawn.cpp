@@ -215,7 +215,7 @@ void spawn::pool_lurking_spawn() {
 
 	std::array<unsigned int, 8> weights = { 1, 1, 1, 1, 1, 1, 1, 1 };
 
-	for (int i = 0, n = 8; i < N_LURKERS; i++, n--) {
+	for (int i = 0; i < N_LURKERS; i++) {
 		auto k = rng.random_weighted_sample(weights);
 		weights[k] = 0;
 
@@ -273,7 +273,9 @@ void spawn::lurking_squad_update() {
 	switch (scene.type) {
 	case scene_type::pool:
 	case scene_type::fog:
-		pool_lurking_spawn();
+		if (data.countdown.pool <= 0) {
+            pool_lurking_spawn();
+		}
 		return;
 
 	case scene_type::night:
@@ -282,7 +284,9 @@ void spawn::lurking_squad_update() {
 
 	case scene_type::roof:
 	case scene_type::moon_night:
-		roof_lurking_spawn();
+		if (data.countdown.pool <= 0) {
+			roof_lurking_spawn();
+		}
 		return;
 
 	default:
