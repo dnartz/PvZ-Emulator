@@ -71,12 +71,10 @@ void zombie_pole_vaulting::update(zombie &z) {
         }
 
         z.status = zombie_status::pole_valuting_jumpping;
-        reanim.set(z, "anim_jump", reanim_type::once, 24);
+        reanim.set(z, zombie_reanim_name::anim_jump, reanim_type::once, 24);
         z.has_item_or_walk_left = false;
         z.dx = static_cast<float>(
-            (static_cast<double>(z.int_x) -
-                static_cast<double>(plant->x) -
-                80.0) /
+            (static_cast<double>(z.int_x) - static_cast<double>(plant->x) - 80.0) /
             (z.reanim.n_frames / z.reanim.fps * 100.0));
     }
 }
@@ -99,7 +97,7 @@ void zombie_pole_vaulting::init(zombie &z, unsigned int row) {
     z.attack_box.width = 70;
     z.attack_box.height = 115;
 
-    reanim.set(z, "anim_run", reanim_type::repeat, 0);
+    reanim.set(z, zombie_reanim_name::anim_run, reanim_type::repeat, 0);
     reanim.update_dx(z);
 
     set_common_fields(z);

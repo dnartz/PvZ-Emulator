@@ -155,7 +155,7 @@ void zombie_dancing::update(object::zombie& z) {
     {
         if (get_clock(z) == 12 && z.is_not_dying && z.x < 700) {
             z.status = zombie_status::dancing_wait_summoning;
-            reanim.set(z, "anim_point", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_point, reanim_type::once, 24);
         } else {
             z.catapult_or_jackson.summon_countdown = 1;
         }
@@ -164,7 +164,7 @@ void zombie_dancing::update(object::zombie& z) {
     if (z.status == zombie_status::dancing_moonwalk) {
         if (z.is_not_dying && z.countdown.action == 0) {
             z.status = zombie_status::dancing_point;
-            reanim.set(z, "anim_point", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_point, reanim_type::once, 24);
             reanim.update_dx(z);
         }
         return;
@@ -179,7 +179,7 @@ void zombie_dancing::update(object::zombie& z) {
             }
 
             z.status = zombie_status::dancing_walking;
-            reanim.set(z, "anim_walk", reanim_type::repeat, 0);
+            reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 0);
         }
 
         auto next_status = get_status_by_clock(z);
@@ -187,12 +187,12 @@ void zombie_dancing::update(object::zombie& z) {
             z.status = next_status;
 
             if (next_status == zombie_status::dancing_walking) {
-                reanim.set(z, "anim_walk", reanim_type::repeat, 0);
+                reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 0);
             } else if (next_status == zombie_status::dancing_armrise1) {
-                reanim.set(z, "anim_armraise", reanim_type::repeat, 18);
+                reanim.set(z, zombie_reanim_name::anim_armraise, reanim_type::repeat, 18);
                 z.reanim.progress = 0.60000002f;
             } else {
-                reanim.set(z, "anim_armraise", reanim_type::repeat, 18);
+                reanim.set(z, zombie_reanim_name::anim_armraise, reanim_type::repeat, 18);
             }
         }
 
@@ -225,7 +225,7 @@ void zombie_dancing::init(zombie& z, unsigned int row) {
 
     z.countdown.action = rng.randint(12) + 300;
 
-    reanim.set(z, "anim_moonwalk", reanim_type::repeat, 24);
+    reanim.set(z, zombie_reanim_name::anim_moonwalk, reanim_type::repeat, 24);
 
     set_common_fields(z);
 }

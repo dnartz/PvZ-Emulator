@@ -15,7 +15,7 @@ void plant_doomshroom::update(plant & p) {
 
     p.status = plant_status::work;
     p.countdown.effect = 100;
-    p.set_reanim_frame("anim_explode");
+    p.set_reanim_frame(plant_reanim_name::anim_explode);
     p.reanim.fps = 23;
     p.reanim.type = reanim_type::once;
 }
@@ -31,7 +31,7 @@ void plant_sunshroom::init(plant& p, unsigned int row, unsigned int col) {
 void plant_sunshroom::update(plant& p) {
     if (p.status == plant_status::sunshroom_small) {
         if (p.countdown.status == 0) {
-            p.set_reanim("anim_grow", reanim_type::once, 12);
+            p.set_reanim(plant_reanim_name::anim_grow, reanim_type::once, 12);
             p.status = plant_status::sunshroom_grow;
         }
 
@@ -39,7 +39,7 @@ void plant_sunshroom::update(plant& p) {
     } else if (p.status != plant_status::sunshroom_grow) {
         produce_sun(p);
     } else if (p.reanim.n_repeated > 0) {
-        p.set_reanim("anim_bigidle", reanim_type::repeat, rng.randfloat(12, 15));
+        p.set_reanim(plant_reanim_name::anim_bigidle, reanim_type::repeat, rng.randfloat(12, 15));
         p.status = plant_status::sunshroom_big;
     }
 }
@@ -104,7 +104,7 @@ bool plant_magnetshroom::attack_zombie(plant& p) {
 
     p.status = plant_status::magnetshroom_working;
     p.countdown.status = 1500;
-    p.set_reanim("anim_shooting", reanim_type::once, 12);
+    p.set_reanim(plant_reanim_name::anim_shooting, reanim_type::once, 12);
 
     if (target->accessory_1.type == zombie_accessories_type_1::bucket ||
         target->accessory_1.type == zombie_accessories_type_1::football_cap)
@@ -163,7 +163,7 @@ void plant_magnetshroom::attack_ladder(plant& p) {
     if (target) {
         p.status = plant_status::magnetshroom_working;
         p.countdown.status = 1500;
-        p.set_reanim("anim_shooting", reanim_type::once, 12);
+        p.set_reanim(plant_reanim_name::anim_shooting, reanim_type::once, 12);
 
         griditem_factory(scene).destroy(*target);
     }
@@ -174,13 +174,13 @@ void plant_magnetshroom::update(plant & p) {
     case plant_status::magnetshroom_inactive_idle:
         if (p.countdown.status == 0) {
             p.status = plant_status::wait;
-            p.set_reanim("anim_idle", reanim_type::repeat, rng.randfloat(10, 15));
+            p.set_reanim(plant_reanim_name::anim_idle, reanim_type::repeat, rng.randfloat(10, 15));
         }
         return;
 
     case plant_status::magnetshroom_working:
         if (p.reanim.n_repeated > 0) {
-            p.set_reanim("anim_nonactive_idle2", reanim_type::repeat, 2);
+            p.set_reanim(plant_reanim_name::anim_nonactive_idle2, reanim_type::repeat, 2);
             p.status = plant_status::magnetshroom_inactive_idle;
         }
         return;
@@ -224,28 +224,28 @@ void plant_scaredyshroom::update(plant & p) {
     case plant_status::wait:
         if (found_scared) {
             p.status = plant_status::scaredyshroom_scared;
-            p.set_reanim("anim_scared", reanim_type::once, 10);
+            p.set_reanim(plant_reanim_name::anim_scared, reanim_type::once, 10);
         }
         break;
 
     case plant_status::scaredyshroom_scared:
         if (p.reanim.n_repeated > 0) {
             p.status = plant_status::scaredyshroom_scared_idle;
-            p.set_reanim("anim_scaredidle", reanim_type::repeat, 0);
+            p.set_reanim(plant_reanim_name::anim_scaredidle, reanim_type::repeat, 0);
         }
         break;
 
     case plant_status::scaredyshroom_scared_idle:
         if (!found_scared) {
             p.status = plant_status::scaredyshroom_grow;
-            p.set_reanim("anim_grow", reanim_type::once, rng.randfloat(7, 12));
+            p.set_reanim(plant_reanim_name::anim_grow, reanim_type::once, rng.randfloat(7, 12));
         }
         break;
 
     case plant_status::scaredyshroom_grow:
         if (p.reanim.n_repeated > 0) {
             p.status = plant_status::wait;
-            p.set_reanim("anim_idle", reanim_type::repeat, rng.randfloat(10, 15));
+            p.set_reanim(plant_reanim_name::anim_idle, reanim_type::repeat, rng.randfloat(10, 15));
         }
         break;
 

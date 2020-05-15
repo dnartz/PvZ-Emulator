@@ -15,7 +15,7 @@ void plant_spikeweed::attack(plant& p) {
 void plant_spikeweed::set_idle_reanim(plant& p) {
     if (p.reanim.n_repeated > 0) {
         p.set_reanim(
-            "anim_idle",
+            plant_reanim_name::anim_idle,
             reanim_type::repeat,
             rng.randfloat(12, 15));
     }
@@ -51,7 +51,7 @@ void plant_spikeweed::update(plant& p) {
 
         return;
     } else if (find_target(p, p.row, false)) {
-        p.set_reanim("anim_attack", reanim_type::once, 18);
+        p.set_reanim(plant_reanim_name::anim_attack, reanim_type::once, 18);
         p.status = plant_status::spike_attack;
         p.countdown.status = 100;
     }

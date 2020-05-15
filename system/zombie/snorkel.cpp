@@ -14,7 +14,7 @@ void zombie_snorkel::update(zombie& z) {
                 z.dx = 0.2f;
                 z.status = zombie_status::snorkel_jump_in_the_pool;
 
-                reanim.set(z, "anim_jumpinpool", reanim_type::once, 16);
+                reanim.set(z, zombie_reanim_name::anim_jumpinpool, reanim_type::once, 16);
             }
             return;
         }
@@ -36,7 +36,7 @@ void zombie_snorkel::update(zombie& z) {
         if (z.reanim.n_repeated > 0) {
             z.status = zombie_status::snorkel_swim;
             z.is_in_water = true;
-            reanim.set(z, "anim_swim", reanim_type::repeat, 12);
+            reanim.set(z, zombie_reanim_name::anim_swim, reanim_type::repeat, 12);
         }
 
         return;
@@ -75,7 +75,7 @@ void zombie_snorkel::update(zombie& z) {
 
         if (z.is_eating) {
             z.status = zombie_status::snorkel_up_to_eat;
-            reanim.set(z, "anim_uptoeat", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_uptoeat, reanim_type::once, 24);
         }
 
         return;
@@ -84,25 +84,25 @@ void zombie_snorkel::update(zombie& z) {
         if (z.is_eating) {
             if (z.reanim.n_repeated > 0) {
                 z.status = zombie_status::snorkel_eat;
-                reanim.set(z, "anim_eat", reanim_type::repeat, 0);
+                reanim.set(z, zombie_reanim_name::anim_eat, reanim_type::repeat, 0);
             }
         } else {
             z.status = zombie_status::snorkel_finied_eat;
-            reanim.set(z, "anim_uptoeat", reanim_type::once, -24);
+            reanim.set(z, zombie_reanim_name::anim_uptoeat, reanim_type::once, -24);
         }
         return;
 
     case zombie_status::snorkel_eat:
         if (!z.is_eating) {
             z.status = zombie_status::snorkel_finied_eat;
-            reanim.set(z, "anim_uptoeat", reanim_type::once, -24);
+            reanim.set(z, zombie_reanim_name::anim_uptoeat, reanim_type::once, -24);
         }
         return;
 
     case zombie_status::snorkel_finied_eat:
         if (z.reanim.n_repeated > 0) {
             z.status = zombie_status::snorkel_swim;
-            reanim.set(z, "anim_swim", reanim_type::once, 0);
+            reanim.set(z, zombie_reanim_name::anim_swim, reanim_type::once, 0);
             reanim.update_dx(z);
         }
         return;

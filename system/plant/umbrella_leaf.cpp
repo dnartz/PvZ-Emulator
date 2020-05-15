@@ -12,7 +12,7 @@ void plant_umbrella_leaf::update(plant& p) {
     }
     else if (p.status == plant_status::umbrella_leaf_shrink) {
         if (p.reanim.n_repeated > 0) {
-            p.set_reanim("anim_idle", reanim_type::repeat, 12);
+            p.set_reanim(plant_reanim_name::anim_idle, reanim_type::repeat, 12);
             p.status = plant_status::idle;
         }
     }

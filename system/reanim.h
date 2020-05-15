@@ -12,7 +12,11 @@ private:
     rng rng;
 
 public:
-    void set(object::zombie& z, const char* name, object::reanim_type type, float fps);
+    void set(
+        object::zombie& z,
+        object::zombie_reanim_name name,
+        object::reanim_type type,
+        float fps);
 
     void set_fps(object::zombie& z, float fps) {
         z.reanim.fps = is_slowed(scene, z) ? 0.5f * fps : fps;

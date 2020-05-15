@@ -119,7 +119,7 @@ void plant_squash::update(plant& p) {
     switch (p.status) {
     case plant_status::squash_look:
         if (p.countdown.status == 0) {
-            p.set_reanim("anim_jumpup", reanim_type::once, 24);
+            p.set_reanim(plant_reanim_name::anim_jumpup, reanim_type::once, 24);
             p.status = plant_status::squash_jump_up;
             p.countdown.status = 45;
         }
@@ -146,7 +146,7 @@ void plant_squash::update(plant& p) {
             y - 120);
 
         if (p.countdown.status == 0) {
-            p.set_reanim("anim_jumpdown", reanim_type::once, 60);
+            p.set_reanim(plant_reanim_name::anim_jumpdown, reanim_type::once, 60);
             p.status = plant_status::squash_jump_down;
             p.countdown.status = 10;
         }
@@ -186,9 +186,9 @@ void plant_squash::update(plant& p) {
             p.countdown.status = 80;
 
             if (p.cannon.x >= p.x) {
-                p.set_reanim("anim_lookright", reanim_type::once, 24);
+                p.set_reanim(plant_reanim_name::anim_lookright, reanim_type::once, 24);
             } else {
-                p.set_reanim("anim_lookleft", reanim_type::once, 24);
+                p.set_reanim(plant_reanim_name::anim_lookleft, reanim_type::once, 24);
             }
         }
         break;

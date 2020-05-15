@@ -14,7 +14,7 @@ void plant_imitater::update(plant& p) {
         }
     } else if (p.countdown.status == 0) {
         p.status = plant_status::imitater_explode;
-        p.set_reanim("anim_explode", reanim_type::once, 26);
+        p.set_reanim(plant_reanim_name::anim_explode, reanim_type::once, 26);
     }
 }
 

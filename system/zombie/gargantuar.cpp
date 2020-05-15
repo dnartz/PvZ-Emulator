@@ -89,7 +89,7 @@ void zombie_gargantuar::update(zombie& z) {
         imp.dy = 88.0f;
         imp.d2y = static_cast<float>(d2y / 3 * 0.5 * 0.05000000074505806);
 
-        reanim.set(imp, "anim_thrown", reanim_type::once, 18);
+        reanim.set(imp, zombie_reanim_name::anim_thrown, reanim_type::once, 18);
         reanim.update_progress(imp.reanim);
 
         set_walk(z);
@@ -109,13 +109,13 @@ void zombie_gargantuar::update(zombie& z) {
             z.x > 400)
         {
             z.status = zombie_status::gargantuar_throw;
-            reanim.set(z, "anim_throw", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_throw, reanim_type::once, 24);
             return;
         }
 
         if (find_target(z, zombie_attack_type::smash_or_eat)) {
             z.status = zombie_status::gargantuar_smash;
-            reanim.set(z, "anim_smash", reanim_type::once, 16);
+            reanim.set(z, zombie_reanim_name::anim_smash, reanim_type::once, 16);
         }
     }
 }

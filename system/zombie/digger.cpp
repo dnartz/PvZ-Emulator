@@ -29,19 +29,19 @@ void zombie_digger::update(zombie& z) {
         z.dy = -120.0f;
         z.status = zombie_status::digger_drill;
         z.countdown.action = 130;
-        reanim.set(z, "anim_drill", reanim_type::repeat, 20);
+        reanim.set(z, zombie_reanim_name::anim_drill, reanim_type::repeat, 20);
         return;
 
     case zombie_status::digger_drill:
         update_dy(z);
 
         if (z.countdown.action == 30) {
-            reanim.set(z, "anim_landing", reanim_type::once, 12);
+            reanim.set(z, zombie_reanim_name::anim_landing, reanim_type::once, 12);
         }
         else if (z.countdown.action == 0) {
             z.dy = 0;
             z.status = zombie_status::digger_dizzy;
-            reanim.set(z, "anim_dizzy", reanim_type::repeat, 12);
+            reanim.set(z, zombie_reanim_name::anim_dizzy, reanim_type::repeat, 12);
         }
 
         return;
@@ -51,7 +51,7 @@ void zombie_digger::update(zombie& z) {
             z.dy = -120.0f;
             z.status = zombie_status::digger_landing;
             z.countdown.action = 130;
-            reanim.set(z, "anim_landing", reanim_type::once, 0);
+            reanim.set(z, zombie_reanim_name::anim_landing, reanim_type::once, 0);
         }
         return;
 
@@ -59,7 +59,7 @@ void zombie_digger::update(zombie& z) {
         update_dy(z);
 
         if (z.countdown.action == 30) {
-            reanim.set(z, "anim_landing", reanim_type::once, 12);
+            reanim.set(z, zombie_reanim_name::anim_landing, reanim_type::once, 12);
         } else if (z.countdown.action == 0) {
             z.dy = 0.0f;
             z.status = zombie_status::digger_walk_left;
@@ -91,7 +91,7 @@ void zombie_digger::init(object::zombie &z, unsigned int row) {
 
     z.status = zombie_status::digger_dig;
 
-    reanim.set(z, "anim_dig", reanim_type::once, 12);
+    reanim.set(z, zombie_reanim_name::anim_dig, reanim_type::once, 12);
     reanim.update_dx(z);
 
     z.accessory_1.type = zombie_accessories_type_1::miner_hat;

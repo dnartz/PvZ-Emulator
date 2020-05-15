@@ -123,7 +123,7 @@ void plant_starfruit::attack(plant& p) {
 
 void plant_starfruit::set_launch_countdown(plant & p) {
     if (has_target(p)) {
-        p.set_reanim("anim_shoot", reanim_type::once, 28);
+        p.set_reanim(plant_reanim_name::anim_shoot, reanim_type::once, 28);
         p.countdown.launch = 40;
     }
 }

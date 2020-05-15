@@ -122,13 +122,13 @@ void zombie_factory::create_roof_lurking(
 	b.x = static_cast<float>(80 * col + 40);
 	b.y = zombie_init_y(scene.type, b, row);
 	b.master_id = static_cast<int>(scene.zombies.get_index(z));
-	reanim.set(b, "anim_raise", reanim_type::once, 36);
+	reanim.set(b, zombie_reanim_name::anim_raise, reanim_type::once, 36);
 
 	z.x = b.x - 15;
 	z.row = row;
 	z.y = zombie_init_y(scene.type, z, row);
 	z.action = zombie_action::fall_from_sky;
-	reanim.set(z, "anim_idle", reanim_type::repeat, 0);
+	reanim.set(z, zombie_reanim_name::anim_idle, reanim_type::repeat, 0);
 }
 
 void zombie_factory::create_pool_or_night_lurking(

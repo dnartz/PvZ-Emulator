@@ -13,7 +13,7 @@ void zombie_catapult::init(zombie& z, unsigned int row) {
     z.hp = 850;
     z.x = static_cast<float>(rng.randint(10) + 825);
 
-    reanim.set(z, "anim_walk", reanim_type::repeat, 5.5);
+    reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 5.5);
 
     z.catapult_or_jackson.n_basketballs = 20;
 
@@ -70,7 +70,7 @@ void zombie_catapult::update(zombie &z) {
         {
             z.status = zombie_status::catapult_shoot;
             z.countdown.action = 300;
-            reanim.set(z, "anim_shoot", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_shoot, reanim_type::once, 24);
         }
         return;
 
@@ -82,11 +82,11 @@ void zombie_catapult::update(zombie &z) {
         if (find_target(z)) {
             z.status = zombie_status::catapult_shoot;
             z.countdown.action = 300;
-            reanim.set(z, "anim_shoot", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_shoot, reanim_type::once, 24);
             return;
         }
 
-        reanim.set(z, "anim_walk", reanim_type::repeat, 6);
+        reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 6);
         z.status = zombie_status::walking;
         return;
 
@@ -99,10 +99,10 @@ void zombie_catapult::update(zombie &z) {
         if (z.reanim.n_repeated > 0) {
             if (z.catapult_or_jackson.n_basketballs > 0) {
                 --z.catapult_or_jackson.n_basketballs;
-                reanim.set(z, "anim_idle", reanim_type::once, 12);
+                reanim.set(z, zombie_reanim_name::anim_idle, reanim_type::once, 12);
                 z.status = zombie_status::catapult_idle;
             } else {
-                reanim.set(z, "anim_walk", reanim_type::repeat, 6);
+                reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 6);
                 z.status = zombie_status::walking;
             }
         }

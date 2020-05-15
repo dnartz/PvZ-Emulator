@@ -158,7 +158,7 @@ void zombie_system::update_x(zombie& z) {
         z.status == zombie_status::snorkel_jump_in_the_pool)
     {
         dx = z.dx;
-    } else if (z.has_reanim("_ground")) {
+    } else if (z.has_reanim(zombie_reanim_name::_ground)) {
         dx = z.get_delta_x_from_ground();
     } else {
         dx = is_slowed(scene, z) ?

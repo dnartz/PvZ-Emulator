@@ -52,7 +52,7 @@ void zombie_zomboni::init(zombie &z, unsigned int row) {
     z.garlic_tick.b = 2;
     z.garlic_tick.a = 8;
 
-    reanim.set(z, "anim_drive", reanim_type::repeat, 12);
+    reanim.set(z, zombie_reanim_name::anim_drive, reanim_type::repeat, 12);
 
     z.hit_box.x = 0;
     z.hit_box.y = -13;

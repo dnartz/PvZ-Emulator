@@ -7,7 +7,7 @@
 namespace pvz_emulator::object {
 
 float zombie::get_delta_x_from_ground() const {
-    assert(has_reanim("_ground"));
+    assert(has_reanim(zombie_reanim_name::_ground));
 
     reanim_frame_status rfs;
     reanim.get_frame_status(rfs);
@@ -210,26 +210,6 @@ float zombie::get_height_bias() const {
     }
 
     return -200;
-}
-
-void zombie::set_reanim(const char* name, reanim_type type, float fps) {
-    if (fps != 0) {
-        reanim.fps = fps;
-    }
-
-    reanim.type = type;
-    reanim.n_repeated = 0;
-
-    reanim.progress = static_cast<float>(reanim.fps >= 0 ? 0 : 0.99999988);
-    reanim.prev_progress = -1;
-
-    set_reanim_frame(name);
-
-    if (reanim.fps == 0) {
-        
-    } else {
-
-    }
 }
 
 void zombie::to_json(

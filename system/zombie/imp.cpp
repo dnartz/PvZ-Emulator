@@ -20,7 +20,7 @@ void zombie_imp::update(object::zombie& z) {
         if (z.dy <= 0) {
             z.dy = 0;
             z.status = zombie_status::imp_landing;
-            reanim.set(z, "anim_land", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_land, reanim_type::once, 24);
         }
     } else if (z.status == zombie_status::imp_landing &&
         z.reanim.n_repeated > 0)
@@ -35,7 +35,7 @@ void zombie_imp::init(zombie &z, unsigned int row) {
 
     zombie_base::init(z, zombie_type::imp, row);
 
-    reanim.set(z, "anim_walk", reanim_type::repeat, 12);
+    reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 12);
 
     set_common_fields(z);
 }

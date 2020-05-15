@@ -23,7 +23,7 @@ void zombie_jack_in_the_box::update(zombie &z) {
         if (z.countdown.action <= 0 && z.is_not_dying) {
             z.countdown.action = 110;
             z.status = zombie_status::jackbox_pop;
-            reanim.set(z, "anim_pop", reanim_type::once, 28);
+            reanim.set(z, zombie_reanim_name::anim_pop, reanim_type::once, 28);
         }
         break;
 

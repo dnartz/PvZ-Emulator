@@ -116,7 +116,7 @@ void zombie_pogo::init(zombie &z, unsigned int row) {
 
     z.has_item_or_walk_left = true;
 
-    reanim.set(z, "anim_pogo", reanim_type::once, 40);
+    reanim.set(z, zombie_reanim_name::anim_pogo, reanim_type::once, 40);
     z.reanim.progress = 1;
 
     set_common_fields(z);

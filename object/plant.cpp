@@ -231,19 +231,19 @@ void plant::set_sleep(bool flag) {
     is_sleeping = flag;
 
     if (is_sleeping) {
-        if (has_reanim("anim_sleep")) {
-            set_reanim_frame("anim_sleep");
+        if (has_reanim(plant_reanim_name::anim_sleep)) {
+            set_reanim_frame(plant_reanim_name::anim_sleep);
         } else {
             reanim.fps = 1;
         }
     } else {
-        if (has_reanim("anim_idle")) {
-            set_reanim_frame("anim_idle");
+        if (has_reanim(plant_reanim_name::anim_idle)) {
+            set_reanim_frame(plant_reanim_name::anim_idle);
         }
     }
 }
 
-void plant::set_reanim(const char* name, reanim_type type, float fps) {
+void plant::set_reanim(plant_reanim_name name, reanim_type type, float fps) {
     if (fps != 0) {
         reanim.fps = fps;
     }

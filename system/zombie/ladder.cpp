@@ -36,7 +36,7 @@ void zombie_ladder::update(object::zombie& z) {
     } else if (find_target(z, zombie_attack_type::place_ladder)) {
         damage(scene).unset_is_eating(z);
         z.status = zombie_status::ladder_placing;
-        reanim.set(z, "anim_placeladder", reanim_type::once, 24);
+        reanim.set(z, zombie_reanim_name::anim_placeladder, reanim_type::once, 24);
     }
 }
 

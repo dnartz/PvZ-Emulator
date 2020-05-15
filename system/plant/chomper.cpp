@@ -12,7 +12,7 @@ void plant_chomper::update(plant& p) {
 			p.reanim.fps = 24;
 			p.reanim.type = reanim_type::once;
 			p.reanim.n_repeated = 0;
-			p.set_reanim_frame("anim_bite");
+			p.set_reanim_frame(plant_reanim_name::anim_bite);
 			p.status = plant_status::chomper_bite_begin;
 			p.countdown.status = 70;
 		}
@@ -53,7 +53,7 @@ void plant_chomper::update(plant& p) {
 			p.reanim.fps = 15;
 			p.reanim.type = reanim_type::repeat;
 			p.reanim.n_repeated = 0;
-			p.set_reanim_frame("anim_chew");
+			p.set_reanim_frame(plant_reanim_name::anim_chew);
 
 			p.status = plant_status::chomper_chew;
 			p.countdown.status = 4000;
@@ -65,7 +65,7 @@ void plant_chomper::update(plant& p) {
 			p.reanim.fps = 12;
 			p.reanim.type = reanim_type::once;
 			p.reanim.n_repeated = 0;
-			p.set_reanim_frame("anim_swallow");
+			p.set_reanim_frame(plant_reanim_name::anim_swallow);
 
 			p.status = plant_status::chomper_swallow;
 		}
@@ -74,7 +74,7 @@ void plant_chomper::update(plant& p) {
 	case plant_status::chomper_swallow:
 	case plant_status::chomper_bite_fail:
 		if (p.reanim.n_repeated > 0) {
-			p.set_reanim("anim_idle", reanim_type::repeat, 12);
+			p.set_reanim(plant_reanim_name::anim_idle, reanim_type::repeat, 12);
 			p.status = plant_status::wait;
 		}
 		return;

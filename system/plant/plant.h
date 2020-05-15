@@ -97,7 +97,7 @@ public:
         plant_base::init(p, object::plant_type::cherry_bomb, row, col);
 
         p.countdown.effect = 100;
-        p.set_reanim_frame("anim_explode");
+        p.set_reanim_frame(object::plant_reanim_name::anim_explode);
         p.reanim.type = object::reanim_type::once;
     }
 
@@ -253,7 +253,7 @@ public:
         plant_base::init(p, object::plant_type::jalapeno, row, col);
 
         p.countdown.effect = 100;
-        p.set_reanim_frame("anim_explode");
+        p.set_reanim_frame(object::plant_reanim_name::anim_explode);
         p.reanim.type = object::reanim_type::once;
     }
 

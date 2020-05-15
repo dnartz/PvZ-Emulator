@@ -88,8 +88,8 @@ void plant_base::init(
     p.reanim.type = reanim_type::repeat;
     p.reanim.fps = rng.randfloat(5, 15);
 
-    if (p.has_reanim("anim_idle")) {
-        p.set_reanim_frame("anim_idle");
+    if (p.has_reanim(plant_reanim_name::anim_idle)) {
+        p.set_reanim_frame(plant_reanim_name::anim_idle);
     }
 
     if (p.max_boot_delay <= 0) {
@@ -240,7 +240,7 @@ void plant_base::set_launch_countdown(object::plant & p, bool is_alt_attack) {
         p.type == plant_type::gatling_pea ||
         p.type == plant_type::split_pea ||
         p.type == plant_type::threepeater) &&
-        p.has_reanim("anim_shooting"))
+        p.has_reanim(plant_reanim_name::anim_shooting))
     {
         p.countdown.launch = 35;
 
@@ -258,29 +258,29 @@ void plant_base::set_launch_countdown(object::plant & p, bool is_alt_attack) {
     }
 
     if (p.status == plant_status::cactus_tall_idle) {
-        p.set_reanim("anim_shootinghigh", reanim_type::once, 35);
+        p.set_reanim(plant_reanim_name::anim_shootinghigh, reanim_type::once, 35);
         p.countdown.launch = 23;
         return;
     }
 
     if (p.type == plant_type::gloomshroom) {
-        p.set_reanim("anim_shooting", reanim_type::once, 14);
+        p.set_reanim(plant_reanim_name::anim_shooting, reanim_type::once, 14);
         p.countdown.launch = 200;
         return;
     }
 
     if (p.type == plant_type::cattail) {
-        p.set_reanim("anim_shooting", reanim_type::once, 30);
+        p.set_reanim(plant_reanim_name::anim_shooting, reanim_type::once, 30);
         p.countdown.launch = 50;
         return;
     }
 
-    if (!p.has_reanim("anim_shooting")) {
+    if (!p.has_reanim(plant_reanim_name::anim_shooting)) {
         plant_system(scene).launch(p, target, p.row, is_alt_attack);
         return;
     }
 
-    p.set_reanim("anim_shooting", reanim_type::once, 35);
+    p.set_reanim(plant_reanim_name::anim_shooting, reanim_type::once, 35);
 
     switch (p.type) {
     case plant_type::fumeshroom:

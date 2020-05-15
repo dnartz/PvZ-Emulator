@@ -4,6 +4,7 @@
 #include "rapidjson/stringbuffer.h"
 
 #include "common.h"
+#include "plant_reanim_data.h"
 
 namespace pvz_emulator::object {
 
@@ -228,9 +229,9 @@ public:
 
     void init_reanim();
 
-    void set_reanim_frame(const char* name);
-    void set_reanim(const char* name, reanim_type type, float fps);
-    bool has_reanim(const char* name);
+    void set_reanim_frame(plant_reanim_name name);
+    void set_reanim(plant_reanim_name name, reanim_type type, float fps);
+    bool has_reanim(plant_reanim_name name);
 
     void to_json(scene& scene, rapidjson::Writer<rapidjson::StringBuffer>& writer);
     static const char* type_to_string(plant_type type);

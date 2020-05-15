@@ -99,11 +99,11 @@ void damage::set_is_eating(object::zombie& z) {
     }
 
     if (z.status == zombie_status::ladder_walking) {
-        reanim.set(z, "anim_laddereat", reanim_type::repeat, 0);
+        reanim.set(z, zombie_reanim_name::anim_laddereat, reanim_type::repeat, 0);
     } else if (z.status == zombie_status::newspaper_running) {
-        reanim.set(z, "anim_eat_nopaper", reanim_type::repeat, 0);
+        reanim.set(z, zombie_reanim_name::anim_eat_nopaper, reanim_type::repeat, 0);
     } else if (z.status != zombie_status::pole_valuting_running) {
-        reanim.set(z, "anim_eat", reanim_type::repeat, 0);
+        reanim.set(z, zombie_reanim_name::anim_eat, reanim_type::repeat, 0);
     }
 }
 
@@ -126,7 +126,7 @@ void damage::set_death_state(zombie& z, unsigned int flags) {
         return;
     }
 
-    if (z.has_reanim("anim_death") && (
+    if (z.has_reanim(zombie_reanim_name::anim_death) && (
         z.type != zombie_type::dolphin_rider ||
         z.status != zombie_status::dophin_jump_in_pool) &&
         z.status != zombie_status::snorkel_jump_in_the_pool &&
@@ -182,22 +182,22 @@ void damage::set_death_state(zombie& z, unsigned int flags) {
             break;
         }
 
-        const char* name = "anim_death";
+        zombie_reanim_name name = zombie_reanim_name::anim_death;
 
-        if (z.is_in_water && z.has_reanim("anim_waterdeath")) {
-            name = "anim_waterdeath";
+        if (z.is_in_water && z.has_reanim(zombie_reanim_name::anim_waterdeath)) {
+            name = zombie_reanim_name::anim_waterdeath;
         } else {
             auto n = rng.randint(100);
 
             if (n == 99 &&
-                z.has_reanim("anim_superlongdeath") &&
+                z.has_reanim(zombie_reanim_name::anim_superlongdeath) &&
                 z.countdown.slow == 0 &&
                 scene.get_n_zombies_alive_and_not_hypno() <= 5)
             {
-                name = "anim_superlongdeath";
+                name = zombie_reanim_name::anim_superlongdeath;
                 fps = 14;
-            } else if (n > 50 && z.has_reanim("anim_death2")) {
-                name = "anim_death2";
+            } else if (n > 50 && z.has_reanim(zombie_reanim_name::anim_death2)) {
+                name = zombie_reanim_name::anim_death2;
             }
         }
 
@@ -224,14 +224,14 @@ void damage::destroy_accessory_2(zombie& z) {
         }
 
         z.status = zombie_status::newspaper_destoryed;
-        reanim.set(z, "anim_gasp", reanim_type::once, 8);
+        reanim.set(z, zombie_reanim_name::anim_gasp, reanim_type::once, 8);
 
         break;
 
     case zombie_accessories_type_2::ladder:
         z.status = zombie_status::walking;
         if (z.is_eating) {
-            reanim.set(z, "anim_eat", reanim_type::repeat, 0);
+            reanim.set(z, zombie_reanim_name::anim_eat, reanim_type::repeat, 0);
         } else {
             reanim.update_status(z);
         }
@@ -259,9 +259,9 @@ void damage::take_body(zombie& z, unsigned int damage, unsigned int flags) {
             z.countdown.action = 280;
 
             if (rng.randint(4) || z.x >= 600) {
-                reanim.set(z, "anim_wheelie1", reanim_type::once, 12);
+                reanim.set(z, zombie_reanim_name::anim_wheelie1, reanim_type::once, 12);
             } else {
-                reanim.set(z, "anim_wheelie2", reanim_type::once, 10);
+                reanim.set(z, zombie_reanim_name::anim_wheelie2, reanim_type::once, 10);
             }
         } else if (z.hp < 0) {
             zombie_factory.destroy(z);
@@ -273,7 +273,7 @@ void damage::take_body(zombie& z, unsigned int damage, unsigned int flags) {
             z.status = zombie_status::dying;
             z.dx = 0;
             z.countdown.action = 280;
-            reanim.set(z, "anim_bounce", reanim_type::once, 12);
+            reanim.set(z, zombie_reanim_name::anim_bounce, reanim_type::once, 12);
         } else if (z.hp < 0) {
             zombie_factory.destroy(z);
         }
@@ -444,7 +444,7 @@ void damage::activate_plant(object::plant& p) {
         {
             p.status = plant_status::umbrella_leaf_block;
             p.countdown.status = 5;
-            p.set_reanim("anim_block", reanim_type::once, 22);
+            p.set_reanim(plant_reanim_name::anim_block, reanim_type::once, 22);
         }
         return;
 
@@ -489,7 +489,7 @@ void damage::activate_plant(object::plant& p) {
         }
 
         p.status = plant_status::work;
-        p.set_reanim("anim_crumble", reanim_type::once, 22);
+        p.set_reanim(plant_reanim_name::anim_crumble, reanim_type::once, 22);
 
         return;
     }
@@ -611,7 +611,7 @@ void damage::take(object::zombie& z, unsigned int damage, unsigned int flags) {
                 z.status == zombie_status::balloon_flying)
             {
                 z.status = zombie_status::balloon_falling;
-                reanim.set(z, "anim_pop", reanim_type::once, 24);
+                reanim.set(z, zombie_reanim_name::anim_pop, reanim_type::once, 24);
             }
 
             if ((scene.type == scene_type::pool ||

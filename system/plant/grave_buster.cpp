@@ -9,7 +9,7 @@ using namespace pvz_emulator::object;
 void plant_grave_buster::update(plant& p) {
     if (p.status == plant_status::grave_buster_land) {
         if (p.reanim.n_repeated > 0) {
-            p.set_reanim("anim_idle", reanim_type::repeat, 12);
+            p.set_reanim(plant_reanim_name::anim_idle, reanim_type::repeat, 12);
             p.countdown.status = 400;
             p.status = plant_status::grave_buster_idle;
         }
@@ -32,7 +32,7 @@ void plant_grave_buster::update(plant& p) {
 
 void plant_grave_buster::init(plant & p, unsigned int row, unsigned int col) {
     plant_base::init(p, plant_type::grave_buster, row, col);
-    p.set_reanim_frame("anim_land");
+    p.set_reanim_frame(plant_reanim_name::anim_land);
     p.reanim.type = reanim_type::once;
     p.status = plant_status::grave_buster_land;
 }

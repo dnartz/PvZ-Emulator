@@ -147,11 +147,11 @@ void zombie_bungee::update(zombie& z) {
                 reanim.update_status(*roof_partner);
                 z.master_id = -1;
                 z.status = zombie_status::bungee_raise;
-                reanim.set(z, "anim_raise", reanim_type::once, 36);
+                reanim.set(z, zombie_reanim_name::anim_raise, reanim_type::once, 36);
             } else {
                 z.status = zombie_status::bungee_idle_after_drop;
                 z.countdown.action = 300;
-                reanim.set(z, "anim_idle", reanim_type::repeat, 24);
+                reanim.set(z, zombie_reanim_name::anim_idle, reanim_type::repeat, 24);
                 z.reanim.progress = 0.5;
             }
         }
@@ -161,7 +161,7 @@ void zombie_bungee::update(zombie& z) {
 
     case zombie_status::bungee_idle_after_drop:
         if (z.countdown.action <= 0) {
-            reanim.set(z, "anim_grab", reanim_type::once, 24);
+            reanim.set(z, zombie_reanim_name::anim_grab, reanim_type::once, 24);
 
             auto status = get_grid_plant_status(scene, z.row, z.bungee_col);
             auto p = status.coffee_bean;
@@ -191,7 +191,7 @@ void zombie_bungee::update(zombie& z) {
 
     case zombie_status::bungee_grab:
         if (z.reanim.n_repeated > 0) {
-            reanim.set(z, "anim_raise", reanim_type::once, 36);
+            reanim.set(z, zombie_reanim_name::anim_raise, reanim_type::once, 36);
 
             if (z.bungee_target) {
                 auto p = z.bungee_target;
@@ -243,7 +243,7 @@ void zombie_bungee::init(zombie &z, unsigned int row) {
 
     z.status = zombie_status::bungee_target_drop;
 
-    reanim.set(z, "anim_drop", reanim_type::repeat, 24);
+    reanim.set(z, zombie_reanim_name::anim_drop, reanim_type::repeat, 24);
 
     z.hit_box.x = -20;
     z.hit_box.y = 22;

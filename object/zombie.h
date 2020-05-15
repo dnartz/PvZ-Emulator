@@ -3,6 +3,7 @@
 #include "rapidjson/stringbuffer.h"
 
 #include "common.h"
+#include "zombie_reanim_data.h"
 
 namespace pvz_emulator::object {
 
@@ -230,7 +231,7 @@ public:
     bool has_balloon;
     bool has_eaten_garlic;
 
-    bool has_reanim(const char *name) const;
+    bool has_reanim(zombie_reanim_name name) const;
 
     enum zombie_hp_status get_hp_status() const {
         double r = hp / max_hp;
@@ -279,9 +280,7 @@ public:
 
     void init_reanim();
 
-    void set_reanim_frame(const char* name);
-
-    void set_reanim(const char* name, reanim_type type, float fps);
+    void set_reanim_frame(zombie_reanim_name name);
 
     void to_json(scene& s, rapidjson::Writer<rapidjson::StringBuffer>& writer);
 

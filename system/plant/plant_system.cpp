@@ -428,7 +428,7 @@ void plant_system::update_launch_countdown(plant& p) {
     
     if (p.status == plant_status::cactus_tall_idle) {
         if (p.reanim.n_repeated > 0) {
-            p.set_reanim("anim_idlehigh", reanim_type::once, 0);
+            p.set_reanim(plant_reanim_name::anim_idlehigh, reanim_type::once, 0);
             p.reanim.fps = 12;
             return;
         }
@@ -436,11 +436,11 @@ void plant_system::update_launch_countdown(plant& p) {
         if (p.reanim.n_repeated > 0) {
             p.status = plant_status::cob_cannon_unaramed_idle;
             p.countdown.status = 3000;
-            p.set_reanim("anim_unarmed_idle", reanim_type::repeat, 12);
+            p.set_reanim(plant_reanim_name::anim_unarmed_idle, reanim_type::repeat, 12);
             return;
         }
     } else if (p.reanim.n_repeated > 0) {
-        p.set_reanim("anim_idle", reanim_type::repeat, 12);
+        p.set_reanim(plant_reanim_name::anim_idle, reanim_type::repeat, 12);
         return;
     }
 

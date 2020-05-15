@@ -32,7 +32,7 @@ void zombie_dolphin_rider::update(zombie& z) {
     case zombie_status::dophin_walk_with_dophin:
         if (700 < z.int_x && z.int_x <= 720) {
             z.status = zombie_status::dophin_jump_in_pool;
-            reanim.set(z, "anim_jumpinpool", reanim_type::once, 16);
+            reanim.set(z, zombie_reanim_name::anim_jumpinpool, reanim_type::once, 16);
         }
         return;
 
@@ -45,7 +45,7 @@ void zombie_dolphin_rider::update(zombie& z) {
             z.status = zombie_status::dophin_ride;
             z.is_in_water = true;
 
-            reanim.set(z, "anim_ride", reanim_type::repeat, 12);
+            reanim.set(z, zombie_reanim_name::anim_ride, reanim_type::repeat, 12);
         }
         return;
 
@@ -59,14 +59,14 @@ void zombie_dolphin_rider::update(zombie& z) {
                 z.status = zombie_status::dophin_jump;
                 z.countdown.action = 120;
                 
-                reanim.set(z, "anim_dolphinjump", reanim_type::once, 10);
+                reanim.set(z, zombie_reanim_name::anim_dolphinjump, reanim_type::once, 10);
             }
         } else {
             z.dy -= 40;
             z.action = zombie_action::leaving_pool;
             z.status = zombie_status::dophin_walk_with_dophin;
             
-            reanim.set(z, "anim_walkdolphin", reanim_type::repeat, 0);
+            reanim.set(z, zombie_reanim_name::anim_walkdolphin, reanim_type::repeat, 0);
             reanim.update_dx(z);
         }
         return;
@@ -106,7 +106,7 @@ void zombie_dolphin_rider::update(zombie& z) {
             z.action = zombie_action::leaving_pool;
             z.dy = -40;
 
-            reanim.set(z, "anim_walk", reanim_type::repeat, 0);
+            reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 0);
             reanim.update_dx(z);
         }
 
@@ -124,7 +124,7 @@ void zombie_dolphin_rider::init(zombie& z, unsigned int row) {
     z.status = zombie_status::dophin_walk_with_dophin;
     z.garlic_tick.a = 6;
 
-    reanim.set(z, "anim_walkdolphin", reanim_type::repeat, 0);
+    reanim.set(z, zombie_reanim_name::anim_walkdolphin, reanim_type::repeat, 0);
     reanim.update_dx(z);
 
     set_common_fields(z);

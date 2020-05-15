@@ -4,7 +4,7 @@ namespace pvz_emulator::system {
 
 using namespace pvz_emulator::object;
 
-void reanim::set(zombie &z, const char* name, reanim_type type, float fps) {
+void reanim::set(zombie &z, zombie_reanim_name name, reanim_type type, float fps) {
     if (fps != 0) {
         z.reanim.fps = fps;
     }
@@ -127,31 +127,31 @@ void reanim::update_status(zombie& z) {
     update_dx(z);
 
     if (z.status == zombie_status::ladder_walking) {
-        set(z, "anim_ladderwalk", reanim_type::repeat, 0);
+        set(z, zombie_reanim_name::anim_ladderwalk, reanim_type::repeat, 0);
     } else if (z.status == zombie_status::newspaper_running) {
-        set(z, "anim_walk_nopaper", reanim_type::repeat, 0);
+        set(z, zombie_reanim_name::anim_walk_nopaper, reanim_type::repeat, 0);
     } else if (z.is_in_water &&
         z.action != zombie_action::entering_pool &&
         z.action != zombie_action::leaving_pool &&
-        z.has_reanim("anim_swim"))
+        z.has_reanim(zombie_reanim_name::anim_swim))
     {
-        set(z, "anim_swim", reanim_type::repeat, 0);
+        set(z, zombie_reanim_name::anim_swim, reanim_type::repeat, 0);
     } else if (!scene.is_zombie_dance ||
         z.type != zombie_type::zombie &&
         z.type != zombie_type::conehead &&
         z.type != zombie_type::buckethead)
     {
         if (z.type != zombie_type::flag && rng.randint(2) ||
-            !z.has_reanim("anim_walk2"))
+            !z.has_reanim(zombie_reanim_name::anim_walk2))
         {
-            if (z.has_reanim("anim_walk")) {
-                set(z, "anim_walk", reanim_type::repeat, 0);
+            if (z.has_reanim(zombie_reanim_name::anim_walk)) {
+                set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 0);
             }
         } else {
-            set(z, "anim_walk2", reanim_type::repeat, 0);
+            set(z, zombie_reanim_name::anim_walk2, reanim_type::repeat, 0);
         }
     } else {
-        set(z, "anim_dance", reanim_type::repeat, 0);
+        set(z, zombie_reanim_name::anim_dance, reanim_type::repeat, 0);
     }
 }
 
