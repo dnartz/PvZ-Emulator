@@ -46,6 +46,10 @@ bool world::update() {
 
     ice_path.update();
 
+    if (scene.spawn.countdown.pool > 0) {
+        --scene.spawn.countdown.pool;
+    }
+
     if (endgame.update()) {
         spawn.on_flag_end();
         return true;
