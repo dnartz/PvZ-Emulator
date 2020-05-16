@@ -25,16 +25,16 @@ target_include_directories(pvzemu
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/system
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/object)
 
-ExternalProject_Add(debugger-ui
-    SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/debugger
-    CONFIGURE_COMMAND npm i
-    BUILD_ALWAYS true
-    BUILD_IN_SOURCE true
-    BUILD_COMMAND npm run build
-    INSTALL_COMMAND "")
+if(PVZEMU_BUILD_DEBUGGER)
+    ExternalProject_Add(debugger-ui
+        SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/debugger
+        CONFIGURE_COMMAND npm i
+        BUILD_ALWAYS true
+        BUILD_IN_SOURCE true
+        BUILD_COMMAND npm run build
+        INSTALL_COMMAND "")
 
-add_executable(debug-server ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
-
-add_dependencies(debug-server debugger-ui)
-
-target_link_libraries(debug-server pvzemu)
+    add_executable(debug-server ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+    add_dependencies(debug-server debugger-ui)
+    target_link_libraries(debug-server pvzemu)
+endif(PVZEMU_BUILD_DEBUGGER)
