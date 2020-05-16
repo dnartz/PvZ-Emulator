@@ -20,6 +20,8 @@ private:
 public:
     spawn(scene& s);
 
+    unsigned int get_current_hp();
+
     void on_flag_end();
 
     void update();
@@ -66,8 +68,6 @@ private:
         curr_spawn_count[static_cast<int>(type)]++;
         total_spawn_count[static_cast<int>(type)]++;
     }
-
-    unsigned int get_current_hp();
 
     void pool_lurking_spawn();
     void roof_lurking_spawn();
