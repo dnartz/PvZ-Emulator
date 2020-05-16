@@ -27,15 +27,15 @@ class plant_factory {
         grid_plant_status& status,
         object::plant_type advanced);
 
+    bool has_enough_sun(object::plant_type type);
+
+public:
     bool can_plant(
         unsigned int row,
         unsigned int col,
         object::plant_type type,
         object::plant_type imitater_type);
 
-    bool has_enough_sun(object::plant_type type);
-
-public:
     object::plant* plant(
         unsigned int i,
         unsigned int row,
