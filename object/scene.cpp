@@ -221,4 +221,38 @@ void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.EndObject();
 }
 
+void scene::reset() {
+    rng = std::mt19937(std::random_device()());
+
+    zombie_dancing_clock = rng() % 10000;
+    is_zombie_dance = false;
+    is_future_enabled = false;
+    is_game_over = false;
+    stop_spawn = false;
+    enable_split_pea_bug = true;
+
+    zombies.clear();
+    plants.clear();
+    griditems.clear();
+    projectiles.clear();
+
+    memset(&spawn, 0, sizeof(spawn));
+    spawn.total_flags = 1000;
+    spawn.countdown.next_wave = 600;
+    spawn.countdown.next_wave_initial = 600;
+
+    sun.sun = 9990;
+    sun.natural_sun_generated = 0;
+    sun.natural_sun_countdown = 0;
+
+    memset(&ice_path.countdown, 0, sizeof(ice_path.countdown));
+    memset(&ice_path.x, 0, sizeof(ice_path.x));
+
+    for (auto& card : cards) {
+        card.type = plant_type::none;
+        card.imitater_type = plant_type::none;
+        card.cold_down = 0;
+    }
+}
+
 }

@@ -63,6 +63,16 @@ public:
 	}
 
 	bool plant(object::plant_type type, unsigned int row, unsigned int col);
+
+	void reset() {
+		scene.reset();
+		spawn.reset();
+	}
+
+	void reset(object::scene_type type) {
+		scene.reset(type);
+		spawn.reset();
+	}
 };
 
 }

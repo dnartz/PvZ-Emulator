@@ -175,6 +175,13 @@ public:
 	iterator end() {
 		return iterator(-1, *this);
 	}
+
+	void clear() {
+		next_available = 0;
+		active_end = 0;
+		n_actives = 0;
+		memset(a, 0, sizeof(a));
+	}
 };
 
 };

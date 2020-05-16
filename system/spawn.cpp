@@ -38,8 +38,7 @@ spawn::spawn(object::scene& s):
 	zombie_factory(s),
 	griditem_factory(s)
 {
-	on_flag_end();
-	data.total_flags--;
+	reset();
 }
 
 constexpr unsigned int spawn::get_spawn_weight(zombie_type type) {
@@ -447,7 +446,7 @@ void spawn::update() {
 	}
 }
 
-void spawn::on_flag_end() {
+void spawn::reset() {
     data.wave = 0;
 	data.hp = { 0 };
 

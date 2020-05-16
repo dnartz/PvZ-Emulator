@@ -1,3 +1,4 @@
+#include "world.h"
 #include <unordered_set>
 #include <unordered_map>
 #include "rapidjson/writer.h"
@@ -51,7 +52,7 @@ bool world::update() {
     }
 
     if (endgame.update()) {
-        spawn.on_flag_end();
+        spawn.reset();
         return true;
     } else {
         return false;

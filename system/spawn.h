@@ -22,7 +22,7 @@ public:
 
     unsigned int get_current_hp();
 
-    void on_flag_end();
+    void reset();
 
     void update();
 

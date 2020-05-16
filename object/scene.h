@@ -98,10 +98,8 @@ public:
 
     scene(scene_type t) : type(t),
         zombie_dancing_clock(rng() % 10000),
-        rows(
-            t == pvz_emulator::object::scene_type::pool ||
-            t == pvz_emulator::object::scene_type::fog ? 6 : 5
-        ), is_zombie_dance(false),
+        rows(get_max_row()),
+        is_zombie_dance(false),
         is_future_enabled(false),
         is_game_over(false),
         stop_spawn(false),
@@ -148,6 +146,15 @@ public:
     }
 
     void to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer);
+
+    void reset();
+
+    void reset(scene_type type) {
+        this->type = type;
+        rows = get_max_row();
+
+        reset();
+    }
 };
 
 }
