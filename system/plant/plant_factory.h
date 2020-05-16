@@ -27,7 +27,7 @@ class plant_factory {
         grid_plant_status& status,
         object::plant_type advanced);
 
-    bool has_enough_sun(object::plant_type type);
+    unsigned int get_cost(object::plant_type type);
 
 public:
     bool can_plant(

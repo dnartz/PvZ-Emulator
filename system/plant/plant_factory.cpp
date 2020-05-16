@@ -115,7 +115,7 @@ void plant_factory::is_covered_by_griditem(
     }
 }
 
-bool plant_factory::has_enough_sun(plant_type type) {
+unsigned int plant_factory::get_cost(object::plant_type type) {
     if (type >= plant_type::gatling_pea) {
         int n = 0;
 
@@ -125,9 +125,9 @@ bool plant_factory::has_enough_sun(plant_type type) {
             }
         }
 
-        return plant::COST_TABLE[static_cast<int>(type)] + 50 * n <= scene.sun.sun;
+        return plant::COST_TABLE[static_cast<int>(type)] + 50 * n;
     } else {
-        return plant::COST_TABLE[static_cast<int>(type)] <= scene.sun.sun;
+        return plant::COST_TABLE[static_cast<int>(type)];
     }
 }
 
@@ -154,7 +154,7 @@ bool plant_factory::can_plant(
         imitater_type :
         type;
 
-    if (!has_enough_sun(target_type)) {
+    if (get_cost(target_type) > scene.sun.sun) {
         return false;
     }
 
@@ -512,6 +512,8 @@ plant* plant_factory::plant(
     default:
         break;
     }
+
+    scene.sun.sun -= get_cost(target_type);
 
     auto p = &create(type, row, col, imitater_type);
 
