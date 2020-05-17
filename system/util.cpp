@@ -248,6 +248,12 @@ bool is_not_movable(scene& scene, zombie& z) {
 }
 
 bool is_target_of_kelp(scene &s, zombie &z) {
+    if (s.type != scene_type::fog && s.type != scene_type::pool ||
+        z.row != 2 && z.row != 3)
+    {
+        return false;
+    }
+
     if (z.action == zombie_action::caught_by_kelp) {
         return true;
     }
