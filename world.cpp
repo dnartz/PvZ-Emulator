@@ -10,6 +10,7 @@ namespace pvz_emulator {
 void world::clean_obj_lists() {
     scene.plants.shrink_to_fit();
     scene.zombies.shrink_to_fit();
+    scene.projectiles.shrink_to_fit();
     scene.griditems.shrink_to_fit();
 }
 
