@@ -52,7 +52,9 @@ public:
 
 	bool update();
 
+#ifdef PVZEMU_BUILD_DEBUGGER
 	void to_json(std::string& s);
+#endif // PVZEMU_BUILD_DEBUGGER
 
 	bool select_plants(
 		std::vector<object::plant_type> cards,

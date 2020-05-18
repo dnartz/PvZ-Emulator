@@ -1,8 +1,12 @@
 #include "world.h"
 #include <unordered_set>
 #include <unordered_map>
+
+#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#endif // PVZEMU_BUILD_DEBUGGER
+
 #include "world.h"
 
 namespace pvz_emulator {
@@ -60,6 +64,7 @@ bool world::update() {
     }
 }
 
+#ifdef PVZEMU_BUILD_DEBUGGER
 void world::to_json(std::string& s) {
     rapidjson::StringBuffer sb;
     rapidjson::Writer<rapidjson::StringBuffer> writer(sb);
@@ -68,6 +73,7 @@ void world::to_json(std::string& s) {
 
     s = sb.GetString();
 }
+#endif PVZEMU_BUILD_DEBUGGER
 
 using namespace pvz_emulator::object;
 

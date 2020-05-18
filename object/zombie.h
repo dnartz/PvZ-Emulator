@@ -1,6 +1,8 @@
 #pragma once
+#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#endif // PVZEMU_BUILD_DEBUGGER
 
 #include "common.h"
 #include "zombie_reanim_data.h"
@@ -282,6 +284,7 @@ public:
 
     void set_reanim_frame(zombie_reanim_name name);
 
+#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(scene& s, rapidjson::Writer<rapidjson::StringBuffer>& writer);
 
     static const char* status_to_string(zombie_status status);
@@ -292,6 +295,7 @@ public:
 
     static const char*
     accessories_type_to_string(zombie_accessories_type_2 type);
-};
+#endif // PVZEMU_BUILD_DEBUGGER
+    };
 
 };

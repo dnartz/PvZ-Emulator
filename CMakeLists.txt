@@ -26,6 +26,8 @@ target_include_directories(pvzemu
    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/object)
 
 if(PVZEMU_BUILD_DEBUGGER)
+    add_definitions(-DPVZEMU_BUILD_DEBUGGER)
+
     ExternalProject_Add(debugger-ui
         SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/debugger
         CONFIGURE_COMMAND npm i

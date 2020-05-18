@@ -1,7 +1,9 @@
 #pragma once
 #include <array>
+#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#endif // PVZEMU_BUILD_DEBUGGER
 
 #include "common.h"
 #include "plant_reanim_data.h"
@@ -233,9 +235,11 @@ public:
     void set_reanim(plant_reanim_name name, reanim_type type, float fps);
     bool has_reanim(plant_reanim_name name);
 
+#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(scene& scene, rapidjson::Writer<rapidjson::StringBuffer>& writer);
     static const char* type_to_string(plant_type type);
     static const char* status_to_string(plant_status status);
+#endif // PVZEMU_BUILD_DEBUGGER
 };
 
 };

@@ -257,6 +257,7 @@ void plant::set_reanim(plant_reanim_name name, reanim_type type, float fps) {
     set_reanim_frame(name);
 }
 
+#ifdef PVZEMU_BUILD_DEBUGGER
 void plant::to_json(
     scene& scene,
     rapidjson::Writer<rapidjson::StringBuffer>& writer)
@@ -506,5 +507,6 @@ const char* plant::status_to_string(plant_status status) {
         return nullptr;
     }
 }
+#endif // PVZEMU_BUILD_DEBUGGER
 
 }

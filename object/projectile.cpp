@@ -86,6 +86,7 @@ unsigned int projectile::get_flags_with_zombie(const zombie& z) const {
     return flags;
 }
 
+#ifdef PVZEMU_BUILD_DEBUGGER
 void projectile::to_json(
     scene& scene,
     rapidjson::Writer<rapidjson::StringBuffer>& writer)
@@ -225,5 +226,6 @@ const char* projectile::motion_type_to_string(projectile_motion_type type)
         return nullptr;
     }
 }
+#endif // PVZEMU_BUILD_DEBUGGER
 
 }

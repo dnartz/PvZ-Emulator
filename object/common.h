@@ -1,6 +1,8 @@
 #pragma once
+#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#endif // PVZEMU_BUILD_DEBUGGER
 
 namespace pvz_emulator::object {
 
@@ -13,7 +15,10 @@ struct rect {
     bool is_intersect_with_circle(int px, int py, int r);
 
     float get_overlap_len(const rect& r);
+
+#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer);
+#endif // PVZEMU_BUILD_DEBUGGER
 };
 
 enum class reanim_type {
@@ -39,7 +44,9 @@ struct reanim {
 
     bool is_in_progress(double progress);
 
+#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer);
+#endif // PVZEMU_BUILD_DEBUGGER
 
     void get_frame_status(reanim_frame_status& rfs) const;
 };
