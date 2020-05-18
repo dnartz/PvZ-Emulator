@@ -1,6 +1,8 @@
 #pragma once
+#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#endif
 
 namespace pvz_emulator::object {
 
