@@ -132,6 +132,10 @@ public:
 
 	bool is_active(const T* p) const {
 		auto ow = reinterpret_cast<const obj_wrap*>(p);
+		if (ow < &a[0] || ow > & a[S - 1]) {
+			return false;
+		}
+
 		auto i = ow->next_available;
 
 		return ow - a == i;
