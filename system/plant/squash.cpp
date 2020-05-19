@@ -134,6 +134,10 @@ void plant_squash::update(plant& p) {
 
                 p.status = plant_status::squash_stop_in_the_air;
                 p.countdown.status = 50;
+
+                if (scene.plant_map[p.row][p.col].content == &p) {
+                    scene.plant_map[p.row][p.col].content = nullptr;
+                }
             }
         }
         break;
@@ -149,6 +153,10 @@ void plant_squash::update(plant& p) {
             p.set_reanim(plant_reanim_name::anim_jumpdown, reanim_type::once, 60);
             p.status = plant_status::squash_jump_down;
             p.countdown.status = 10;
+
+            if (scene.plant_map[p.row][p.col].content == &p) {
+                scene.plant_map[p.row][p.col].content = nullptr;
+            }
         }
         break;
 
@@ -163,6 +171,10 @@ void plant_squash::update(plant& p) {
             } else {
                 p.status = plant_status::squash_crushed;
                 p.countdown.status = 100;
+
+                if (scene.plant_map[p.row][p.col].content == &p) {
+                    scene.plant_map[p.row][p.col].content = nullptr;
+                }
             }
         }
         break;

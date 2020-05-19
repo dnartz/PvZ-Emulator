@@ -45,7 +45,7 @@ plant *zombie_catapult::find_target(zombie& z) {
             continue;
         }
 
-        auto status = get_grid_plant_status(scene, p.row, p.col);
+        auto& status = scene.plant_map[p.row][p.col];
 
         if (status.coffee_bean) {
             target = status.coffee_bean;

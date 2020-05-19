@@ -243,6 +243,8 @@ void scene::reset() {
     spawn.countdown.next_wave = 600;
     spawn.countdown.next_wave_initial = 600;
 
+    memset(&plant_map, 0, sizeof(plant_map));
+
     sun.sun = 9990;
     sun.natural_sun_generated = 0;
     sun.natural_sun_countdown = 0;

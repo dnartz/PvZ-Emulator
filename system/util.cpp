@@ -99,57 +99,6 @@ float zombie_init_y(scene_type type, const zombie& z, unsigned int row) {
 	return y;
 }
 
-struct grid_plant_status get_grid_plant_status(
-    object::scene& s,
-    unsigned int row,
-    unsigned int col)
-{
-    struct grid_plant_status result = { 0 };
-
-    for (auto& p : s.plants) {
-        auto type = p.type;
-
-        if (type == plant_type::imitater &&
-            p.imitater_target != plant_type::none)
-        {
-            type = p.imitater_target;
-        }
-
-        if (type == plant_type::cob_cannon) {
-            if (p.row != row || p.col < col - 1 || p.col > col) {
-                continue;
-            }
-        } else if (p.row != row || p.col != col) {
-            continue;
-        }
-
-        if (p.is_squash_attacking()) {
-            continue;
-        }
-
-        switch (p.type) {
-        case plant_type::coffee_bean:
-            result.coffee_bean = &p;
-            break;
-
-        case plant_type::lily_pad:
-        case plant_type::flower_pot:
-            result.base = &p;
-            break;
-
-        case plant_type::pumpkin:
-            result.pumpkin = &p;
-            break;
-
-        default:
-            result.content = &p;
-            break;
-        }
-    }
-
-    return result;
-}
-
 bool is_slowed(scene &scene, zombie &z) {
     if (z.countdown.slow > 0) {
         return true;

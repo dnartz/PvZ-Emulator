@@ -131,7 +131,7 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
 
     switch (type) {
     case zombie_attack_type::smash_or_eat: {
-        auto gs = get_grid_plant_status(scene, p.row, p.col);
+        auto& gs = scene.plant_map[p.row][p.col];
 
         auto other = gs.pumpkin;
         if (gs.pumpkin == nullptr) {
@@ -159,17 +159,17 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
             ((p.type != plant_type::doomshroom &&
                 p.type != plant_type::iceshroom) || p.is_sleeping);
 
-    case zombie_attack_type::jump:
-        auto gp = get_grid_plant_status(scene, p.row, p.col);
+    case zombie_attack_type::jump: {
+        auto& gp = scene.plant_map[p.row][p.col];
 
         if (gp.content != nullptr &&
             gp.content != &p &&
-            can_attack_plant(z, *gp.content, zombie_attack_type::jump))
-        {
+            can_attack_plant(z, *gp.content, zombie_attack_type::jump)) {
             return false;
         } else {
             return true;
         }
+    }
 
     case pvz_emulator::system::zombie_attack_type::place_ladder:
         if (z.status != zombie_status::ladder_walking &&

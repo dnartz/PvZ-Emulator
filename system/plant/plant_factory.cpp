@@ -54,7 +54,7 @@ bool plant_factory::can_plant_advanced_plant(
                 b.row == status.content->row &&
                 b.col == status.content->col + 1)
             {
-                auto s1 = get_grid_plant_status(scene, b.row, b.col);
+                auto& s1 = scene.plant_map[b.row][b.col];
 
                 return s1.base == nullptr && status.base == nullptr ||
                     s1.base != nullptr && status.base != nullptr;
@@ -148,7 +148,7 @@ bool plant_factory::can_plant(
         return false;
     }
 
-    auto status = get_grid_plant_status(scene, row, col);
+    auto& status = scene.plant_map[row][col];
 
     auto target_type = type == plant_type::imitater ?
         imitater_type :
@@ -431,6 +431,25 @@ plant& plant_factory::create(
         break;
     }
 
+    if (p.type == plant_type::pumpkin) {
+        assert(!scene.plants.is_active(scene.plant_map[p.row][p.col].pumpkin));
+        scene.plant_map[p.row][p.col].pumpkin = &p;
+    } else if (p.type == plant_type::coffee_bean) {
+        assert(!scene.plants.is_active(scene.plant_map[p.row][p.col].coffee_bean));
+        scene.plant_map[p.row][p.col].coffee_bean = &p;
+    } else if (p.type == plant_type::flower_pot || p.type == plant_type::lily_pad) {
+        assert(!scene.plants.is_active(scene.plant_map[p.row][p.col].base));
+        scene.plant_map[p.row][p.col].base = &p;
+    } else if (p.type == plant_type::cob_cannon) {
+        assert(!scene.plants.is_active(scene.plant_map[p.row][p.col].base));
+        assert(!scene.plants.is_active(scene.plant_map[p.row][p.col + 1].base));
+        scene.plant_map[p.row][p.col].content = &p;
+        scene.plant_map[p.row][p.col + 1].content = &p;
+    } else {
+        assert(!scene.plants.is_active(scene.plant_map[p.row][p.col].content));
+        scene.plant_map[p.row][p.col].content = &p;
+    }
+
     return p;
 }
 
@@ -454,7 +473,7 @@ plant* plant_factory::plant(
         return nullptr;
     }
 
-    auto status = get_grid_plant_status(scene, row, col);
+    auto& status = scene.plant_map[row][col];
 
     bool is_gloom_awake = false;
     unsigned int gloom_awake_countdown;
@@ -501,7 +520,7 @@ plant* plant_factory::plant(
         }
 
         if (col + 1 < 9) {
-            auto s = get_grid_plant_status(scene, row, col + 1);
+            auto& s = scene.plant_map[row][col + 1];
             if (s.content) {
                 destroy(*s.content);
             }
@@ -551,7 +570,7 @@ void plant_factory::destroy(object::plant& p) {
         }
     }
 
-    auto status = get_grid_plant_status(scene, p.row, p.col);
+    auto& status = scene.plant_map[p.row][p.col];
     if (status.coffee_bean == nullptr &&
         status.content == nullptr &&
         status.pumpkin == nullptr &&
@@ -563,6 +582,22 @@ void plant_factory::destroy(object::plant& p) {
         !status.base->is_smashed)
     {
         status.base->reanim.fps = rng.randfloat(10, 15);
+    }
+
+    if (status.pumpkin == &p) {
+        status.pumpkin = nullptr;
+    }
+
+    if (status.coffee_bean == &p) {
+        status.coffee_bean = nullptr;
+    }
+
+    if (status.base == &p) {
+        status.base = nullptr;
+    }
+
+    if (status.content == &p) {
+        status.content = nullptr;
     }
 }
 

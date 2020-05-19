@@ -24,7 +24,7 @@ void zombie_bungee::select_target(zombie &z) {
 
         has_grave_or_bungee[z.row][z.bungee_col] = true;
 
-        auto status = get_grid_plant_status(scene, z.row, z.bungee_col);
+        auto& status = scene.plant_map[z.row][z.bungee_col];
 
         if (status.content && !status.content->is_sun_plant()) {
             n_sun_plants++;
@@ -56,7 +56,7 @@ void zombie_bungee::select_target(zombie &z) {
                 continue;
             }
 
-            auto status = get_grid_plant_status(scene, i, j);
+            auto& status = scene.plant_map[i][j];
 
             int w = 1;
 
@@ -163,7 +163,7 @@ void zombie_bungee::update(zombie& z) {
         if (z.countdown.action <= 0) {
             reanim.set(z, zombie_reanim_name::anim_grab, reanim_type::once, 24);
 
-            auto status = get_grid_plant_status(scene, z.row, z.bungee_col);
+            auto& status = scene.plant_map[z.row][z.bungee_col];
             auto p = status.coffee_bean;
             if (p == nullptr) {
                 p = status.content;
@@ -200,7 +200,7 @@ void zombie_bungee::update(zombie& z) {
                 p->reanim.fps = 0.1f;
 
                 if (p->type == plant_type::cattail) {
-                    auto status = get_grid_plant_status(scene, p->row, p->col);
+                    auto& status = scene.plant_map[p->row][p->col];
                     if (status.pumpkin) {
                         plant_factory(scene).create(
                             plant_type::lily_pad,

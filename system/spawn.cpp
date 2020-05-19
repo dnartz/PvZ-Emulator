@@ -320,7 +320,7 @@ void spawn::night_grave_spawn() {
 				continue;
 			}
 
-			auto s = get_grid_plant_status(scene, row, col);
+			auto& s = scene.plant_map[row][col];
 
 			if (s.base || s.coffee_bean || s.content || s.pumpkin) {
 				weights.push_back(1);

@@ -15,6 +15,19 @@
 
 namespace pvz_emulator::object {
 
+struct grid_plant_status {
+    object::plant* pumpkin;
+    object::plant* base;
+    object::plant* content;
+    object::plant* coffee_bean;
+
+    grid_plant_status():
+        pumpkin(nullptr),
+        base(nullptr),
+        content(nullptr),
+        coffee_bean(nullptr) {}
+};
+
 enum class scene_type {
     day = 0x0,
     night = 0x1,
@@ -38,6 +51,8 @@ public:
     typename obj_list<object::plant, 512> plants{};
     typename obj_list<object::griditem, 128> griditems{};
     typename obj_list<object::projectile, 1024> projectiles{};
+
+    grid_plant_status plant_map[6][9];
 
     struct spawn_data {
         object::zombie_type spawn_list[20][50];

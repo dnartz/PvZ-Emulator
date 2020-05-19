@@ -482,7 +482,7 @@ void damage::activate_plant(object::plant& p) {
         return;
 
     case plant_type::coffee_bean: {
-        auto gs = get_grid_plant_status(scene, p.row, p.col);
+        auto& gs = scene.plant_map[p.row][p.col];
 
         if (gs.content && gs.content->is_sleeping) {
             gs.content->countdown.awake = 100;

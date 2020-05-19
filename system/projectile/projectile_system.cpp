@@ -99,7 +99,7 @@ plant* projectile_system::find_plant_target(projectile& proj) {
         return nullptr;
     }
 
-    auto status = get_grid_plant_status(scene, target->row, target->col);
+    auto& status = scene.plant_map[target->row][target->col];
     target = status.coffee_bean;
     if (target == nullptr) {
         target = status.content;

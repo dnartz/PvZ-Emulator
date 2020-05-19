@@ -24,16 +24,6 @@ float zombie_init_y(
     const object::zombie& z,
     unsigned int row);
 
-struct grid_plant_status {
-    object::plant* pumpkin;
-    object::plant* base;
-    object::plant* content;
-    object::plant* coffee_bean;
-};
-
-struct grid_plant_status
-get_grid_plant_status(object::scene &s, unsigned int row, unsigned int col);
-
 int get_row_by_x_and_y(object::scene_type s, int x, int y);
 
 bool is_slowed(object::scene& scene, object::zombie& z);
