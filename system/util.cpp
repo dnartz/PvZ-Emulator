@@ -207,8 +207,11 @@ bool is_target_of_kelp(scene &s, zombie &z) {
         return true;
     }
 
-    for (auto& p : s.plants) {
-        if (p.type == plant_type::tangle_kelp && p.target == &z) {
+    for (int i = 0; i < 9; i++) {
+        if (s.plant_map[z.row][i].content &&
+            s.plant_map[z.row][i].content->type == plant_type::tangle_kelp &&
+            s.plant_map[z.row][i].content->target == &z)
+        {
             return true;
         }
     }

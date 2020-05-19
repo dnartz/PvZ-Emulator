@@ -599,6 +599,12 @@ void plant_factory::destroy(object::plant& p) {
     if (status.content == &p) {
         status.content = nullptr;
     }
+
+    if (p.type == plant_type::cob_cannon &&
+        scene.plant_map[p.row][p.col + 1].content == &p)
+    {
+        scene.plant_map[p.row][p.col + 1].content = nullptr;
+    }
 }
 
 }
