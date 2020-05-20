@@ -68,7 +68,7 @@ void zombie_base::init(object::zombie &z, zombie_type type, unsigned int row) {
     z.ladder_col = -1;
 
     z.bungee_col = -1;
-    z.bungee_target = nullptr;
+    z.bungee_target = -1;
 
     z.garlic_tick.a = 0;
     z.garlic_tick.b = 12;

@@ -50,6 +50,21 @@ public:
 		projectile(scene)
 	{}
 
+	world(const world& w) :
+		scene(w.scene),
+		sun(scene),
+		spawn(scene),
+		ice_path(scene),
+		endgame(scene),
+		griditem(scene),
+		plant_system(scene),
+		plant_factory(scene),
+		griditem_factory(scene),
+		zombie_factory(scene),
+		zombie(scene),
+		projectile(scene)
+	{}
+
 	bool update();
 
 #ifdef PVZEMU_BUILD_DEBUGGER

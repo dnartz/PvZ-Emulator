@@ -73,7 +73,7 @@ public:
     float cannon_x;
     int cannon_row;
 
-    zombie* target;
+    int target;
 
     bool is_visible;
     bool is_disappeared;

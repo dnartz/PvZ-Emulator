@@ -552,11 +552,10 @@ plant* plant_factory::plant(
 void plant_factory::destroy(object::plant& p) {
     p.is_dead = true;
 
-    if (p.type == plant_type::tangle_kelp &&
-        p.target &&
-        scene.zombies.is_active(p.target))
-    {
-        zombie_factory.destroy(*p.target);
+    if (p.type == plant_type::tangle_kelp && p.target != -1) {
+        if (auto z = scene.zombies.get(p.target)) {
+            zombie_factory.destroy(*z);
+        }
     }
 
     if (p.type != plant_type::coffee_bean) {

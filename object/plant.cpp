@@ -316,10 +316,10 @@ void plant::to_json(
     writer.String(direction == plant_direction::left ? "left" : "right");
 
     writer.Key("target");
-    if (target == nullptr) {
+    if (target == -1) {
         writer.Null();
     } else {
-        writer.Uint64(scene.zombies.get_index(*target));
+        writer.Uint64(target);
     }
 
     writer.Key("imitater_target");

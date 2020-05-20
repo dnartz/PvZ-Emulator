@@ -139,7 +139,6 @@ enum class plant_direction {
 };
 
 class scene;
-class zombie;
 
 class plant {
 public:
@@ -169,7 +168,7 @@ public:
 
     plant_direction direction;
 
-    zombie* target;
+    int target;
 
     plant_type imitater_target;
 

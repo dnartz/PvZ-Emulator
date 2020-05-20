@@ -176,10 +176,10 @@ void projectile::to_json(
     writer.Int(cannon_row);
 
     writer.Key("target");
-    if (target == nullptr) {
+    if (target == -1) {
         writer.Null();
     } else {
-        writer.Uint64(scene.zombies.get_index(*target));
+        writer.Uint64(target);
     }
 
     writer.Key("is_visible");

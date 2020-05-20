@@ -181,7 +181,7 @@ void zombie_bungee::update(zombie& z) {
                 p->edible != plant_edible_status::invisible_and_not_edible &&
                 !p->is_dead && p->type != plant_type::cob_cannon)
             {
-                z.bungee_target = p;
+                z.bungee_target = scene.plants.get_index(*p);
                 p->edible = plant_edible_status::invisible_and_edible;
             }
 
@@ -193,9 +193,7 @@ void zombie_bungee::update(zombie& z) {
         if (z.reanim.n_repeated > 0) {
             reanim.set(z, zombie_reanim_name::anim_raise, reanim_type::once, 36);
 
-            if (z.bungee_target) {
-                auto p = z.bungee_target;
-
+            if (auto p = scene.plants.get(z.bungee_target)) {
                 p->edible = plant_edible_status::invisible_and_not_edible;
                 p->reanim.fps = 0.1f;
 

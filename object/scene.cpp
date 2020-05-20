@@ -1,6 +1,42 @@
 #include "scene.h"
+#include "scene.h"
 
 namespace pvz_emulator::object {
+
+scene::scene(const scene& s) :
+    rng(std::random_device()()),
+    zombie_dancing_clock(rng() % 10000),
+    rows(get_max_row()),
+    zombies(s.zombies),
+    plants(s.plants),
+    griditems(s.griditems),
+    projectiles(s.projectiles),
+    spawn(s.spawn),
+    sun(s.sun),
+    ice_path(s.ice_path),
+    cards(s.cards),
+    is_game_over(s.is_game_over),
+    is_zombie_dance(s.is_zombie_dance),
+    is_future_enabled(s.is_future_enabled),
+    stop_spawn(s.stop_spawn),
+    enable_split_pea_bug(s.enable_split_pea_bug)
+{
+    memset(plant_map, 0, sizeof(plant_map));
+
+    for (auto& p : plants) {
+        if (p.type == plant_type::flower_pot ||
+            p.type == plant_type::lily_pad)
+        {
+            plant_map[p.row][p.col].base = &p;
+        } else if (p.type == plant_type::coffee_bean) {
+            plant_map[p.row][p.col].coffee_bean = &p;
+        } else if (p.type == plant_type::pumpkin) {
+            plant_map[p.row][p.col].pumpkin = &p;
+        } else {
+            plant_map[p.row][p.col].content = &p;
+        }
+    }
+}
 
 #ifdef PVZEMU_BUILD_DEBUGGER
 void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {

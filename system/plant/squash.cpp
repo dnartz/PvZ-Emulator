@@ -187,7 +187,7 @@ void plant_squash::update(plant& p) {
 
     case plant_status::idle:
         if (auto z = find_target(p)) {
-            p.target = z;
+            p.target = scene.zombies.get_index(*z);
 
             rect zr;
             z->get_hit_box(zr);

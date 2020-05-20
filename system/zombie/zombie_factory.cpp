@@ -182,9 +182,9 @@ void zombie_factory::destroy(object::zombie& z) {
 	z.is_dead = true;
 
 	if (z.type == zombie_type::bungee) {
-		if (z.bungee_target && z.status == zombie_status::bungee_grab) {
-			auto p = z.bungee_target;
+        auto p = scene.plants.get(z.bungee_target);
 
+		if (p != nullptr && z.status == zombie_status::bungee_grab) {
 			if (p->edible == plant_edible_status::invisible_and_edible) {
 				p->edible = plant_edible_status::visible_and_edible;
 			}
@@ -192,11 +192,11 @@ void zombie_factory::destroy(object::zombie& z) {
 				plant_factory(scene).destroy(*p);
 			}
 
-			z.bungee_target = nullptr;
+			z.bungee_target = -1;
 		}
 
-		if (z.bungee_target) {
-			plant_factory(scene).destroy(*z.bungee_target);
+		if (auto p = scene.plants.get(z.bungee_target)) {
+			plant_factory(scene).destroy(*p);
 		}
 
 		if (auto partner = scene.zombies.get(z.master_id)) {

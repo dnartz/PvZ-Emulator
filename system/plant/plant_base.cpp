@@ -79,7 +79,7 @@ void plant_base::init(
     p.reanim.type = reanim_type::repeat;
     p.reanim.fps = rng.randfloat(10, 15);
 
-    p.target = nullptr;
+    p.target = -1;
     
     memset(&p.reanim, 0, sizeof(p.reanim));
 

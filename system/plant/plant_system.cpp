@@ -296,7 +296,7 @@ void plant_system::launch(plant& p,
     case plant_type::cattail:
         proj.dx = 2;
         proj.motion_type = projectile_motion_type::cattail;
-        proj.target = target;
+        proj.target = scene.zombies.get_index(*target);
         break;
 
     case plant_type::cob_cannon:

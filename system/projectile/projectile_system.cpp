@@ -351,20 +351,20 @@ void projectile_system::others_do_attack(projectile& proj) {
     }
 
     if (proj.motion_type == projectile_motion_type::cattail) {
-        if (scene.zombies.is_active(proj.target) &&
-            damage.can_be_attacked(*proj.target, proj.flags))
-        {
+        auto z = scene.zombies.get(proj.target);
+
+        if (z != nullptr && damage.can_be_attacked(*z, proj.flags)) {
             rect proj_rect;
             proj.get_attack_box(proj_rect);
 
             rect zr;
-            proj.target->get_hit_box(zr);
+            z->get_hit_box(zr);
 
             if (zr.get_overlap_len(proj_rect) >= 0 &&
                 zr.y < proj.y &&
                 zr.height + zr.y > proj.y)
             {
-                attack_target_zombie(proj, proj.target);
+                attack_target_zombie(proj, z);
             }
         }
 
@@ -422,12 +422,12 @@ void projectile_system::do_other_motion(projectile& proj) {
         proj.x -= 3.329999923706055f;
         break;
 
-    case projectile_motion_type::cattail:
-        if (scene.zombies.is_active(proj.target) &&
-            damage.can_be_attacked(*proj.target, proj.flags))
-        {
+    case projectile_motion_type::cattail: {
+        auto z = scene.zombies.get(proj.target);
+
+        if (z != nullptr && damage.can_be_attacked(*z, proj.flags)) {
             rect zr;
-            proj.target->get_hit_box(zr);
+            z->get_hit_box(zr);
 
             float a2[2];
 
@@ -462,6 +462,7 @@ void projectile_system::do_other_motion(projectile& proj) {
                 static_cast<int>(proj.y)));
 
         break;
+    }
 
     case projectile_motion_type::starfruit:
         proj.y += proj.dy2;

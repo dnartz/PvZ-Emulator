@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <random>
 #include <cassert>
 
@@ -41,23 +42,23 @@ class scene {
 public:
     scene_type type;
 
-    std::mt19937 rng{std::random_device()()};
+    std::mt19937 rng;
 
     unsigned int zombie_dancing_clock;
 
     unsigned int rows;
 
-    typename obj_list<object::zombie, 1024> zombies{};
-    typename obj_list<object::plant, 512> plants{};
-    typename obj_list<object::griditem, 128> griditems{};
-    typename obj_list<object::projectile, 1024> projectiles{};
+    obj_list<object::zombie, 1024> zombies;
+    obj_list<object::plant, 512> plants;
+    obj_list<object::griditem, 128> griditems;
+    obj_list<object::projectile, 1024> projectiles;
 
     grid_plant_status plant_map[6][9];
 
     struct spawn_data {
         object::zombie_type spawn_list[20][50];
 
-        unsigned int total_flags = 1000;
+        unsigned int total_flags;
         unsigned int wave;
 
         struct {
@@ -66,33 +67,51 @@ public:
         } hp;
 
         struct {
-            unsigned int next_wave = 600;
-            unsigned int next_wave_initial = 600;
-            unsigned int lurking_squad = 0;
-            unsigned int hugewave_fade = 0;
-            unsigned int endgame = 0;
-            unsigned int pool = 0;
+            unsigned int next_wave;
+            unsigned int next_wave_initial;
+            unsigned int lurking_squad;
+            unsigned int hugewave_fade;
+            unsigned int endgame;
+            unsigned int pool;
         } countdown;
 
         struct row_random_tuple {
             float b;
             float c;
             float d;
-        } row_random[6] = { 0 };
+        } row_random[6];
 
-        bool spawn_flags[33] = { 0 };
+        bool spawn_flags[33];
         bool is_hugewave_shown = false;
+
+        spawn_data() {
+            memset(this, 0, sizeof(*this));
+
+            total_flags = 1000;
+            countdown.next_wave = 600;
+            countdown.next_wave_initial = 600;
+        }
     } spawn;
 
     struct sun_data {
         unsigned int sun = 9990;
         unsigned int natural_sun_generated = 0;
         unsigned int natural_sun_countdown = 0;
+
+        sun_data() :
+            sun(9000),
+            natural_sun_generated(0),
+            natural_sun_countdown(0) {}
     } sun;
 
     struct ice_path_data {
-        unsigned int countdown[6] = { 0 };
-        int x[6] = { 800 , 800, 800, 800, 800, 800};
+        unsigned int countdown[6];
+        int x[6];
+
+        ice_path_data() {
+            memset(countdown, 0, sizeof(countdown));
+            memset(x, 800, sizeof(x));
+        }
     } ice_path;
 
     struct card_data {
@@ -104,7 +123,9 @@ public:
             type(plant_type::none),
             imitater_type(plant_type::none),
             cold_down(0) {}
-    } cards[10];
+    };
+    
+    std::array<card_data, 10> cards;
 
     bool is_game_over;
 
@@ -115,13 +136,16 @@ public:
     bool enable_split_pea_bug;
 
     scene(scene_type t) : type(t),
+        rng(std::random_device()()),
         zombie_dancing_clock(rng() % 10000),
         rows(get_max_row()),
+        is_game_over(false),
         is_zombie_dance(false),
         is_future_enabled(false),
-        is_game_over(false),
         stop_spawn(false),
         enable_split_pea_bug(true) {}
+
+    scene(const scene& s);
 
     unsigned int get_n_zombies_alive_and_not_hypno() {
         unsigned int n = 0;

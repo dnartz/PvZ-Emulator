@@ -52,7 +52,7 @@ projectile_factory::alloc_and_init(projectile_type type, int row, int x, int y) 
 
     p.last_torchwood_col = -1;
 
-    p.target = nullptr;
+    p.target = -1;
 
     return p;
 }

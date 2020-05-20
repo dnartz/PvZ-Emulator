@@ -355,10 +355,10 @@ void zombie::to_json(
     writer.EndObject();
 
     writer.Key("bungee_target");
-    if (bungee_target == nullptr) {
+    if (bungee_target == -1) {
         writer.Null();
     } else {
-        writer.Uint64(scene.plants.get_index(*bungee_target));
+        writer.Uint64(bungee_target);
     }
 
     if (type == zombie_type::catapult) {

@@ -138,7 +138,6 @@ enum class zombie_hp_status {
 };
 
 class scene;
-class plant;
 
 class zombie {
 public:
@@ -216,7 +215,7 @@ public:
         unsigned int c;
     } garlic_tick;
 
-    plant* bungee_target;
+    int bungee_target;
 
     union {
         unsigned int n_basketballs;
