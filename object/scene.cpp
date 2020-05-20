@@ -4,6 +4,7 @@
 namespace pvz_emulator::object {
 
 scene::scene(const scene& s) :
+    type(s.type),
     rng(std::random_device()()),
     zombie_dancing_clock(rng() % 10000),
     rows(get_max_row()),
