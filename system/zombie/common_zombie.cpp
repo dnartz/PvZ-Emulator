@@ -75,7 +75,9 @@ void zombie_base::init(object::zombie &z, zombie_type type, unsigned int row) {
     z.garlic_tick.c = 12;
 
     z.master_id = -1;
-    memset(z.partners, -1, sizeof(z.partners));
+    for (auto& p : z.partners) {
+        p = -1;
+    }
 
     z.catapult_or_jackson.n_basketballs = 0;
 

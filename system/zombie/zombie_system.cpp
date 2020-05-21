@@ -303,7 +303,9 @@ void zombie_system::set_hypno_effect(zombie& z) {
     z.is_hypno = true;
 
     if (z.type == zombie_type::dancing) {
-        memset(z.partners, -1, sizeof(z.partners));
+        for (auto& p : z.partners) {
+            p = -1;
+        }
         return;
     }
 
