@@ -34,7 +34,7 @@ public:
         unsigned int row,
         unsigned int col,
         object::plant_type type,
-        object::plant_type imitater_type);
+        object::plant_type imitater_type = object::plant_type::none);
 
     object::plant* plant(
         unsigned int i,
