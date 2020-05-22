@@ -12,7 +12,7 @@ using namespace pvz_emulator::object;
 void zombie_bungee::select_target(zombie &z) {
     int n_sun_plants = 0;
 
-    bool has_grave_or_bungee[6][9] = { 0 };
+    bool has_grave_or_bungee[6][9] = {{0}};
 
     for (auto& z : scene.zombies) {
         if (z.has_death_status() ||

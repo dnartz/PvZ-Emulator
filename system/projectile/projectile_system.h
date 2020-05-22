@@ -44,9 +44,9 @@ public:
     void update();
     projectile_system(object::scene &s) :
         scene(s),
+        projectile_factory(s),
         damage(s),
         debuff(s),
-        projectile_factory(s),
         zombie_base(s) {}
 };
 

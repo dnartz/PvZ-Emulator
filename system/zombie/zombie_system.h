@@ -52,11 +52,11 @@ public:
     zombie_system(object::scene& s) :
         scene(s),
         rng(s),
+        damage(s),
+        debuff(s),
         plant_factory(s),
         zombie_factory(s),
         reanim(s),
-        damage(s),
-        debuff(s),
         subsystems(s) {}
 
     bool update();

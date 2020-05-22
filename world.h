@@ -44,8 +44,8 @@ public:
 		griditem(scene),
 		plant_system(scene),
 		plant_factory(scene),
-		griditem_factory(scene),
 		zombie_factory(scene),
+		griditem_factory(scene),
 		zombie(scene),
 		projectile(scene)
 	{}
@@ -59,8 +59,8 @@ public:
 		griditem(scene),
 		plant_system(scene),
 		plant_factory(scene),
-		griditem_factory(scene),
 		zombie_factory(scene),
+		griditem_factory(scene),
 		zombie(scene),
 		projectile(scene)
 	{}

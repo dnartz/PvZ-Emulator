@@ -37,9 +37,6 @@ bool plant_starfruit::has_target(object::plant& p) {
             zr.width += 10;
         }
 
-        long double zh = zr.height;
-        long double zy = zr.y;
-
         int hzw = zr.width / 2 + zr.x;
         int hzh = zr.height / 2 + zr.y;
 
@@ -72,8 +69,6 @@ bool plant_starfruit::has_target(object::plant& p) {
 }
 
 void plant_starfruit::attack(plant& p) {
-    auto flags = p.get_attack_flags(false);
-
     projectile_factory projectile_factory(scene);
 
     constexpr float v_cos = 2.883864528529686f;

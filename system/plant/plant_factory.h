@@ -50,8 +50,8 @@ public:
     void destroy(object::plant &p);
     plant_factory(object::scene &s):
         scene(s),
-        griditem_factory(s),
         zombie_factory(s),
+        griditem_factory(s),
         subsystems(s),
         rng(s) {}
 };

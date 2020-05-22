@@ -39,8 +39,8 @@ public:
         projectile_factory(s),
         damage(s),
         reanim(s),
-        subsystems(s),
-        rng(s) {}
+        rng(s),
+        subsystems(s) {}
 };
 
 }

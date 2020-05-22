@@ -278,6 +278,9 @@ void damage::take_body(zombie& z, unsigned int damage, unsigned int flags) {
             zombie_factory.destroy(z);
         }
         break;
+        
+    default:
+        break;
     }
 
     if (z.hp <= 0) {

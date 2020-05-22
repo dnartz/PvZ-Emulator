@@ -314,6 +314,9 @@ void plant_system::launch(plant& p,
         if (is_alt_attack) {
             proj.motion_type = projectile_motion_type::left_straight;
         }
+
+    default:
+        break;
     }
 }
 

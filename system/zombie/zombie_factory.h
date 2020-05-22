@@ -26,9 +26,9 @@ public:
     zombie_factory(object::scene& s) :
         scene(s),
         data(s.spawn),
+        reanim(s),
         rng(s),
-        subsystems(s),
-        reanim(s) {}
+        subsystems(s) {}
 
     object::zombie& create(object::zombie_type type);
     void create_lurking(object::zombie_type type, unsigned int row, unsigned int col);

@@ -295,7 +295,7 @@ void spawn::lurking_squad_update() {
 
 void spawn::night_grave_spawn() {
 	int n = 0;
-	bool grids[5][5] = { 0 };
+	bool grids[5][5] = {{0}};
 
 	for (auto& item : scene.griditems) {
 		if ((item.type == griditem_type::grave ||

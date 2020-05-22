@@ -35,10 +35,7 @@ public:
 
     long double predict_after(object::zombie& z, float cs);
 
-    zombie_base(object::scene& s) :
-        reanim(s),
-        scene(s),
-        rng(s) {}
+    zombie_base(object::scene& s) : scene(s), reanim(s), rng(s) {}
 };
 
 class common_zombie : public zombie_base {

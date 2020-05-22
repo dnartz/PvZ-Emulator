@@ -63,7 +63,7 @@ protected:
         p.y += rng.randint(6) - 3;
     }
 public:
-    puff_mushroom_base(object::scene& s) : mushroom_base(s), plant_base(s) {}
+    puff_mushroom_base(object::scene& s) : plant_base(s), mushroom_base(s) {}
 };
 
 class pea_base : public plant_base {
@@ -88,7 +88,7 @@ public:
 class plant_sunflower : public sun_plant_base {
 public:
     TRIVAL_INIT(plant, sunflower)
-    plant_sunflower(object::scene& s) : sun_plant_base(s), plant_base(s) {}
+    plant_sunflower(object::scene& s) : plant_base(s), sun_plant_base(s) {}
 };
 
 class plant_cherry_bomb : public plant_base {
@@ -141,9 +141,7 @@ public:
 class plant_puffshroom: public puff_mushroom_base {
 public:
     TRIVAL_INIT(puff_mushroom, puffshroom)
-    plant_puffshroom(object::scene& s):
-        puff_mushroom_base(s),
-        plant_base(s) {}
+    plant_puffshroom(object::scene& s): plant_base(s), puff_mushroom_base(s) {}
 };
 
 class plant_sunshroom: public mushroom_base, sun_plant_base {
@@ -151,15 +149,15 @@ public:
     void update(object::plant& p);
     void init(object::plant& p, unsigned int row, unsigned int col);
     plant_sunshroom(object::scene& s):
+        plant_base(s),
         mushroom_base(s),
-        sun_plant_base(s),
-        plant_base(s) {}
+        sun_plant_base(s) {}
 };
 
 class plant_fumeshroom: public mushroom_base {
 public:
     TRIVAL_INIT(mushroom, fumeshroom)
-    plant_fumeshroom(object::scene& s): mushroom_base(s), plant_base(s) {}
+    plant_fumeshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_grave_buster: public plant_base {
@@ -172,9 +170,7 @@ public:
 class plant_hypnoshroom: public mushroom_base {
 public:
     TRIVAL_INIT(mushroom, hypnoshroom)
-    plant_hypnoshroom(object::scene& s):
-        mushroom_base(s),
-        plant_base(s) {}
+    plant_hypnoshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_scaredyshroom: public mushroom_base {
@@ -186,27 +182,21 @@ public:
         p.status = object::plant_status::wait;
     }
 
-    plant_scaredyshroom(object::scene& s):
-        mushroom_base(s),
-        plant_base(s) {}
+    plant_scaredyshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_iceshroom: public mushroom_base {
 public:
     void update(object::plant& p);
     TRIVAL_INIT(mushroom, iceshroom)
-    plant_iceshroom(object::scene& s):
-        mushroom_base(s),
-        plant_base(s) {}
+    plant_iceshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_doomshroom: public mushroom_base {
 public:
     void update(object::plant& p);
     TRIVAL_INIT(mushroom, doomshroom)
-    plant_doomshroom(object::scene& s):
-        mushroom_base(s),
-        plant_base(s) {}
+    plant_doomshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_lily_pad: public plant_base {
@@ -286,9 +276,7 @@ public:
 class plant_seashroom: public puff_mushroom_base {
 public:
     TRIVAL_INIT(puff_mushroom, puffshroom)
-    plant_seashroom(object::scene& s):
-        puff_mushroom_base(s),
-        plant_base(s) {}
+    plant_seashroom(object::scene& s): plant_base(s), puff_mushroom_base(s) {}
 };
 
 class plant_plantern: public plant_base {
@@ -346,9 +334,7 @@ private:
 public:
     void update(object::plant& p);
     TRIVAL_INIT(mushroom, magnetshroom)
-    plant_magnetshroom(object::scene& s):
-        mushroom_base(s),
-        plant_base(s) {}
+    plant_magnetshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_cabbagepult: public plant_base {
@@ -420,15 +406,13 @@ public:
 class plant_twin_sunflower: public sun_plant_base {
 public:
     TRIVAL_INIT(plant, twin_sunflower)
-    plant_twin_sunflower(object::scene& s): sun_plant_base(s), plant_base(s) {}
+    plant_twin_sunflower(object::scene& s): plant_base(s), sun_plant_base(s) {}
 };
 
 class plant_gloomshroom: public mushroom_base {
 public:
     TRIVAL_INIT(mushroom, gloomshroom)
-    plant_gloomshroom(object::scene& s):
-        mushroom_base(s),
-        plant_base(s) {}
+    plant_gloomshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_cattail: public plant_base {

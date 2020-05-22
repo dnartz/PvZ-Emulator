@@ -73,7 +73,7 @@ void world::to_json(std::string& s) {
 
     s = sb.GetString();
 }
-#endif PVZEMU_BUILD_DEBUGGER
+#endif // PVZEMU_BUILD_DEBUGGER
 
 using namespace pvz_emulator::object;
 
@@ -128,7 +128,12 @@ bool world::select_plants(
             if (cards[i] == plant_type::imitater) {
                 scene.cards[i].type = plant_type::imitater;
                 scene.cards[i].imitater_type = imitater_type;
-                scene.cards[i].cold_down = prev_imitater_cd;
+
+                if (imitater_type == prev_imitater_type) {
+                    scene.cards[i].cold_down = prev_imitater_cd;
+                } else {
+                    scene.cards[i].cold_down = 0;
+                }
             } else {
                 scene.cards[i].type = cards[i];
                 scene.cards[i].imitater_type = plant_type::none;

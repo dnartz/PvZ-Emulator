@@ -76,8 +76,8 @@ public:
         rng(s),
         debuff(s),
         reanim(s),
-        zombie_factory(s),
         plant_factory(s),
+        zombie_factory(s),
         griditem_factory(s),
         spikerock(s) {}
 };
