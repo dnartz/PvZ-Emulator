@@ -110,7 +110,9 @@ public:
 
         ice_path_data() {
             memset(countdown, 0, sizeof(countdown));
-            memset(x, 800, sizeof(x));
+            for (auto& p : x) {
+                p = 800;
+            }
         }
     } ice_path;
 

@@ -26,7 +26,8 @@ void plant_base::init(
     p.x = 80 * col + 40;
     p.y = get_y_by_row_and_col(scene.type, row, col);
 
-    memset(&p.cannon, -1, sizeof(p.cannon));
+    p.cannon.x = -1;
+    p.cannon.y = -1;
 
     switch (type) {
     case plant_type::wallnut:

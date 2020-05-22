@@ -287,7 +287,9 @@ void scene::reset() {
     sun.natural_sun_countdown = 0;
 
     memset(&ice_path.countdown, 0, sizeof(ice_path.countdown));
-    memset(&ice_path.x, 800, sizeof(ice_path.x));
+    for (auto& p : ice_path.x) {
+        p = 800;
+    }
 
     for (auto& card : cards) {
         card.type = plant_type::none;
