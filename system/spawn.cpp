@@ -32,11 +32,11 @@ const unsigned int spawn::N_HUGEWAVE_SQUAD = 8;
 const unsigned int spawn::NIGHT_MAX_GRAVES = 12;
 
 spawn::spawn(object::scene& s):
-	data(s.spawn),
-	rng(s),
 	scene(s),
+	data(s.spawn),
 	zombie_factory(s),
-	griditem_factory(s)
+	griditem_factory(s),
+	rng(s)
 {
 	reset();
 }
@@ -337,6 +337,7 @@ void spawn::night_grave_spawn() {
 	}
 
 	auto& p = targets[rng.random_weighted_sample(weights)];
+	griditem_factory.create(griditem_type::grave, p.first, p.second);
 }
 
 void spawn::hugewave_warn_update() {
