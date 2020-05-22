@@ -94,12 +94,12 @@ public:
     } spawn;
 
     struct sun_data {
-        unsigned int sun = 9990;
-        unsigned int natural_sun_generated = 0;
-        unsigned int natural_sun_countdown = 0;
+        unsigned int sun;
+        unsigned int natural_sun_generated;
+        unsigned int natural_sun_countdown;
 
         sun_data() :
-            sun(9000),
+            sun(9990),
             natural_sun_generated(0),
             natural_sun_countdown(0) {}
     } sun;
