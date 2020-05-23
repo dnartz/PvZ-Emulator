@@ -123,7 +123,7 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
             z.type != zombie_type::giga_gargantuar &&
             z.type != zombie_type::zomboni &&
             !scene.is_water_grid(p.row, p.col) &&
-            scene.find_flower_pot(p.row, p.col) == nullptr)
+            scene.plant_map[p.row][p.col].base == nullptr)
         {
             return false;
         } else {

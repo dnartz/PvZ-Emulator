@@ -6,21 +6,32 @@ and Zombie Bobsled Team (They don't occur in Survival Endless). It supports
 all 6 scenes (Day, Night, Pool, Fog, Roof, and Moon Night).
 
 ## Usage
-This emulator is provided as a static library. Include `pvz-emulator/world.h`
-before to your source code. All functions and methods are thread-safe.
+This emulator can be used as a static library or a python module. Include
+`pvz-emulator/world.h` before to your source code. All functions and methods
+are thread-safe.
+
+To build the Python module add flags `-DPVZEMU_BUILD_PYBIND=True -DPYBIND11_PYTHON_VERSION=3.8` to your CMake build command.
 
 ### Create and Update a Game Instance
 ```cpp
 int main(void) {
     pvz_emulator::world w(pvz_emulator::object::scene_type::pool);
 
-    // Ths first wave of zombies will spawn after 6 seconds.
+    // The first wave of zombies will spawn after 6 seconds.
     for (int i = 0; i < 600; i++) {
         w.update();
     }
 
     return 0;
 }
+```
+
+```python
+from pvzemu import World, SceneType
+
+w = World(SceneType.pool)
+for i in range(0, 600):
+    w.update()
 ```
 
 ### Control Flags

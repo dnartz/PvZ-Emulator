@@ -192,7 +192,7 @@ void damage::set_death_state(zombie& z, unsigned int flags) {
             if (n == 99 &&
                 z.has_reanim(zombie_reanim_name::anim_superlongdeath) &&
                 z.countdown.slow == 0 &&
-                scene.get_n_zombies_alive_and_not_hypno() <= 5)
+                get_n_zombies_alive_and_not_hypno() <= 5)
             {
                 name = zombie_reanim_name::anim_superlongdeath;
                 fps = 14;
@@ -558,7 +558,7 @@ void damage::take_instant_kill(
         z.get_hit_box(rect);
 
         if (abs(static_cast<int>(z.row) - row) <= grid_radius &&
-            rect.is_intersect_with_circle(x, y, radius))
+            rect.is_overlap_with_circle(x, y, radius))
         {
             if (is_ash_attack) {
                 take_ash_attack(z);

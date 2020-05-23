@@ -1,4 +1,6 @@
 #pragma once
+#include <array>
+
 #ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
@@ -131,12 +133,6 @@ enum class zombie_accessories_type_2 {
     ladder = 0x3,
 };
 
-enum class zombie_hp_status {
-    gte_two_third = 0,
-    lt_two_third = 1,
-    lt_one_third = 2
-};
-
 class scene;
 
 class zombie {
@@ -207,7 +203,7 @@ public:
     } accessory_2;
 
     int master_id;
-    int partners[4];
+    std::array<int, 4> partners;
 
     struct {
         unsigned int a;
@@ -234,24 +230,12 @@ public:
 
     bool has_reanim(zombie_reanim_name name) const;
 
-    enum zombie_hp_status get_hp_status() const {
-        double r = hp / max_hp;
-
-        if (r < 1.0 / 3.0) {
-            return zombie_hp_status::lt_one_third;
-        } else if (r < 2.0 / 3.0) {
-            return zombie_hp_status::lt_two_third;
-        } else {
-            return zombie_hp_status::gte_two_third;
-        }
-    }
-
     bool is_flying_or_falling() const {
         return status == zombie_status::balloon_flying ||
             status == zombie_status::balloon_falling;
     }
 
-    float get_delta_x_from_ground() const;
+    float get_dx_from_ground() const;
 
     bool is_walk_right() const;
 

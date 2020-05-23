@@ -6,7 +6,7 @@
 
 namespace pvz_emulator::object {
 
-float zombie::get_delta_x_from_ground() const {
+float zombie::get_dx_from_ground() const {
     assert(has_reanim(zombie_reanim_name::_ground));
 
     reanim_frame_status rfs;

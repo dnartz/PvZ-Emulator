@@ -19,11 +19,29 @@ add_library(pvzemu STATIC
     ${PLANT_SYS_SRC}
     world.cpp)
 
-target_include_directories(pvzemu 
-   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
-   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib
-   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/system
-   PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/object)
+SET(LIB_INCLUDE
+   ${CMAKE_CURRENT_SOURCE_DIR}
+   ${CMAKE_CURRENT_SOURCE_DIR}/lib
+   ${CMAKE_CURRENT_SOURCE_DIR}/system
+   ${CMAKE_CURRENT_SOURCE_DIR}/object)
+
+target_include_directories(pvzemu PUBLIC ${LIB_INCLUDE})
+
+if(PVZEMU_BUILD_PYBIND)
+    add_definitions(-DPVZEMU_BUILD_PYBIND)
+
+    add_subdirectory(lib/pybind11)
+    pybind11_add_module(pvzemu-py SHARED
+        ${OBJ_SRC}
+        ${SYS_SRC}
+        ${ZOMB_SYS_SRC}
+        ${PROJ_SYS_SRC}
+        ${PLANT_SYS_SRC}
+        world.cpp
+        pybind.cpp)
+
+    target_include_directories(pvzemu-py PUBLIC ${LIB_INCLUDE})
+endif(PVZEMU_BUILD_PYBIND)
 
 if(PVZEMU_BUILD_DEBUGGER)
     add_definitions(-DPVZEMU_BUILD_DEBUGGER)

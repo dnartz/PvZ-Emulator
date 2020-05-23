@@ -12,7 +12,7 @@ struct rect {
     int width;
     int height;
 
-    bool is_intersect_with_circle(int px, int py, int r);
+    bool is_overlap_with_circle(int px, int py, int r);
 
     float get_overlap_len(const rect& r);
 
@@ -44,11 +44,11 @@ struct reanim {
 
     bool is_in_progress(double progress);
 
+    void get_frame_status(reanim_frame_status& rfs) const;
+
 #ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer);
 #endif // PVZEMU_BUILD_DEBUGGER
-
-    void get_frame_status(reanim_frame_status& rfs) const;
 };
 
 }

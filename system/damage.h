@@ -45,6 +45,19 @@ class damage {
     void take_body(object::zombie& z, unsigned int damage, unsigned int flags);
 
     void take_ash_attack(object::zombie &z);
+
+    unsigned int get_n_zombies_alive_and_not_hypno() {
+        unsigned int n = 0;
+
+        for (auto& z : scene.zombies) {
+            if (z.is_not_dying && !z.has_death_status() && !z.is_hypno) {
+                n++;
+            }
+        }
+
+        return n;
+    }
+
 public:
     bool can_be_attacked(const object::zombie& z, unsigned char flags);
 

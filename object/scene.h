@@ -53,10 +53,10 @@ public:
     obj_list<object::griditem, 128> griditems;
     obj_list<object::projectile, 1024> projectiles;
 
-    grid_plant_status plant_map[6][9];
+    std::array<std::array<grid_plant_status, 0>, 6> plant_map;
 
     struct spawn_data {
-        object::zombie_type spawn_list[20][50];
+        std::array<std::array<object::zombie_type, 50>, 20> spawn_list;
 
         unsigned int total_flags;
         unsigned int wave;
@@ -82,7 +82,7 @@ public:
         } row_random[6];
 
         bool spawn_flags[33];
-        bool is_hugewave_shown = false;
+        bool is_hugewave_shown;
 
         spawn_data() {
             memset(this, 0, sizeof(*this));
@@ -105,11 +105,11 @@ public:
     } sun;
 
     struct ice_path_data {
-        unsigned int countdown[6];
-        int x[6];
+        std::array<unsigned int, 6> countdown;
+        std::array<int, 6> x;
 
         ice_path_data() {
-            memset(countdown, 0, sizeof(countdown));
+            memset(&countdown, 0, sizeof(countdown));
             for (auto& p : x) {
                 p = 800;
             }
@@ -149,40 +149,12 @@ public:
 
     scene(const scene& s);
 
-    unsigned int get_n_zombies_alive_and_not_hypno() {
-        unsigned int n = 0;
-
-        for (auto& z : zombies) {
-            if (z.is_not_dying && !z.has_death_status() && !z.is_hypno) {
-                n++;
-            }
-        }
-
-        return n;
-    }
-
     bool is_water_grid(int row, int col) {
         if (type != scene_type::fog && type != scene_type::pool) {
             return false;
         }
 
         return (row == 2 || row == 3) && (col >= 0 && col <= 8);
-    }
-
-    plant* find_flower_pot(int row, int col) {
-        for (auto& p : plants) {
-            if (p.row == row &&
-                p.col == col &&
-                !p.is_squash_attacking() &&
-                !p.is_smashed && 
-                p.edible != plant_edible_status::invisible_and_not_edible &&
-                p.type == plant_type::flower_pot)
-            {
-                return &p;
-            }
-        }
-        
-        return nullptr;
     }
 
     unsigned int get_max_row() {

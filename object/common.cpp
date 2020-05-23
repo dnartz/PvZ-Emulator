@@ -12,7 +12,7 @@
 
 namespace pvz_emulator::object {
 
-bool rect::is_intersect_with_circle(int px, int py, int r) {
+bool rect::is_overlap_with_circle(int px, int py, int r) {
     bool x_in_range = x <= px && px <= x + width;
     bool y_in_range = y <= px && py <= y + height;
 

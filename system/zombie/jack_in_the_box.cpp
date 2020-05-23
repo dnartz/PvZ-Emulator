@@ -11,7 +11,7 @@ void zombie_jack_in_the_box::kill_plants(zombie& z, int x, int y) {
         rect rect;
         p.get_hit_box(rect);
         
-        if (rect.is_intersect_with_circle(x, y, 90)) {
+        if (rect.is_overlap_with_circle(x, y, 90)) {
             plant_factory(scene).destroy(p);
         }
     }

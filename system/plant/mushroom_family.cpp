@@ -89,7 +89,7 @@ bool plant_magnetshroom::attack_zombie(plant& p) {
             continue;
         }
 
-        if (zr.is_intersect_with_circle(p.x, p.y, z.is_eating ? 320 : 270)) {
+        if (zr.is_overlap_with_circle(p.x, p.y, z.is_eating ? 320 : 270)) {
             auto d = sqrt(pow(p.x - z.x, 2) + pow(p.y - z.y, 2)) + row_diff * 80;
             if (target == nullptr || dist > d) {
                 target = &z;
@@ -213,7 +213,7 @@ void plant_scaredyshroom::update(plant & p) {
             rect zr;
             z.get_hit_box(zr);
 
-            if (zr.is_intersect_with_circle(p.x, p.y + 20, 120)) {
+            if (zr.is_overlap_with_circle(p.x, p.y + 20, 120)) {
                 found_scared = true;
                 break;
             }

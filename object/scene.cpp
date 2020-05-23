@@ -22,7 +22,7 @@ scene::scene(const scene& s) :
     stop_spawn(s.stop_spawn),
     enable_split_pea_bug(s.enable_split_pea_bug)
 {
-    memset(plant_map, 0, sizeof(plant_map));
+    memset(&plant_map, 0, sizeof(plant_map));
 
     for (auto& p : plants) {
         if (p.type == plant_type::flower_pot ||
