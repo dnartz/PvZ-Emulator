@@ -78,13 +78,7 @@ void world::update_all(
     std::vector<std::thread> threads;
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
-            for (;;) {
-                auto k = i.fetch_add(1);
-
-                if (k >= w.size()) {
-                    return;
-                }
-
+            for (auto k = i.fetch_add(1); k < w.size(); k = i.fetch_add(1)) {
                 res[k] = w[k]->update();
 
                 for (auto& t : actions[k]) {

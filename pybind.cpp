@@ -183,6 +183,11 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("content", &grid_plant_status::content)
         .def_readonly("coffee_bean", &grid_plant_status::coffee_bean);
 
+    py::class_<scene::sun_data>(m, "SunData")
+        .def_readonly("sun", &scene::sun_data::sun)
+        .def_readonly("natural_sun_countdown", &scene::sun_data::natural_sun_countdown)
+        .def_readonly("natural_sun_generated", &scene::sun_data::natural_sun_generated);
+
     py::class_<scene>(m, "Scene")
         .def_readonly("type", &scene::type)
         .def_readonly("zombie_dancing_clock", &scene::zombie_dancing_clock)
