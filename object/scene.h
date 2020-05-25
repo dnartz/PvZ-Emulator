@@ -53,7 +53,7 @@ public:
     obj_list<object::griditem, 128> griditems;
     obj_list<object::projectile, 1024> projectiles;
 
-    std::array<std::array<grid_plant_status, 0>, 6> plant_map;
+    std::array<std::array<grid_plant_status, 9>, 6> plant_map;
 
     struct spawn_data {
         std::array<std::array<object::zombie_type, 50>, 20> spawn_list;

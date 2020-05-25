@@ -70,11 +70,12 @@ public:
 
 	bool update();
 
-    using batch_action_vector = std::vector<std::vector<std::tuple<int, int, int>>>;
+    using action_vector = std::vector<std::tuple<int, int, int>>;
+    using batch_action_vector = std::vector<action_vector>;
 
 	static void update_all(
 		std::vector<world *>& v,
-        std::vector<std::tuple<int, int, int>>& actions,
+        batch_action_vector& actions,
 		std::vector<int>& res,
 		batch_action_vector& available);
 

@@ -14,17 +14,52 @@ PYBIND11_MAKE_OPAQUE(world::batch_action_vector);
 PYBIND11_MODULE(pvzemu, m) {
     py::class_<std::vector<int>>(m, "IntVector")
         .def(py::init<>())
-        .def("clear", &std::vector<int>::clear)
-        .def("pop_back", &std::vector<int>::pop_back)
-        .def("__len__", [](const std::vector<int>& v) { return v.size(); })
+        .def("__getitem__", [](const std::vector<int>& v, std::vector<int>::size_type i) {
+            return v[i];
+        }).def("__len__", [](const std::vector<int>& v) { return v.size(); })
         .def("__iter__", [](std::vector<int>& v) {
+            return py::make_iterator(v.begin(), v.end());
+        }, py::keep_alive<0, 1>());
+
+    py::class_<world::action_vector>(m, "ActionVector")
+        .def(py::init<>())
+        .def("__getitem__", [](
+            world::action_vector& v,
+            world::action_vector::size_type i) -> std::tuple<int, int, int>&
+        {
+            return v[i];
+        }).def("__len__", [](const world::action_vector& v) { return v.size(); })
+        .def("__iter__", [](world::action_vector& v) {
             return py::make_iterator(v.begin(), v.end());
         }, py::keep_alive<0, 1>());
 
     py::class_<world::batch_action_vector>(m, "BatchActionVector")
         .def(py::init<>())
+        .def(py::init([](py::list &list) {
+            auto v = new world::batch_action_vector();
+
+            for (auto& actions : list) {
+                v->emplace_back();
+                for (auto& t : actions.cast<py::list>()) {
+                    v->back().emplace_back(
+                        t.cast<py::tuple>()[0].cast<int>(),
+                        t.cast<py::tuple>()[1].cast<int>(),
+                        t.cast<py::tuple>()[2].cast<int>());
+                }
+            }
+
+            return v;
+        }), py::return_value_policy::take_ownership)
         .def("clear", &world::batch_action_vector::clear)
-        .def("pop_back", &world::batch_action_vector::pop_back)
+        .def("resize",
+            (void (world::batch_action_vector::*)(world::batch_action_vector::size_type))
+            &world::batch_action_vector::resize)
+        .def("__getitem__", [](
+            world::batch_action_vector& v,
+            world::batch_action_vector::size_type i) -> world::action_vector&
+        {
+            return v[i];
+        })
         .def("__len__", [](const world::batch_action_vector& v) { return v.size(); })
         .def("__iter__", [](world::batch_action_vector& v) {
             return py::make_iterator(v.begin(), v.end());
