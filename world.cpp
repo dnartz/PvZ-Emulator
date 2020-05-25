@@ -9,6 +9,8 @@
 
 #include "world.h"
 
+using namespace pvz_emulator::object;
+
 namespace pvz_emulator {
 
 void world::clean_obj_lists() {
@@ -61,6 +63,56 @@ bool world::update() {
         return true;
     } else {
         return false;
+    }
+}
+void world::update_all(
+    std::vector<world *>& w,
+    std::vector<std::tuple<int, int, int>>& actions,
+    std::vector<int>& res,
+    batch_action_vector& available_actions)
+{
+    std::atomic<decltype(w.size())> i = 0;
+    available_actions.resize(w.size(), std::vector<std::tuple<int, int, int>>());
+
+    std::vector<std::thread> threads;
+    for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
+        threads.emplace_back([&]() {
+            auto k = i.fetch_add(1);
+
+            if (k >= w.size()) {
+                return;
+            }
+
+            res[k] = w[k]->update();
+
+            for (auto& t : actions) {
+                auto op = std::get<0>(t);
+                auto row = std::get<1>(t);
+                auto col = std::get<2>(t);
+
+                if (op < 10) {
+                    auto& card = w[k]->scene.cards[op];
+                    if (card.cold_down == 0 &&
+                        card.type != plant_type::none &&
+                        w[k]->plant_factory.can_plant(
+                            row, col, card.type, card.imitater_type)) {
+                        available_actions[k].emplace_back(t);
+                    }
+                } else if (op == 10) {
+                    if (w[k]->scene.plant_map[row][col].base ||
+                        w[k]->scene.plant_map[row][col].coffee_bean ||
+                        w[k]->scene.plant_map[row][col].content) {
+                        available_actions[k].emplace_back(t);
+                    }
+                } else if (w[k]->scene.plant_map[row][col].pumpkin) {
+                    available_actions[k].emplace_back(t);
+                }
+            }
+        });
+    }
+
+    for (auto& t : threads) {
+        t.join();
     }
 }
 

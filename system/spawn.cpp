@@ -180,7 +180,7 @@ void spawn::gen_spawn_list() {
 }
 
 void spawn::gen_spawn_flags() {
-	memset(data.spawn_flags, 0, sizeof(data.spawn_flags));
+	memset(data.spawn_flags.data(), 0, sizeof(data.spawn_flags));
 
 	data.spawn_flags[0] = true;
     data.spawn_flags[static_cast<int>(zombie_type::yeti)] = true;

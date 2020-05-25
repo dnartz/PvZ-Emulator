@@ -8,7 +8,28 @@ namespace py = pybind11;
 using namespace pvz_emulator;
 using namespace pvz_emulator::object;
 
+PYBIND11_MAKE_OPAQUE(std::vector<int>);
+PYBIND11_MAKE_OPAQUE(world::batch_action_vector);
+
 PYBIND11_MODULE(pvzemu, m) {
+    py::class_<std::vector<int>>(m, "IntVector")
+        .def(py::init<>())
+        .def("clear", &std::vector<int>::clear)
+        .def("pop_back", &std::vector<int>::pop_back)
+        .def("__len__", [](const std::vector<int>& v) { return v.size(); })
+        .def("__iter__", [](std::vector<int>& v) {
+            return py::make_iterator(v.begin(), v.end());
+        }, py::keep_alive<0, 1>());
+
+    py::class_<world::batch_action_vector>(m, "BatchActionVector")
+        .def(py::init<>())
+        .def("clear", &world::batch_action_vector::clear)
+        .def("pop_back", &world::batch_action_vector::pop_back)
+        .def("__len__", [](const world::batch_action_vector& v) { return v.size(); })
+        .def("__iter__", [](world::batch_action_vector& v) {
+            return py::make_iterator(v.begin(), v.end());
+        }, py::keep_alive<0, 1>());
+
     py::class_<world>(m, "World")
         .def_readwrite("scene", &world::scene)
         .def_readonly("sun", &world::sun)
@@ -22,7 +43,8 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("griditem_factory", &world::griditem_factory)
         .def_readonly("zombie", &world::zombie)
         .def_readonly("projectile", &world::projectile)
-        .def("update", &world::update)
+        .def("update", (bool (world::*)(void)) & world::update)
+        .def_static("update_all", &world::update_all)
         .def(py::init<scene_type>())
         .def("select_plants", &world::select_plants)
         .def("plant",

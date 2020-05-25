@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
+#include <tuple>
 #include <string>
+#include <atomic>
+#include <thread>
 #include "object/scene.h"
 #include "system/sun.h"
 #include "system/spawn.h"
@@ -66,6 +69,14 @@ public:
 	{}
 
 	bool update();
+
+    using batch_action_vector = std::vector<std::vector<std::tuple<int, int, int>>>;
+
+	static void update_all(
+		std::vector<world *>& v,
+        std::vector<std::tuple<int, int, int>>& actions,
+		std::vector<int>& res,
+		batch_action_vector& available);
 
 #ifdef PVZEMU_BUILD_DEBUGGER
 	void to_json(std::string& s);

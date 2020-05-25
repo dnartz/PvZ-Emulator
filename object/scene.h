@@ -81,7 +81,7 @@ public:
             float d;
         } row_random[6];
 
-        bool spawn_flags[33];
+        std::array<bool, 33> spawn_flags;
         bool is_hugewave_shown;
 
         spawn_data() {
