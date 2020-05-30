@@ -65,9 +65,40 @@ bool world::update() {
         return false;
     }
 }
+void world::get_available_actions(
+    const action_vector& actions,
+    action_vector& available_actions) const
+{
+    for (auto& t : actions) {
+        auto op = std::get<0>(t);
+        auto row = std::get<1>(t);
+        auto col = std::get<2>(t);
+
+        if (op < 10) {
+            auto& card = scene.cards[op];
+            if (card.cold_down == 0 &&
+                card.type != plant_type::none &&
+                plant_factory.can_plant(row, col, card.type, card.imitater_type))
+            {
+                available_actions.emplace_back(t);
+            }
+        } else if (op == 10) {
+            if (scene.plant_map[row][col].base ||
+                scene.plant_map[row][col].coffee_bean ||
+                scene.plant_map[row][col].content)
+            {
+                available_actions.emplace_back(t);
+            }
+        } else if (scene.plant_map[row][col].pumpkin) {
+            available_actions.emplace_back(t);
+        }
+    }
+
+}
+
 void world::update_all(
     std::vector<world *>& w,
-    batch_action_vector& actions,
+    const batch_action_vector& actions,
     std::vector<int>& res,
     batch_action_vector& available_actions)
 {
@@ -81,31 +112,7 @@ void world::update_all(
             for (auto k = i.fetch_add(1); k < w.size(); k = i.fetch_add(1)) {
                 res[k] = w[k]->update();
 
-                for (auto& t : actions[k]) {
-                    auto op = std::get<0>(t);
-                    auto row = std::get<1>(t);
-                    auto col = std::get<2>(t);
-
-                    if (op < 10) {
-                        auto& card = w[k]->scene.cards[op];
-                        if (card.cold_down == 0 &&
-                            card.type != plant_type::none &&
-                            w[k]->plant_factory.can_plant(
-                                row, col, card.type, card.imitater_type)) {
-                            available_actions[k].emplace_back(t);
-                        }
-                    }
-                    else if (op == 10) {
-                        if (w[k]->scene.plant_map[row][col].base ||
-                            w[k]->scene.plant_map[row][col].coffee_bean ||
-                            w[k]->scene.plant_map[row][col].content) {
-                            available_actions[k].emplace_back(t);
-                        }
-                    }
-                    else if (w[k]->scene.plant_map[row][col].pumpkin) {
-                        available_actions[k].emplace_back(t);
-                    }
-                }
+                w[k]->get_available_actions(actions[k], available_actions[k]);
             }
         });
     }

@@ -8,7 +8,7 @@ using namespace pvz_emulator::object;
 
 bool plant_factory::can_plant_advanced_plant(
     grid_plant_status& status,
-    plant_type advanced)
+    plant_type advanced) const
 {
     if (advanced != plant_type::cattail &&
         (status.content == nullptr ||
@@ -66,7 +66,7 @@ bool plant_factory::can_plant_advanced_plant(
     }
 }
 
-bool plant_factory::is_pos_valid(unsigned row, unsigned col) {
+bool plant_factory::is_pos_valid(unsigned row, unsigned col) const {
     if (scene.type == scene_type::pool || scene.type == scene_type::fog) {
         if (row > 5) {
             return false;
@@ -82,7 +82,7 @@ bool plant_factory::is_pos_valid(unsigned row, unsigned col) {
     return true;
 }
 
-bool plant_factory::is_not_covered_by_ice_path(unsigned row, unsigned col) {
+bool plant_factory::is_not_covered_by_ice_path(unsigned row, unsigned col) const {
     static const int ICE_PATH_TABLE[] = {
         108, 188, 268, 348, 428, 508, 588, 668, 751
     };
@@ -95,7 +95,7 @@ void plant_factory::is_covered_by_griditem(
     unsigned row,
     unsigned col,
     bool& has_grave,
-    bool& has_crater)
+    bool& has_crater) const
 {
     has_grave = false;
     has_crater = false;
@@ -115,7 +115,7 @@ void plant_factory::is_covered_by_griditem(
     }
 }
 
-unsigned int plant_factory::get_cost(object::plant_type type) {
+unsigned int plant_factory::get_cost(object::plant_type type) const {
     if (type >= plant_type::gatling_pea) {
         int n = 0;
 
@@ -135,7 +135,7 @@ bool plant_factory::can_plant(
     unsigned int row,
     unsigned int col,
     plant_type type,
-    plant_type imitater_type)
+    plant_type imitater_type) const
 {
     if (!is_pos_valid(row, col) || !is_not_covered_by_ice_path(row, col)) {
         return false;

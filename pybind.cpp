@@ -79,6 +79,7 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("zombie", &world::zombie)
         .def_readonly("projectile", &world::projectile)
         .def("update", (bool (world::*)(void)) & world::update)
+        .def("get_available_actions", &world::get_available_actions)
         .def_static("update_all", &world::update_all)
         .def(py::init<scene_type>())
         .def("select_plants", &world::select_plants)

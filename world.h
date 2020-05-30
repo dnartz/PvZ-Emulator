@@ -73,11 +73,15 @@ public:
     using action_vector = std::vector<std::tuple<int, int, int>>;
     using batch_action_vector = std::vector<action_vector>;
 
+	void get_available_actions(
+		const action_vector& actions,
+		action_vector& available_actions) const;
+
 	static void update_all(
 		std::vector<world *>& v,
-        batch_action_vector& actions,
+        const batch_action_vector& actions,
 		std::vector<int>& res,
-		batch_action_vector& available);
+		batch_action_vector& available_actions);
 
 #ifdef PVZEMU_BUILD_DEBUGGER
 	void to_json(std::string& s);
