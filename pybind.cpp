@@ -709,7 +709,7 @@ PYBIND11_MODULE(pvzemu, m) {
     py::class_<plant_factory>(m, "PlantFactory")
         .def(py::init<scene>())
         .def("can_plant", &plant_factory::can_plant)
-        .def("plant", &plant_factory::plant)
+        .def("plant", &plant_factory::plant, py::return_value_policy::reference)
         .def("create",
             &plant_factory::create,
             py::arg("type"),
