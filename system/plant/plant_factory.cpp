@@ -88,7 +88,7 @@ bool plant_factory::is_not_covered_by_ice_path(unsigned row, unsigned col) const
     };
 
     return scene.ice_path.countdown[row] <= 0 ||
-        scene.ice_path.x[col] >= ICE_PATH_TABLE[col];
+        scene.ice_path.x[row] >= ICE_PATH_TABLE[col];
 }
 
 void plant_factory::is_covered_by_griditem(
