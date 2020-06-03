@@ -2,7 +2,7 @@
 
 #include "scene.h"
 #include "plant.h"
-#include "system\plant\plant.h"
+#include "system/plant/plant.h"
 
 namespace pvz_emulator::object {
 

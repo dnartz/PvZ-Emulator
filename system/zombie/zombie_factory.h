@@ -11,8 +11,8 @@ class zombie_factory {
 private:
     object::scene& scene;
     object::scene::spawn_data& data;
-    reanim reanim;
-    rng rng;
+    system::reanim reanim;
+    system::rng rng;
 
     zombie_subsystems subsystems;
     

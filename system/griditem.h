@@ -9,7 +9,7 @@ using namespace pvz_emulator::object;
 
 class griditem {
     object::scene& scene;
-    griditem_factory griditem_factory;
+    system::griditem_factory griditem_factory;
 
 public:
     griditem(object::scene& s): scene(s), griditem_factory(s) {}

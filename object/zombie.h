@@ -150,7 +150,7 @@ public:
     float dy;
     float d2y;
 
-    reanim reanim;
+    object::reanim reanim;
 
     const float* _ground;
 

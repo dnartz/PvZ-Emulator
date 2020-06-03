@@ -13,7 +13,7 @@ namespace pvz_emulator::system {
 class plant_base {
 protected:
     object::scene& scene;
-    rng rng;
+    system::rng rng;
 
     void init(
         object::plant& p,

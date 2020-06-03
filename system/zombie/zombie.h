@@ -16,8 +16,8 @@ class zombie_base {
 protected:
     object::scene& scene;
 
-    reanim reanim;
-    rng rng;
+    system::reanim reanim;
+    system::rng rng;
 
     static constexpr unsigned int GARLIC_MOVE_TIME = 170;
 

@@ -9,7 +9,7 @@ namespace pvz_emulator::system {
 class reanim {
 private:
     object::scene& scene;
-    rng rng;
+    system::rng rng;
 
 public:
     void set(

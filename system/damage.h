@@ -32,13 +32,13 @@ unsigned int operator|(T a, zombie_damage_flags f) {
 
 class damage {
     object::scene& scene;
-    rng rng;
-    debuff debuff;
-    reanim reanim;
-    plant_factory plant_factory;
-    zombie_factory zombie_factory;
-    griditem_factory griditem_factory;
-    plant_spikerock spikerock;
+    system::rng rng;
+    system::debuff debuff;
+    system::reanim reanim;
+    system::plant_factory plant_factory;
+    system::zombie_factory zombie_factory;
+    system::griditem_factory griditem_factory;
+    system::plant_spikerock spikerock;
 
     void set_death_state(object::zombie& z, unsigned int flags);
 

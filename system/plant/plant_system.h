@@ -11,12 +11,12 @@ namespace pvz_emulator::system {
 class plant_system {
 private:
     object::scene& scene;
-    plant_factory plant_factory;
-    projectile_factory projectile_factory;
-    damage damage;
-    reanim reanim;
-    rng rng;
-    plant_subsystems subsystems;
+    system::plant_factory plant_factory;
+    system::projectile_factory projectile_factory;
+    system::damage damage;
+    system::reanim reanim;
+    system::rng rng;
+    system::plant_subsystems subsystems;
 
     void get_pea_offset(const object::plant& p, int &x, int &y);
 

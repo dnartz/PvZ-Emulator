@@ -10,10 +10,10 @@ namespace pvz_emulator::system {
 
 class plant_factory {
     object::scene& scene;
-    zombie_factory zombie_factory;
-    griditem_factory griditem_factory;
-    plant_subsystems subsystems;
-    rng rng;
+    system::zombie_factory zombie_factory;
+    system::griditem_factory griditem_factory;
+    system::plant_subsystems subsystems;
+    system::rng rng;
 
     bool is_pos_valid(unsigned row, unsigned col) const;
     bool is_not_covered_by_ice_path(unsigned row, unsigned col) const;

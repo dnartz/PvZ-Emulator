@@ -12,7 +12,7 @@ namespace pvz_emulator::system {
 class projectile_factory {
 private:
     object::scene& scene;
-    rng rng;
+    system::rng rng;
 
     object::projectile&
     alloc_and_init(object::projectile_type type, int row, int x, int y);

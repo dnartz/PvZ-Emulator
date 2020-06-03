@@ -1,10 +1,11 @@
 #pragma once
 
+#include<cstring>
 #include<cstddef>
 #include<cassert>
 #include<array>
 
-namespace {
+namespace pvz_emulator::object {
 
 template<typename T, size_t S> class obj_list {
 	class obj_wrap {

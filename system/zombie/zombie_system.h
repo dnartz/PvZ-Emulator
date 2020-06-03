@@ -10,15 +10,15 @@ namespace pvz_emulator::system {
 
 class zombie_system {
     object::scene& scene;
-    rng rng;
-    damage damage;
-    debuff debuff;
-    plant_factory plant_factory;
-    zombie_factory zombie_factory;
+    system::rng rng;
+    system::damage damage;
+    system::debuff debuff;
+    system::plant_factory plant_factory;
+    system::zombie_factory zombie_factory;
 
-    reanim reanim;
+    system::reanim reanim;
 
-    zombie_subsystems subsystems;
+    system::zombie_subsystems subsystems;
 
     void update_falling(object::zombie& z);
     void update_action_in_pool(object::zombie& z);

@@ -680,35 +680,35 @@ PYBIND11_MODULE(pvzemu, m) {
     using namespace pvz_emulator::system;
 
     py::class_<sun>(m, "Sun")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("add_sun", &sun::add_sun)
         .def("update", &sun::update);
 
     py::class_<spawn>(m, "Spawn")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("get_current_hp", &spawn::get_current_hp)
         .def("reset", &spawn::reset)
         .def("update", &spawn::update);
 
     py::class_<ice_path>(m, "IcePath")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("update", &ice_path::update);
 
     py::class_<endgame>(m, "Endgame")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("update", &endgame::update);
 
     py::class_<system::griditem>(m, "GriditemSystem")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("update", &system::griditem::update);
 
     py::class_<plant_system>(m, "PlantSystem")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("launch", &plant_system::launch)
         .def("update", &plant_system::update);
 
     py::class_<plant_factory>(m, "PlantFactory")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("can_plant", &plant_factory::can_plant)
         .def("plant", &plant_factory::plant, py::return_value_policy::reference)
         .def("create",
@@ -720,21 +720,21 @@ PYBIND11_MODULE(pvzemu, m) {
         .def("destroy", &plant_factory::destroy);
 
     py::class_<zombie_factory>(m, "ZombieFactory")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("create", &zombie_factory::create)
         .def("create_lurking", &zombie_factory::create_lurking)
         .def("destroy", &zombie_factory::destroy);
 
     py::class_<griditem_factory>(m, "GriditemFactory")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("create", &griditem_factory::create)
         .def("destroy", &griditem_factory::destroy);
 
     py::class_<zombie_system>(m, "ZombieSystem")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("update", &zombie_system::update);
 
     py::class_<projectile_system>(m, "ProjectileSystem")
-        .def(py::init<scene>())
+        .def(py::init<scene&>())
         .def("update", &projectile_system::update);
 }

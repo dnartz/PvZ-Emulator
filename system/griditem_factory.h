@@ -9,8 +9,8 @@ using namespace pvz_emulator::object;
 
 class griditem_factory {
 private:
-    scene& scene;
-    rng rng;
+    object::scene& scene;
+    system::rng rng;
 
 public:
     griditem_factory(object::scene& s) : scene(s), rng(s) {}

@@ -3,7 +3,6 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
-#include <string>
 
 #include "spawn.h"
 #include "util.h"

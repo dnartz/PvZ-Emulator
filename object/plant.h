@@ -183,7 +183,7 @@ public:
         int blover_disappear;
     } countdown;
 
-    reanim reanim;
+    object::reanim reanim;
 
     plant_edible_status edible;
 

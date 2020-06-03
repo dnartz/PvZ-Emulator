@@ -10,10 +10,10 @@ namespace pvz_emulator::system {
 class projectile_system {
 private:
     object::scene& scene;
-    projectile_factory projectile_factory;
-    damage damage;
-    debuff debuff;
-    zombie_base zombie_base;
+    system::projectile_factory projectile_factory;
+    system::damage damage;
+    system::debuff debuff;
+    system::zombie_base zombie_base;
 
     bool is_in_torchwood(object::projectile& proj);
 

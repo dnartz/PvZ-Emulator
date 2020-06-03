@@ -8,7 +8,7 @@ namespace pvz_emulator::system {
 class debuff {
 private:
     object::scene& scene;
-    reanim reanim;
+    system::reanim reanim;
     
 public:
     void set_slowed(object::zombie& z, unsigned int countdown);

@@ -10,7 +10,7 @@ class sun {
 
     object::scene& scene;
     object::scene::sun_data& data;
-    rng rng;
+    system::rng rng;
 
     unsigned int gen_nature_sun_countdown();
 public:

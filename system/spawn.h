@@ -18,7 +18,7 @@ private:
     void gen_spawn_flags();
 
 public:
-    spawn(scene& s);
+    spawn(object::scene& s);
 
     unsigned int get_current_hp();
 
@@ -41,12 +41,12 @@ private:
     unsigned int curr_spawn_count[33];
     unsigned int total_spawn_count[33];
 
-    scene &scene;
+    object::scene &scene;
     scene::spawn_data &data;
-    zombie_factory zombie_factory;
-    griditem_factory griditem_factory;
+    system::zombie_factory zombie_factory;
+    system::griditem_factory griditem_factory;
 
-    rng rng;
+    system::rng rng;
 
     static bool is_wave_9_or_19(unsigned w) {
         return w == 9 || w == 19;

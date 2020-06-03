@@ -1,5 +1,5 @@
 project(pvz-emulator)
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.10)
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 set(CMAKE_CXX_STANDARD 17)
