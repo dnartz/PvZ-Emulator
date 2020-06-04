@@ -83,7 +83,7 @@ public:
 	static void update_all(
 		std::vector<world *>& v,
         const action_vector & actions,
-		std::vector<int>& res,
+		std::vector<int>& done,
 		batch_action_masks &batch_action_masks);
 
 #ifdef PVZEMU_BUILD_DEBUGGER

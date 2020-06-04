@@ -162,17 +162,18 @@ void world::get_available_actions(
 void world::update_all(
     std::vector<world *>& w,
     const action_vector & actions,
-    std::vector<int>& res,
+    std::vector<int>& done,
     batch_action_masks& action_masks)
 {
     std::atomic<decltype(w.size())> i = 0;
-    res.resize(w.size());
+    done.resize(w.size());
+    action_masks.resize(w.size());
 
     std::vector<std::thread> threads;
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
             for (auto k = i.fetch_add(1); k < w.size(); k = i.fetch_add(1)) {
-                res[k] = w[k]->update();
+                done[k] = w[k]->update();
 
                 w[k]->get_available_actions(actions, action_masks[k]);
             }
