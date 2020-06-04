@@ -5,12 +5,18 @@ This emulator can emulate all kinds of plants and zombies except Dr. Zomboss
 and Zombie Bobsled Team (They don't occur in Survival Endless). It supports
 all 6 scenes (Day, Night, Pool, Fog, Roof, and Moon Night).
 
+### Install
+To build the Python module with CMake, add flags `-DPVZEMU_BUILD_PYBIND=True -DPYBIND11_PYTHON_VERSION=3.8` to your CMake build command.
+
+You can install through `pip` as well:
+```shell script
+python -m pip install git+https://github.com/dnartz/PvZ-Emulator
+```
+
 ## Usage
 This emulator can be used as a static library or a python module. Include
 `pvz-emulator/world.h` before to your source code. All functions and methods
 are thread-safe.
-
-To build the Python module add flags `-DPVZEMU_BUILD_PYBIND=True -DPYBIND11_PYTHON_VERSION=3.8` to your CMake build command.
 
 ### Create and Update a Game Instance
 ```cpp
