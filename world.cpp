@@ -102,11 +102,11 @@ void world::get_available_actions(
     std::vector<int>& action_masks) const
 {
     std::array<bool, static_cast<int>(plant_type::imitater) + 1> card_flags = {false};
-    for (auto& card : scene.cards) {
-        if (card.type != plant_type::none && card.cold_down == 0) {
-            card_flags[static_cast<int>(card.type == plant_type::imitater ?
-                card.imitater_type :
-                card.type)] = true;
+    std::array<int, static_cast<int>(plant_type::imitater) + 1> card_index = {0};
+    for (int i = 0; i < 10; i++) {
+        if (scene.cards[i].type != plant_type::none && scene.cards[i].cold_down == 0) {
+            card_flags[static_cast<int>(scene.cards[i].type)] = true;
+            card_index[static_cast<int>(scene.cards[i].type)] = i;
         }
     }
 
@@ -147,7 +147,12 @@ void world::get_available_actions(
             }
         } else if (op >= 0 &&
             op <= static_cast<int>(plant_type::imitater) &&
-            card_flags[op])
+            card_flags[op] &&
+            plant_factory.can_plant(
+                row,
+                col,
+                scene.cards[card_index[op]].type,
+                scene.cards[card_index[op]].imitater_type))
         {
             action_masks[i] = 1;
         }
