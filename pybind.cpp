@@ -33,19 +33,6 @@ PYBIND11_MODULE(pvzemu, m) {
             return py::make_iterator(v.begin(), v.end());
         }, py::keep_alive<0, 1>());
 
-    py::class_<world::action_masks>(m, "ActionMasks")
-            .def(py::init<>())
-            .def("__getitem__", [](
-                world::action_masks &v,
-                world::action_masks::size_type i) -> int
-            {
-                return v[i];
-            }).def("__len__", [](const world::action_masks & v) {
-                return v.size();
-            }).def("__iter__", [](world::action_masks & v) {
-                return py::make_iterator(v.begin(), v.end());
-            }, py::keep_alive<0, 1>());
-
     py::class_<world::batch_action_masks>(m, "BatchActionMasks")
         .def(py::init<>())
         .def("__getitem__", [](
