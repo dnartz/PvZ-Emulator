@@ -73,8 +73,8 @@ public:
 
     using action_vector = std::vector<std::tuple<int, int, int>>;
 
-    using action_masks_vector = std::vector<int>;
-    using batch_action_masks = std::vector<action_masks_vector>;
+    using action_masks = std::vector<int>;
+    using batch_action_masks = std::vector<action_masks>;
 
 	void get_available_actions(
 		const action_vector& actions,
