@@ -9,7 +9,6 @@ using namespace pvz_emulator;
 using namespace pvz_emulator::object;
 
 PYBIND11_MAKE_OPAQUE(std::vector<int>);
-PYBIND11_MAKE_OPAQUE(world::batch_action_vector);
 
 PYBIND11_MODULE(pvzemu, m) {
     py::class_<std::vector<int>>(m, "IntVector")
@@ -33,38 +32,6 @@ PYBIND11_MODULE(pvzemu, m) {
             return py::make_iterator(v.begin(), v.end());
         }, py::keep_alive<0, 1>());
 
-    py::class_<world::batch_action_vector>(m, "BatchActionVector")
-        .def(py::init<>())
-        .def(py::init([](py::list &list) {
-            auto v = new world::batch_action_vector();
-
-            for (auto& actions : list) {
-                v->emplace_back();
-                for (auto& t : actions.cast<py::list>()) {
-                    v->back().emplace_back(
-                        t.cast<py::tuple>()[0].cast<int>(),
-                        t.cast<py::tuple>()[1].cast<int>(),
-                        t.cast<py::tuple>()[2].cast<int>());
-                }
-            }
-
-            return v;
-        }), py::return_value_policy::take_ownership)
-        .def("clear", &world::batch_action_vector::clear)
-        .def("resize",
-            (void (world::batch_action_vector::*)(world::batch_action_vector::size_type))
-            &world::batch_action_vector::resize)
-        .def("__getitem__", [](
-            world::batch_action_vector& v,
-            world::batch_action_vector::size_type i) -> world::action_vector&
-        {
-            return v[i];
-        })
-        .def("__len__", [](const world::batch_action_vector& v) { return v.size(); })
-        .def("__iter__", [](world::batch_action_vector& v) {
-            return py::make_iterator(v.begin(), v.end());
-        }, py::keep_alive<0, 1>());
-
     py::class_<world>(m, "World")
         .def_readwrite("scene", &world::scene)
         .def_readonly("sun", &world::sun)
@@ -79,6 +46,7 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("zombie", &world::zombie)
         .def_readonly("projectile", &world::projectile)
         .def("update", (bool (world::*)(void)) & world::update)
+        .def("update", (bool (world::*)(const std::tuple<int, int, int>&)) & world::update)
         .def("get_available_actions", &world::get_available_actions)
         .def_static("update_all", &world::update_all)
         .def(py::init<scene_type>())

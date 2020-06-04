@@ -69,19 +69,22 @@ public:
 	{}
 
 	bool update();
+	bool update(const std::tuple<int, int, int>& action);
 
     using action_vector = std::vector<std::tuple<int, int, int>>;
-    using batch_action_vector = std::vector<action_vector>;
+
+    using action_masks_vector = std::vector<int>;
+    using batch_action_masks = std::vector<action_masks_vector>;
 
 	void get_available_actions(
 		const action_vector& actions,
-		action_vector& available_actions) const;
+		std::vector<int>& action_masks) const;
 
 	static void update_all(
 		std::vector<world *>& v,
-        const batch_action_vector& actions,
+        const action_vector & actions,
 		std::vector<int>& res,
-		batch_action_vector& available_actions);
+		batch_action_masks &batch_action_masks);
 
 #ifdef PVZEMU_BUILD_DEBUGGER
 	void to_json(std::string& s);

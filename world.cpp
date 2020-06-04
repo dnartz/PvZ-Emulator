@@ -65,46 +65,103 @@ bool world::update() {
         return false;
     }
 }
-void world::get_available_actions(
-    const action_vector& actions,
-    action_vector& available_actions) const
-{
-    for (auto& t : actions) {
-        auto op = std::get<0>(t);
-        auto row = std::get<1>(t);
-        auto col = std::get<2>(t);
 
-        if (op < 10) {
-            auto& card = scene.cards[op];
-            if (card.cold_down == 0 &&
-                card.type != plant_type::none &&
-                plant_factory.can_plant(row, col, card.type, card.imitater_type))
-            {
-                available_actions.emplace_back(t);
+bool world::update(const std::tuple<int, int, int> &action) {
+    int op = std::get<0>(action);
+    int row = std::get<1>(action);
+    int col = std::get<2>(action);
+
+    if (row >= 0 && row < scene.rows && col >= 0 && col < 9) {
+        if (op == -2) {
+            if (scene.plant_map[row][col].pumpkin) {
+                plant_factory.destroy(*scene.plant_map[row][col].pumpkin);
             }
-        } else if (op == 10) {
-            if (scene.plant_map[row][col].base ||
-                scene.plant_map[row][col].coffee_bean ||
-                scene.plant_map[row][col].content)
-            {
-                available_actions.emplace_back(t);
+        } else if (op == -1) {
+            if (scene.plant_map[row][col].coffee_bean) {
+                plant_factory.destroy(*scene.plant_map[row][col].coffee_bean);
+            } else if (scene.plant_map[row][col].content) {
+                plant_factory.destroy(*scene.plant_map[row][col].content);
+            } else if (scene.plant_map[row][col].base) {
+                plant_factory.destroy(*scene.plant_map[row][col].base);
             }
-        } else if (scene.plant_map[row][col].pumpkin) {
-            available_actions.emplace_back(t);
+        } else {
+            for (int i = 0; i < 10; i++) {
+                if (static_cast<int>(scene.cards[i].type) == op) {
+                    plant(i, row, col);
+                    break;
+                }
+            }
         }
     }
 
+    return update();
+}
+
+void world::get_available_actions(
+    const action_vector& actions,
+    std::vector<int>& action_masks) const
+{
+    std::array<bool, static_cast<int>(plant_type::imitater) + 1> card_flags = {false};
+    for (auto& card : scene.cards) {
+        if (card.type != plant_type::none && card.cold_down == 0) {
+            card_flags[static_cast<int>(card.type == plant_type::imitater ?
+                card.imitater_type :
+                card.type)] = true;
+        }
+    }
+
+    action_masks.resize(actions.size(), 0);
+
+    for (int i = 0; i < actions.size(); i++) {
+        int op = std::get<0>(actions[i]);
+        int row = std::get<1>(actions[i]);
+        int col = std::get<2>(actions[i]);
+
+        if (row < 0 || row >= scene.rows || col < 0 || col >= 9) {
+            continue;
+        }
+
+        if (op == -2) {
+            if (scene.plant_map[row][col].pumpkin &&
+                !scene.plant_map[row][col].pumpkin->is_dead &&
+                !scene.plant_map[row][col].pumpkin->is_smashed)
+            {
+                action_masks[i] = 1;
+            }
+        } else if (op == -1) {
+            if (scene.plant_map[row][col].coffee_bean &&
+                !scene.plant_map[row][col].coffee_bean->is_dead &&
+                !scene.plant_map[row][col].coffee_bean->is_smashed)
+            {
+                action_masks[i] = 1;
+            } else if (scene.plant_map[row][col].content &&
+               !scene.plant_map[row][col].content->is_dead &&
+               !scene.plant_map[row][col].content->is_smashed)
+            {
+                action_masks[i] = 1;
+            } else if (scene.plant_map[row][col].base &&
+               !scene.plant_map[row][col].base->is_dead &&
+               !scene.plant_map[row][col].base->is_smashed)
+            {
+                action_masks[i] = 1;
+            }
+        } else if (op >= 0 &&
+            op <= static_cast<int>(plant_type::imitater) &&
+            card_flags[op])
+        {
+            action_masks[i] = 1;
+        }
+    }
 }
 
 void world::update_all(
     std::vector<world *>& w,
-    const batch_action_vector& actions,
+    const action_vector & actions,
     std::vector<int>& res,
-    batch_action_vector& available_actions)
+    batch_action_masks& action_masks)
 {
     std::atomic<decltype(w.size())> i = 0;
     res.resize(w.size());
-    available_actions.resize(w.size(), std::vector<std::tuple<int, int, int>>());
 
     std::vector<std::thread> threads;
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
@@ -112,7 +169,7 @@ void world::update_all(
             for (auto k = i.fetch_add(1); k < w.size(); k = i.fetch_add(1)) {
                 res[k] = w[k]->update();
 
-                w[k]->get_available_actions(actions[k], available_actions[k]);
+                w[k]->get_available_actions(actions, action_masks[k]);
             }
         });
     }
