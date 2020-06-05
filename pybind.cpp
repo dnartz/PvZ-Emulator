@@ -9,6 +9,7 @@ using namespace pvz_emulator;
 using namespace pvz_emulator::object;
 
 PYBIND11_MAKE_OPAQUE(std::vector<int>);
+PYBIND11_MAKE_OPAQUE(pvz_emulator::world::batch_action_masks);
 
 PYBIND11_MODULE(pvzemu, m) {
     py::class_<std::vector<int>>(m, "IntVector")
@@ -17,19 +18,6 @@ PYBIND11_MODULE(pvzemu, m) {
             return v[i];
         }).def("__len__", [](const std::vector<int>& v) { return v.size(); })
         .def("__iter__", [](std::vector<int>& v) {
-            return py::make_iterator(v.begin(), v.end());
-        }, py::keep_alive<0, 1>());
-
-    py::class_<world::action_vector>(m, "ActionVector")
-        .def(py::init<>())
-        .def("__getitem__", [](
-            world::action_vector& v,
-            world::action_vector::size_type i) -> std::tuple<int, int, int>&
-        {
-            return v[i];
-        }).def("__len__", [](const world::action_vector& v) {
-            return v.size();
-        }).def("__iter__", [](world::action_vector& v) {
             return py::make_iterator(v.begin(), v.end());
         }, py::keep_alive<0, 1>());
 
