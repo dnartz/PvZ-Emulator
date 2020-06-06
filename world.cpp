@@ -161,7 +161,8 @@ void world::get_available_actions(
 
 void world::update_all(
     std::vector<world *>& w,
-    const action_vector & actions,
+    const action_vector & all_actions,
+    action_vector& actions,
     std::vector<int>& done,
     batch_action_masks& action_masks,
     unsigned int frames)
@@ -174,10 +175,11 @@ void world::update_all(
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
             for (auto k = i.fetch_add(1); k < w.size(); k = i.fetch_add(1)) {
-                for (unsigned int l = 0; l < frames && !done[k]; l++) {
+                done[k] = w[k]->update(actions[k]);
+                for (unsigned int l = 0; l < frames - 1 && !done[k]; l++) {
                     done[k] = w[k]->update();
                 }
-                w[k]->get_available_actions(actions, action_masks[k]);
+                w[k]->get_available_actions(all_actions, action_masks[k]);
             }
         });
     }

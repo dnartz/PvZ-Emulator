@@ -82,7 +82,8 @@ public:
 
 	static void update_all(
 		std::vector<world *>& v,
-        const action_vector & actions,
+        const action_vector & all_actions,
+        action_vector &actions,
 		std::vector<int>& done,
 		batch_action_masks &batch_action_masks,
 		unsigned int frames = 1);
