@@ -163,7 +163,8 @@ void world::update_all(
     std::vector<world *>& w,
     const action_vector & actions,
     std::vector<int>& done,
-    batch_action_masks& action_masks)
+    batch_action_masks& action_masks,
+    unsigned int frames)
 {
     std::atomic<decltype(w.size())> i = 0;
     done.resize(w.size());
@@ -173,8 +174,9 @@ void world::update_all(
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
             for (auto k = i.fetch_add(1); k < w.size(); k = i.fetch_add(1)) {
-                done[k] = w[k]->update();
-
+                for (unsigned int l = 0; l < frames && !done[k]; l++) {
+                    done[k] = w[k]->update();
+                }
                 w[k]->get_available_actions(actions, action_masks[k]);
             }
         });

@@ -84,7 +84,8 @@ public:
 		std::vector<world *>& v,
         const action_vector & actions,
 		std::vector<int>& done,
-		batch_action_masks &batch_action_masks);
+		batch_action_masks &batch_action_masks,
+		unsigned int frames = 1);
 
 #ifdef PVZEMU_BUILD_DEBUGGER
 	void to_json(std::string& s);
