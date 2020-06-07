@@ -1,5 +1,6 @@
 #pragma once
 
+#include<cmath>
 #include<cstring>
 #include<cstddef>
 #include<cassert>
@@ -7,12 +8,13 @@
 
 namespace pvz_emulator::object {
 
-template<typename T, size_t S> class obj_list {
+template<typename T> class obj_list {
 	class obj_wrap {
 	protected:
 		T t;
 		size_t next_available;
-		
+
+    public:
 		obj_wrap():t(), next_available(0) {}
 		friend class obj_list;
 	};
@@ -66,33 +68,31 @@ template<typename T, size_t S> class obj_list {
 		}
 	};
 
-	obj_wrap a[S];
-	size_t next_available;
-	size_t active_end;
-	size_t n_actives;
+	std::vector<obj_wrap> a;
+    typename decltype(a)::size_type next_available;
+	typename decltype(a)::size_type active_end;
+	typename decltype(a)::size_type n_actives;
+
+	void resize(typename decltype(a)::size_type len) {
+        a.resize(1ul << static_cast<unsigned int>(ceil(log2(len))));
+	}
 public:
 	explicit obj_list() :
 		next_available(0),
 		active_end(0),
 		n_actives(0)
-	{
-		memset(a, 0, sizeof(a));
-	}
+	{}
 
 	T& alloc() {
-		size_t i;
-
-		if (next_available > S) {
-			throw std::bad_alloc();
-		}
+        typename decltype(a)::size_type i;
 
 		if (next_available >= active_end) {
-			if (active_end < S) {
-				i = active_end;
-				next_available = ++active_end;
-			} else {
-				throw std::bad_alloc();
-			}
+            i = active_end;
+            next_available = ++active_end;
+
+            if (i >= a.size()) {
+                resize(i + 1);
+            }
 		} else {
 			i = next_available;
 			next_available = std::min(a[i].next_available, active_end);
@@ -105,7 +105,7 @@ public:
 	}
 
 	T* get(int i) {
-		if (i >= S || i < 0) {
+		if (i >= a.size() || i < 0) {
 			return nullptr;
 		}
 
@@ -118,7 +118,7 @@ public:
 
 	int get_index(const T& p) const {
 		auto& t = reinterpret_cast<const obj_wrap&>(p);
-		if (&t < &a[0] || &t > &a[S - 1]) {
+		if (&t < &a.front() || &t > &a.back()) {
 			return -1;
 		}
 
@@ -127,13 +127,13 @@ public:
 
 	bool is_active(const T* p) const {
 		auto ow = reinterpret_cast<const obj_wrap*>(p);
-		if (ow < &a[0] || ow > &a[S - 1]) {
+		if (ow < &a.front() || ow > &a.back()) {
 			return false;
 		}
 
 		auto i = ow->next_available;
 
-		return ow - a == i;
+		return ow - a.data() == i;
 	}
 
 	void shrink_to_fit() {
@@ -161,6 +161,7 @@ public:
 		}
 
 		assert(next_available <= active_end);
+        resize(active_end);
 	}
 
 	[[nodiscard]]
@@ -180,7 +181,7 @@ public:
 		next_available = 0;
 		active_end = 0;
 		n_actives = 0;
-		memset(a, 0, sizeof(a));
+		a.clear();
 	}
 };
 
