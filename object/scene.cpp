@@ -5,9 +5,9 @@ namespace pvz_emulator::object {
 
 scene::scene(const scene& s) :
     type(s.type),
-    rng(std::random_device()()),
-    zombie_dancing_clock(rng() % 10000),
-    rows(get_max_row()),
+    rng(s.rng),
+    zombie_dancing_clock(s.zombie_dancing_clock),
+    rows(s.rows),
     zombies(s.zombies),
     plants(s.plants),
     griditems(s.griditems),

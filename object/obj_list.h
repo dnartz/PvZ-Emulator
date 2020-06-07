@@ -163,6 +163,7 @@ public:
 		assert(next_available <= active_end);
 	}
 
+	[[nodiscard]]
 	size_t size() const {
 		return n_actives;
 	}
