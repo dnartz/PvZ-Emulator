@@ -10,6 +10,7 @@ aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system SYS_SRC)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system/zombie ZOMB_SYS_SRC)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system/projectile PROJ_SYS_SRC)
 aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/system/plant PLANT_SYS_SRC)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/learning LEARNING_SRC)
 
 add_library(pvzemu STATIC
     ${OBJ_SRC}
@@ -17,6 +18,7 @@ add_library(pvzemu STATIC
     ${ZOMB_SYS_SRC}
     ${PROJ_SYS_SRC}
     ${PLANT_SYS_SRC}
+    ${LEARNING_SRC}
     world.cpp)
 
 SET(LIB_INCLUDE
@@ -37,6 +39,7 @@ if(PVZEMU_BUILD_PYBIND)
         ${ZOMB_SYS_SRC}
         ${PROJ_SYS_SRC}
         ${PLANT_SYS_SRC}
+        ${LEARNING_SRC}
         world.cpp
         pybind.cpp)
 

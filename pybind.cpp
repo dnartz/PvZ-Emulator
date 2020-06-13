@@ -2,6 +2,7 @@
 #include <pybind11/stl.h>
 
 #include "world.h"
+#include "learning/observation_factory.h"
 
 namespace py = pybind11;
 
@@ -9,6 +10,7 @@ using namespace pvz_emulator;
 using namespace pvz_emulator::object;
 
 PYBIND11_MAKE_OPAQUE(std::vector<int>);
+PYBIND11_MAKE_OPAQUE(std::vector<float>);
 PYBIND11_MAKE_OPAQUE(pvz_emulator::world::batch_action_masks);
 
 PYBIND11_MODULE(pvzemu, m) {
@@ -18,6 +20,18 @@ PYBIND11_MODULE(pvzemu, m) {
             return v[i];
         }).def("__len__", [](const std::vector<int>& v) { return v.size(); })
         .def("__iter__", [](std::vector<int>& v) {
+            return py::make_iterator(v.begin(), v.end());
+        }, py::keep_alive<0, 1>());
+
+    py::class_<std::vector<int>>(m, "FloatVector")
+        .def(py::init<>())
+        .def("__getitem__", [](
+            const std::vector<float>& v,
+            std::vector<float>::size_type i)
+        {
+            return v[i];
+        }).def("__len__", [](const std::vector<float>& v) { return v.size(); })
+        .def("__iter__", [](std::vector<float>& v) {
             return py::make_iterator(v.begin(), v.end());
         }, py::keep_alive<0, 1>());
 
@@ -59,6 +73,22 @@ PYBIND11_MODULE(pvzemu, m) {
             (bool (world::*)(plant_type, unsigned int, unsigned int)) & world::plant)
         .def("reset", (void (world::*)(void)) & world::reset)
         .def("reset", (void (world::*)(scene_type)) & world::reset);
+
+    py::class_<learning::observation_factory>(m, "ObservationFactory")
+        .def(py::init<
+            scene_type,
+            unsigned int,
+            unsigned int,
+            unsigned int,
+            unsigned int
+        >())
+        .def("create", &learning::observation_factory::create)
+        .def_readonly("num_zombies", &learning::observation_factory::num_zombies)
+        .def_readonly("num_plants", &learning::observation_factory::num_plants)
+        .def_readonly("num_projectiles", &learning::observation_factory::num_projectiles)
+        .def_readonly("num_griditems", &learning::observation_factory::num_griditems)
+        .def_readonly("num_ice_paths", &learning::observation_factory::num_ice_paths)
+        .def_readonly("single_size", &learning::observation_factory::single_size);
 
     py::enum_<scene_type>(m, "SceneType")
         .value("day", scene_type::day)
