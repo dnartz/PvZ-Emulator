@@ -7,9 +7,9 @@ namespace pvz_emulator::learning {
 
 class observation_factory {
 private:
-    template<class T>
+    template<class T, size_t S>
     float *fill_ob_vector(
-        pvz_emulator::object::obj_list<T>& list,
+        pvz_emulator::object::obj_list<T, S>& list,
         float *base,
         unsigned int size,
         unsigned int max,
