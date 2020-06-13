@@ -48,10 +48,10 @@ public:
 
     unsigned int rows;
 
-    obj_list<object::zombie> zombies;
-    obj_list<object::plant> plants;
-    obj_list<object::griditem> griditems;
-    obj_list<object::projectile> projectiles;
+    obj_list<object::zombie, 1024> zombies;
+    obj_list<object::plant, 512> plants;
+    obj_list<object::griditem, 128> griditems;
+    obj_list<object::projectile, 1024> projectiles;
 
     std::array<std::array<grid_plant_status, 9>, 6> plant_map;
 
