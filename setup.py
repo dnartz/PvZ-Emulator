@@ -42,6 +42,7 @@ setup(
         "pvzemu",
         sorted(
             glob("object/*.cpp") +
+            glob("learning/*.cpp") +
             glob("system/*.cpp") +
             glob("system/**/*.cpp") + [
                 "pybind.cpp",
