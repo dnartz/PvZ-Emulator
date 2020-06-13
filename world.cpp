@@ -110,7 +110,8 @@ void world::get_available_actions(
         }
     }
 
-    action_masks.resize(actions.size(), 0);
+    action_masks.resize(actions.size() + 1, 0);
+    action_masks.back() = 1;
 
     for (int i = 0; i < actions.size(); i++) {
         int op = std::get<0>(actions[i]);
@@ -118,7 +119,6 @@ void world::get_available_actions(
         int col = std::get<2>(actions[i]);
 
         if (row < 0 || row >= scene.rows || col < 0 || col >= 9) {
-            action_masks[i] = 1;
             continue;
         }
 
