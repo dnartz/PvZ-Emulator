@@ -391,11 +391,7 @@ void plant_system::update_launch_countdown(plant& p) {
                 break;
 
             case plant_type::cactus:
-                if (p.status == plant_status::cactus_short_idle) {
-                    launch(p, nullptr, p.row, true);
-                } else {
-                    launch(p, nullptr, p.row, false);
-                }
+                launch(p, nullptr, p.row, p.status == plant_status::cactus_short_idle);
                 break;
 
             case plant_type::cabbagepult:
