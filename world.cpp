@@ -122,8 +122,8 @@ void world::get_available_actions(
     action_masks.resize(actions.size() + 1, 0);
     action_masks.back() = 1;
 
-    std::set<std::tuple<int, int, int>> imitater_type_actions;
-    std::map<int, std::tuple<int, int, int>> imitater_actions;
+    std::set<std::pair<unsigned int, unsigned int>> imitater_type_actions;
+    std::map<int, std::pair<unsigned int, unsigned int>> imitater_actions;
 
     for (int i = 0; i < actions.size(); i++) {
         const auto& [op, row, col] = actions[i];
@@ -170,9 +170,9 @@ void world::get_available_actions(
 
             if (imitater_type != plant_type::none) {
                 if (op == static_cast<int>(plant_type::imitater)) {
-                    imitater_actions.emplace(i, actions[i]);
+                    imitater_actions.emplace(i, std::make_pair(row, col));
                 } else if (op == static_cast<int>(imitater_type)) {
-                    imitater_type_actions.insert(actions[i]);
+                    imitater_type_actions.insert({row, col});
                 }
             }
         }
@@ -190,13 +190,14 @@ void world::update_all(
     const action_vector & all_actions,
     action_vector& actions,
     batch_action_masks& action_masks,
-    check_list &build_check_list,
+    const check_list &build_check_list,
     std::vector<int>& check_result,
     std::vector<int>& done,
     unsigned int frames)
 {
     std::atomic<decltype(w.size())> i = 0;
     done.resize(w.size());
+    check_result.resize(w.size());
     action_masks.resize(w.size());
 
     std::vector<std::thread> threads;

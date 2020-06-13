@@ -1,4 +1,5 @@
 #include <thread>
+#include <algorithm>
 #include "observation_factory.h"
 
 namespace pvz_emulator::learning {
@@ -81,8 +82,8 @@ void observation_factory::make_observation(
             a[5] = static_cast<float>(z.row) / scene.rows;
             a[6] = static_cast<float>(z.bungee_col) / 9.0;
             a[7] = static_cast<float>(z.hp) / z.max_hp;
-            a[8] = static_cast<float>(z.accessory_1.hp) / z.accessory_1.max_hp;
-            a[9] = static_cast<float>(z.accessory_2.hp) / z.accessory_2.max_hp;
+            a[8] = static_cast<float>(z.accessory_1.hp) / std::max(1u, z.accessory_1.max_hp);
+            a[9] = static_cast<float>(z.accessory_2.hp) / std::max(1u, z.accessory_2.max_hp);
             a[10] = static_cast<float>(z.countdown.freeze) / 600.0;
             a[11] = static_cast<float>(z.countdown.butter) / 400.0;
             a[12] = static_cast<float>(z.countdown.slow) / 2000.0;

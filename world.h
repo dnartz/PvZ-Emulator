@@ -90,7 +90,7 @@ public:
         const action_vector & all_actions,
         action_vector &actions,
 		batch_action_masks &batch_action_masks,
-        check_list &build_check_list,
+        const check_list &build_check_list,
         std::vector<int>& check_result,
         std::vector<int>& done,
 		unsigned int frames = 1);
