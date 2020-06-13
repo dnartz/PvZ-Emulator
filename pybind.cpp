@@ -71,6 +71,7 @@ PYBIND11_MODULE(pvzemu, m) {
             (bool (world::*)(unsigned int, unsigned int, unsigned int)) & world::plant)
         .def("plant",
             (bool (world::*)(plant_type, unsigned int, unsigned int)) & world::plant)
+        .def("check_build", &world::check_build)
         .def("reset", (void (world::*)(void)) & world::reset)
         .def("reset", (void (world::*)(scene_type)) & world::reset);
 

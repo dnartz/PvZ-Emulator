@@ -1,4 +1,6 @@
 #include "world.h"
+#include <set>
+#include <map>
 #include <unordered_set>
 #include <unordered_map>
 
@@ -101,22 +103,30 @@ void world::get_available_actions(
     const action_vector& actions,
     std::vector<int>& action_masks) const
 {
+    plant_type imitater_type = plant_type::none;
     std::array<bool, static_cast<int>(plant_type::imitater) + 1> card_flags = {false};
     std::array<int, static_cast<int>(plant_type::imitater) + 1> card_index = {0};
     for (int i = 0; i < 10; i++) {
-        if (scene.cards[i].type != plant_type::none && scene.cards[i].cold_down == 0) {
-            card_flags[static_cast<int>(scene.cards[i].type)] = true;
-            card_index[static_cast<int>(scene.cards[i].type)] = i;
+        const auto& card = scene.cards[i];
+
+        if (card.type != plant_type::none && card.cold_down == 0) {
+            card_flags[static_cast<int>(card.type)] = true;
+            card_index[static_cast<int>(card.type)] = i;
+        }
+
+        if (card.type == plant_type::imitater) {
+            imitater_type = card.imitater_type;
         }
     }
 
     action_masks.resize(actions.size() + 1, 0);
     action_masks.back() = 1;
 
+    std::set<std::tuple<int, int, int>> imitater_type_actions;
+    std::map<int, std::tuple<int, int, int>> imitater_actions;
+
     for (int i = 0; i < actions.size(); i++) {
-        int op = std::get<0>(actions[i]);
-        int row = std::get<1>(actions[i]);
-        int col = std::get<2>(actions[i]);
+        const auto& [op, row, col] = actions[i];
 
         if (row < 0 || row >= scene.rows || col < 0 || col >= 9) {
             continue;
@@ -146,16 +156,31 @@ void world::get_available_actions(
             {
                 action_masks[i] = 1;
             }
-        } else if (op >= 0 &&
-            op <= static_cast<int>(plant_type::imitater) &&
-            card_flags[op] &&
-            plant_factory.can_plant(
-                row,
-                col,
-                scene.cards[card_index[op]].type,
-                scene.cards[card_index[op]].imitater_type))
-        {
-            action_masks[i] = 1;
+        } else if (op >= 0) {
+            if (op <= static_cast<int>(plant_type::imitater) &&
+                card_flags[op] &&
+                plant_factory.can_plant(
+                    row,
+                    col,
+                    scene.cards[card_index[op]].type,
+                    scene.cards[card_index[op]].imitater_type))
+            {
+                action_masks[i] = 1;
+            }
+
+            if (imitater_type != plant_type::none) {
+                if (op == static_cast<int>(plant_type::imitater)) {
+                    imitater_actions.emplace(i, actions[i]);
+                } else if (op == static_cast<int>(imitater_type)) {
+                    imitater_type_actions.insert(actions[i]);
+                }
+            }
+        }
+    }
+
+    for (const auto& p : imitater_actions) {
+        if (imitater_type_actions.find(p.second) == imitater_type_actions.end()) {
+            action_masks[p.first] = 0;
         }
     }
 }
@@ -164,8 +189,10 @@ void world::update_all(
     std::vector<world *>& w,
     const action_vector & all_actions,
     action_vector& actions,
-    std::vector<int>& done,
     batch_action_masks& action_masks,
+    check_list &build_check_list,
+    std::vector<int>& check_result,
+    std::vector<int>& done,
     unsigned int frames)
 {
     std::atomic<decltype(w.size())> i = 0;
@@ -180,6 +207,7 @@ void world::update_all(
                 for (unsigned int l = 0; l < frames - 1 && !done[k]; l++) {
                     done[k] = w[k]->update();
                 }
+                check_result[k] = w[k]->check_build(build_check_list);
                 w[k]->get_available_actions(all_actions, action_masks[k]);
             }
         });
@@ -287,6 +315,34 @@ bool world::plant(object::plant_type type, unsigned int row, unsigned int col) {
     }
 
     return false;
+}
+
+bool world::check_build(const check_list &plants) {
+    for (auto& t : plants) {
+        auto& [type, row, col] = t;
+
+        if (type == plant_type::pumpkin) {
+            if (scene.plant_map[row][col].pumpkin == nullptr) {
+                return false;
+            }
+        } else if (type == plant_type::lily_pad || type == plant_type::flower_pot) {
+            if (scene.plant_map[row][col].base == nullptr ||
+                scene.plant_map[row][col].base->type != type)
+            {
+                return false;
+            }
+        } else if (type == plant_type::coffee_bean) {
+            if (scene.plant_map[row][col].base == nullptr) {
+                return false;
+            }
+        } else if (scene.plant_map[row][col].content == nullptr ||
+            scene.plant_map[row][col].content->type != type)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 }

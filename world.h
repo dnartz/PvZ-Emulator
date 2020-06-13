@@ -80,12 +80,19 @@ public:
 		const action_vector& actions,
 		std::vector<int>& action_masks) const;
 
-	static void update_all(
+    using check_list = std::vector<std::tuple<
+            object::plant_type,
+            unsigned int,
+            unsigned int>>;
+
+    static void update_all(
 		std::vector<world *>& v,
         const action_vector & all_actions,
         action_vector &actions,
-		std::vector<int>& done,
 		batch_action_masks &batch_action_masks,
+        check_list &build_check_list,
+        std::vector<int>& check_result,
+        std::vector<int>& done,
 		unsigned int frames = 1);
 
 #ifdef PVZEMU_BUILD_DEBUGGER
@@ -101,6 +108,8 @@ public:
 	}
 
 	bool plant(object::plant_type type, unsigned int row, unsigned int col);
+
+	bool check_build(const check_list &plants);
 
 	void reset() {
 		scene.reset();
