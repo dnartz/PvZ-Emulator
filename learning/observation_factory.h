@@ -25,7 +25,7 @@ private:
         return base + size * max;
     }
 
-    void make_observation(world& w, float *base);
+    void make_observation(world& w, const world::action_masks& masks, float *base);
 
 public:
     unsigned int num_zombies;
@@ -49,7 +49,10 @@ public:
         unsigned int num_projectiles,
         unsigned int num_griditems);
 
-    void create(std::vector<world *>& worlds, std::vector<float>& ob);
+    void create(
+        std::vector<world *> &worlds,
+        const world::batch_action_masks& action_masks,
+        std::vector<float> &ob);
 };
 
 }

@@ -35,9 +35,13 @@ observation_factory::observation_factory(
         meta_size)
 {}
 
-void observation_factory::create(std::vector<world *> &worlds, std::vector<float> &ob) {
+void observation_factory::create(
+    std::vector<world *> &worlds,
+    const world::batch_action_masks& action_masks,
+    std::vector<float> &ob)
+{
     ob.clear();
-    ob.resize(worlds.size() * single_size, 0);
+    ob.resize(worlds.size() * (single_size + action_masks[0].size()), 0);
 
     std::atomic<decltype(worlds.size())> i = 0;
     std::vector<std::thread> threads;
@@ -45,7 +49,7 @@ void observation_factory::create(std::vector<world *> &worlds, std::vector<float
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
             for (auto k = i.fetch_add(1); k < worlds.size(); k = i.fetch_add(1)) {
-                make_observation(*worlds[k], &ob[single_size * k]);
+                make_observation(*worlds[k], action_masks[k], &ob[single_size * k]);
             }
         });
     }
@@ -55,7 +59,11 @@ void observation_factory::create(std::vector<world *> &worlds, std::vector<float
     }
 }
 
-void observation_factory::make_observation(world &w, float *base) {
+void observation_factory::make_observation(
+    world &w,
+    const world::action_masks& masks,
+    float *base)
+{
     auto& scene = w.scene;
 
     base = fill_ob_vector<zombie>(
@@ -142,6 +150,9 @@ void observation_factory::make_observation(world &w, float *base) {
     base[4] = static_cast<float>(scene.spawn.countdown.endgame);
     base[5] = static_cast<float>(scene.spawn.countdown.pool);
     base[6] = static_cast<float>(scene.sun.sun);
+
+    base += 7;
+    std::copy(masks.cbegin(), masks.cend(), base);
 }
 
 }
