@@ -41,7 +41,8 @@ void observation_factory::create(
     std::vector<float> &ob)
 {
     ob.clear();
-    ob.resize(worlds.size() * (single_size + action_masks[0].size()), 0);
+    auto row_size = single_size + action_masks[0].size();
+    ob.resize(worlds.size() * row_size, 0);
 
     std::atomic<decltype(worlds.size())> i = 0;
     std::vector<std::thread> threads;
@@ -49,7 +50,7 @@ void observation_factory::create(
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
             for (auto k = i.fetch_add(1); k < worlds.size(); k = i.fetch_add(1)) {
-                make_observation(*worlds[k], action_masks[k], &ob[single_size * k]);
+                make_observation(*worlds[k], action_masks[k], &ob[row_size * k]);
             }
         });
     }
