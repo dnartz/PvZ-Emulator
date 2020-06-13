@@ -144,6 +144,13 @@ void observation_factory::make_observation(
 
     base += num_ice_paths * 2;
 
+    std::copy(
+        scene.spawn.spawn_flags.begin(),
+        scene.spawn.spawn_flags.end(),
+        base);
+
+    base += scene.spawn.spawn_flags.size();
+
     base[0] = static_cast<float>(scene.spawn.wave);
     base[1] = static_cast<float>(scene.spawn.countdown.next_wave);
     base[2] = static_cast<float>(scene.spawn.countdown.lurking_squad);
