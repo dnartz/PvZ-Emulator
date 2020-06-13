@@ -23,7 +23,7 @@ PYBIND11_MODULE(pvzemu, m) {
             return py::make_iterator(v.begin(), v.end());
         }, py::keep_alive<0, 1>());
 
-    py::class_<std::vector<int>>(m, "FloatVector")
+    py::class_<std::vector<float>>(m, "FloatVector")
         .def(py::init<>())
         .def("__getitem__", [](
             const std::vector<float>& v,

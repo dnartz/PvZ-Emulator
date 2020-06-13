@@ -25,7 +25,8 @@ SET(LIB_INCLUDE
    ${CMAKE_CURRENT_SOURCE_DIR}
    ${CMAKE_CURRENT_SOURCE_DIR}/lib
    ${CMAKE_CURRENT_SOURCE_DIR}/system
-   ${CMAKE_CURRENT_SOURCE_DIR}/object)
+   ${CMAKE_CURRENT_SOURCE_DIR}/object
+   ${CMAKE_CURRENT_SOURCE_DIR}/learning)
 
 target_include_directories(pvzemu PUBLIC ${LIB_INCLUDE})
 
