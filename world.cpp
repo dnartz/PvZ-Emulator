@@ -118,6 +118,7 @@ void world::get_available_actions(
         int col = std::get<2>(actions[i]);
 
         if (row < 0 || row >= scene.rows || col < 0 || col >= 9) {
+            action_masks[i] = 1;
             continue;
         }
 
