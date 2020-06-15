@@ -159,6 +159,7 @@ void world::get_available_actions(
         } else if (op >= 0) {
             if (op <= static_cast<int>(plant_type::imitater) &&
                 card_flags[op] &&
+                scene.cards[card_index[op]].cold_down == 0 &&
                 plant_factory.can_plant(
                     row,
                     col,
