@@ -119,16 +119,11 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
     }
 
     if (p.type == plant_type::spikeweed || p.type == plant_type::spikerock) {
-        if (z.type != zombie_type::gargantuar &&
-            z.type != zombie_type::giga_gargantuar &&
-            z.type != zombie_type::zomboni &&
-            !scene.is_water_grid(p.row, p.col) &&
-            scene.plant_map[p.row][p.col].base == nullptr)
-        {
-            return false;
-        } else {
-            return true;
-        }
+        return !(z.type != zombie_type::gargantuar &&
+                 z.type != zombie_type::giga_gargantuar &&
+                 z.type != zombie_type::zomboni &&
+                 !scene.is_water_grid(p.row, p.col) &&
+                 scene.plant_map[p.row][p.col].base == nullptr);
     }
 
     switch (type) {
@@ -143,14 +138,9 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
             }
         }
 
-        if (other != nullptr &&
-            other != &p &&
-            can_attack_plant(z, *other, zombie_attack_type::smash_or_eat))
-        {
-            return false;
-        } else {
-            return true;
-        }
+        return !(other != nullptr &&
+                 other != &p &&
+                 can_attack_plant(z, *other, zombie_attack_type::smash_or_eat));
     }
 
     case zombie_attack_type::crush:
@@ -164,13 +154,9 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
     case zombie_attack_type::jump: {
         auto& gp = scene.plant_map[p.row][p.col];
 
-        if (gp.content != nullptr &&
-            gp.content != &p &&
-            can_attack_plant(z, *gp.content, zombie_attack_type::jump)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(gp.content != nullptr &&
+                 gp.content != &p &&
+                 can_attack_plant(z, *gp.content, zombie_attack_type::jump));
     }
 
     case pvz_emulator::system::zombie_attack_type::place_ladder:
