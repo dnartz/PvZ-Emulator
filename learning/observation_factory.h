@@ -50,6 +50,11 @@ public:
         unsigned int num_griditems);
 
     void create(
+        world& world,
+        const world::action_masks& action_masks,
+        std::vector<float> &ob);
+
+    void create(
         std::vector<world *> &worlds,
         const world::batch_action_masks& action_masks,
         std::vector<float> &ob);

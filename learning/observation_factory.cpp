@@ -41,8 +41,8 @@ void observation_factory::create(
     const world::batch_action_masks& action_masks,
     std::vector<float> &ob)
 {
-    ob.clear();
     auto row_size = single_size + action_masks[0].size();
+    ob.clear();
     ob.resize(worlds.size() * row_size, 0);
 
     std::atomic<decltype(worlds.size())> i = 0;
@@ -59,6 +59,17 @@ void observation_factory::create(
     for (auto& t: threads) {
         t.join();
     }
+}
+
+void observation_factory::create(
+    world &world,
+    const world::action_masks &action_masks,
+    std::vector<float> &ob)
+{
+    ob.clear();
+    ob.resize(single_size + action_masks.size(), 0);
+
+    make_observation(world, action_masks, ob.data());
 }
 
 void observation_factory::make_observation(

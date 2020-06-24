@@ -83,7 +83,16 @@ PYBIND11_MODULE(pvzemu, m) {
             unsigned int,
             unsigned int
         >())
-        .def("create", &learning::observation_factory::create)
+        .def("create", (void (learning::observation_factory::*)(
+            world &world,
+            const world::action_masks &action_masks,
+            std::vector<float> &ob
+        )) & learning::observation_factory::create)
+        .def("create", (void (learning::observation_factory::*)(
+            std::vector<world *> &worlds,
+            const world::batch_action_masks& action_masks,
+            std::vector<float> &ob
+        )) & learning::observation_factory::create)
         .def_readonly("num_zombies", &learning::observation_factory::num_zombies)
         .def_readonly("num_plants", &learning::observation_factory::num_plants)
         .def_readonly("num_projectiles", &learning::observation_factory::num_projectiles)
