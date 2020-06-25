@@ -51,7 +51,7 @@ template<typename T, size_t S> class obj_list {
 			} else if (i == -1) {
 				return other.i >= list.active_end;
 			} else if (other.i == -1) {
-				return i >= list.active_end;
+				return static_cast<size_t>(i) >= list.active_end;
 			} else {
 				return false;
 			}
