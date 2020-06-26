@@ -234,9 +234,10 @@ public:
     void set_reanim(plant_reanim_name name, reanim_type type, float fps);
     bool has_reanim(plant_reanim_name name);
 
+    static const char* type_to_string(plant_type type);
+
 #ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(scene& scene, rapidjson::Writer<rapidjson::StringBuffer>& writer);
-    static const char* type_to_string(plant_type type);
     static const char* status_to_string(plant_status status);
 #endif // PVZEMU_BUILD_DEBUGGER
 };

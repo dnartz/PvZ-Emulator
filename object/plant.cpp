@@ -257,6 +257,63 @@ void plant::set_reanim(plant_reanim_name name, reanim_type type, float fps) {
     set_reanim_frame(name);
 }
 
+const char* plant::type_to_string(plant_type type) {
+    switch (type) {
+    case plant_type::none: return "none";
+    case plant_type::pea_shooter: return "pea_shooter";
+    case plant_type::sunflower: return "sunflower";
+    case plant_type::cherry_bomb: return "cherry_bomb";
+    case plant_type::wallnut: return "wallnut";
+    case plant_type::potato_mine: return "potato_mine";
+    case plant_type::snow_pea: return "snow_pea";
+    case plant_type::chomper: return "chomper";
+    case plant_type::repeater: return "repeater";
+    case plant_type::puffshroom: return "puffshroom";
+    case plant_type::sunshroom: return "sunshroom";
+    case plant_type::fumeshroom: return "fumeshroom";
+    case plant_type::grave_buster: return "grave_buster";
+    case plant_type::hypnoshroom: return "hypnoshroom";
+    case plant_type::scaredyshroom: return "scaredyshroom";
+    case plant_type::iceshroom: return "iceshroom";
+    case plant_type::doomshroom: return "doomshroom";
+    case plant_type::lily_pad: return "lily_pad";
+    case plant_type::squash: return "squash";
+    case plant_type::threepeater: return "threepeater";
+    case plant_type::tangle_kelp: return "tangle_kelp";
+    case plant_type::jalapeno: return "jalapeno";
+    case plant_type::spikeweed: return "spikeweed";
+    case plant_type::torchwood: return "torchwood";
+    case plant_type::tallnut: return "tallnut";
+    case plant_type::seashroom: return "seashroom";
+    case plant_type::plantern: return "plantern";
+    case plant_type::cactus: return "cactus";
+    case plant_type::blover: return "blover";
+    case plant_type::split_pea: return "split_pea";
+    case plant_type::starfruit: return "starfruit";
+    case plant_type::pumpkin: return "pumpkin";
+    case plant_type::magnetshroom: return "magnetshroom";
+    case plant_type::cabbagepult: return "cabbagepult";
+    case plant_type::flower_pot: return "flower_pot";
+    case plant_type::kernelpult: return "kernelpult";
+    case plant_type::coffee_bean: return "coffee_bean";
+    case plant_type::garlic: return "garlic";
+    case plant_type::umbrella_leaf: return "umbrella_leaf";
+    case plant_type::marigold: return "marigold";
+    case plant_type::melonpult: return "melonpult";
+    case plant_type::gatling_pea: return "gatling_pea";
+    case plant_type::twin_sunflower: return "twin_sunflower";
+    case plant_type::gloomshroom: return "gloomshroom";
+    case plant_type::cattail: return "cattail";
+    case plant_type::winter_melon: return "winter_melon";
+    case plant_type::gold_magnet: return "gold_magnet";
+    case plant_type::spikerock: return "spikerock";
+    case plant_type::cob_cannon: return "cob_cannon";
+    case plant_type::imitater: return "imitater";
+    default:
+        return nullptr;
+    }
+}
+
 #ifdef PVZEMU_BUILD_DEBUGGER
 void plant::to_json(
     scene& scene,
@@ -394,64 +451,6 @@ void plant::to_json(
     writer.Bool(can_attack);
 
     writer.EndObject();
-}
-
-const char* plant::type_to_string(plant_type type)
-{
-    switch (type) {
-    case plant_type::none: return "none";
-    case plant_type::pea_shooter: return "pea_shooter";
-    case plant_type::sunflower: return "sunflower";
-    case plant_type::cherry_bomb: return "cherry_bomb";
-    case plant_type::wallnut: return "wallnut";
-    case plant_type::potato_mine: return "potato_mine";
-    case plant_type::snow_pea: return "snow_pea";
-    case plant_type::chomper: return "chomper";
-    case plant_type::repeater: return "repeater";
-    case plant_type::puffshroom: return "puffshroom";
-    case plant_type::sunshroom: return "sunshroom";
-    case plant_type::fumeshroom: return "fumeshroom";
-    case plant_type::grave_buster: return "grave_buster";
-    case plant_type::hypnoshroom: return "hypnoshroom";
-    case plant_type::scaredyshroom: return "scaredyshroom";
-    case plant_type::iceshroom: return "iceshroom";
-    case plant_type::doomshroom: return "doomshroom";
-    case plant_type::lily_pad: return "lily_pad";
-    case plant_type::squash: return "squash";
-    case plant_type::threepeater: return "threepeater";
-    case plant_type::tangle_kelp: return "tangle_kelp";
-    case plant_type::jalapeno: return "jalapeno";
-    case plant_type::spikeweed: return "spikeweed";
-    case plant_type::torchwood: return "torchwood";
-    case plant_type::tallnut: return "tallnut";
-    case plant_type::seashroom: return "seashroom";
-    case plant_type::plantern: return "plantern";
-    case plant_type::cactus: return "cactus";
-    case plant_type::blover: return "blover";
-    case plant_type::split_pea: return "split_pea";
-    case plant_type::starfruit: return "starfruit";
-    case plant_type::pumpkin: return "pumpkin";
-    case plant_type::magnetshroom: return "magnetshroom";
-    case plant_type::cabbagepult: return "cabbagepult";
-    case plant_type::flower_pot: return "flower_pot";
-    case plant_type::kernelpult: return "kernelpult";
-    case plant_type::coffee_bean: return "coffee_bean";
-    case plant_type::garlic: return "garlic";
-    case plant_type::umbrella_leaf: return "umbrella_leaf";
-    case plant_type::marigold: return "marigold";
-    case plant_type::melonpult: return "melonpult";
-    case plant_type::gatling_pea: return "gatling_pea";
-    case plant_type::twin_sunflower: return "twin_sunflower";
-    case plant_type::gloomshroom: return "gloomshroom";
-    case plant_type::cattail: return "cattail";
-    case plant_type::winter_melon: return "winter_melon";
-    case plant_type::gold_magnet: return "gold_magnet";
-    case plant_type::spikerock: return "spikerock";
-    case plant_type::cob_cannon: return "cob_cannon";
-    case plant_type::imitater: return "imitater";
-    default:
-        return nullptr;
-    }
 }
 
 const char* plant::status_to_string(plant_status status) {
