@@ -51,7 +51,7 @@ void observation_factory::create(
     for (unsigned int j = 0; j < std::thread::hardware_concurrency(); j++) {
         threads.emplace_back([&]() {
             for (auto k = i.fetch_add(1); k < worlds.size(); k = i.fetch_add(1)) {
-                make_observation(*worlds[k], action_masks[k], &ob[row_size * k]);
+                create(*worlds[k], action_masks[k], &ob[row_size * k]);
             }
         });
     }
@@ -69,10 +69,10 @@ void observation_factory::create(
     ob.clear();
     ob.resize(single_size + action_masks.size(), 0);
 
-    make_observation(world, action_masks, ob.data());
+    create(world, action_masks, ob.data());
 }
 
-void observation_factory::make_observation(
+void observation_factory::create(
     world &w,
     const world::action_masks& masks,
     float *base)

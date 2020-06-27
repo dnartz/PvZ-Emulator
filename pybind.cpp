@@ -86,6 +86,11 @@ PYBIND11_MODULE(pvzemu, m) {
         .def("create", (void (learning::observation_factory::*)(
             world &world,
             const world::action_masks &action_masks,
+            float *ob
+        )) & learning::observation_factory::create)
+        .def("create", (void (learning::observation_factory::*)(
+            world &world,
+            const world::action_masks &action_masks,
             std::vector<float> &ob
         )) & learning::observation_factory::create)
         .def("create", (void (learning::observation_factory::*)(
