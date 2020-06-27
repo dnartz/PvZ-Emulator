@@ -233,7 +233,7 @@ void world::to_json(std::string& s) {
 using namespace pvz_emulator::object;
 
 bool world::select_plants(
-    std::vector<plant_type> cards,
+    const std::vector<plant_type>& cards,
     plant_type imitater_type)
 {
     auto n = cards.size();

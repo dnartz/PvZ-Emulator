@@ -100,7 +100,7 @@ public:
 #endif // PVZEMU_BUILD_DEBUGGER
 
 	bool select_plants(
-		std::vector<object::plant_type> cards,
+		const std::vector<object::plant_type>& cards,
 		object::plant_type imitater_type = object::plant_type::none);
 
 	bool plant(unsigned int i, unsigned int row, unsigned int col) {
