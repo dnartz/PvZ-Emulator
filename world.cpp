@@ -102,7 +102,6 @@ void world::get_available_actions(
     const action_vector& actions,
     std::vector<int>& action_masks) const
 {
-    plant_type imitater_type = plant_type::none;
     std::array<bool, static_cast<int>(plant_type::imitater) + 1> card_flags = {false};
     std::array<int, static_cast<int>(plant_type::imitater) + 1> card_index = {0};
     for (int i = 0; i < 10; i++) {
@@ -111,10 +110,6 @@ void world::get_available_actions(
         if (card.type != plant_type::none && card.cold_down == 0) {
             card_flags[static_cast<int>(card.type)] = true;
             card_index[static_cast<int>(card.type)] = i;
-        }
-
-        if (card.type == plant_type::imitater) {
-            imitater_type = card.imitater_type;
         }
     }
 
@@ -167,20 +162,6 @@ void world::get_available_actions(
             {
                 action_masks[i] = 1;
             }
-
-            if (imitater_type != plant_type::none) {
-                if (op == static_cast<int>(plant_type::imitater)) {
-                    imitater_actions.emplace(i, std::make_pair(row, col));
-                } else if (op == static_cast<int>(imitater_type)) {
-                    imitater_type_actions.insert({row, col});
-                }
-            }
-        }
-    }
-
-    for (const auto& p : imitater_actions) {
-        if (imitater_type_actions.find(p.second) == imitater_type_actions.end()) {
-            action_masks[p.first] = 0;
         }
     }
 }
