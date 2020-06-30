@@ -10,7 +10,7 @@ const unsigned int observation_factory::zombie_size = 14;
 const unsigned int observation_factory::plant_size = 9;
 const unsigned int observation_factory::projectiles_size = 4;
 const unsigned int observation_factory::griditems_size = 3;
-const unsigned int observation_factory::meta_size = 7;
+const unsigned int observation_factory::meta_size = 8;
 const unsigned int observation_factory::spawn_flags_size = 33;
 
 observation_factory::observation_factory(
@@ -175,8 +175,9 @@ void observation_factory::create(
     base[4] = static_cast<float>(scene.spawn.countdown.endgame) / 500.0;
     base[5] = static_cast<float>(scene.spawn.countdown.pool) / 300.0;
     base[6] = static_cast<float>(scene.sun.sun) / 9990.0;
+    base[7] = static_cast<float>(scene.spawn.total_flags);
 
-    base += 7;
+    base += meta_size;
     std::copy(masks.cbegin(), masks.cend(), base);
 }
 
