@@ -47,22 +47,23 @@ zombie* projectile_system::find_zombie_target(projectile& proj) {
     int min_x;
     zombie* target = nullptr;
 
-    for (auto& z : scene.zombie_map[proj.row]) {
-        if (damage.can_be_attacked(*z, proj.flags) &&
-            (z->status != zombie_status::snorkel_swim || proj.dy1 > 45) &&
+    for (auto& z : scene.zombies) {
+        if (z.row == proj.row &&
+            damage.can_be_attacked(z, proj.flags) &&
+            (z.status != zombie_status::snorkel_swim || proj.dy1 > 45) &&
             (proj.type != projectile_type::star ||
                 proj.time_since_created >= 25 ||
                 proj.dx < 0 ||
-                z->type != zombie_type::digger))
+                z.type != zombie_type::digger))
         {
             rect zr;
-            z->get_hit_box(zr);
+            z.get_hit_box(zr);
 
             if (proj_rect.get_overlap_len(zr) >= 0 &&
-                (target == nullptr || z->int_x < min_x))
+                (target == nullptr || z.int_x < min_x))
             {
-                target = z;
-                min_x = z->int_x;
+                target = &z;
+                min_x = z.int_x;
             }
         }
     }
@@ -146,22 +147,12 @@ void projectile_system::suppter_attack(projectile& proj, zombie* main_target) {
     int n = 0;
     std::vector<zombie*> targets;
 
-    unsigned int l, u;
-    if (proj.type == projectile_type::fire_pea) {
-        l = u = proj.row;
-    } else {
-        l = proj.row > 0 ? proj.row - 1 : 0;
-        u = proj.row < scene.rows - 1 ? proj.row + 1 : scene.rows - 1;
-    }
+    for (auto& z : scene.zombies) {
+        if (is_covered_by_suppter(proj, z)) {
+            targets.emplace_back(&z);
 
-    for (; l <= u; l++) {
-        for (auto& z : scene.zombie_map[l]) {
-            if (is_covered_by_suppter(proj, *z)) {
-                targets.emplace_back(z);
-
-                if (z != main_target) {
-                    n++;
-                }
+            if (&z != main_target) {
+                n++;
             }
         }
     }

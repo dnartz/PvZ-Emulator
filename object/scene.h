@@ -1,5 +1,4 @@
 #pragma once
-#include <set>
 #include <array>
 #include <random>
 #include <cassert>
@@ -55,7 +54,6 @@ public:
     obj_list<object::projectile, 1024> projectiles;
 
     std::array<std::array<grid_plant_status, 9>, 6> plant_map;
-    std::array<std::set<object::zombie *>, 6> zombie_map;
 
     struct spawn_data {
         std::array<std::array<object::zombie_type, 50>, 20> spawn_list;

@@ -17,18 +17,18 @@ void plant_squash::kill(plant& p) {
 
     damage damage(scene);
 
-    for (auto& z : scene.zombie_map[p.row]) {
-        if (!damage.can_be_attacked(*z, flags)) {
+    for (auto& z : scene.zombies) {
+        if (!damage.can_be_attacked(z, flags) || z.row != p.row) {
             continue;
         }
 
         rect zr;
-        z->get_hit_box(zr);
+        z.get_hit_box(zr);
 
         auto d = pr.get_overlap_len(zr);
 
-        if (d > (z->type == zombie_type::football ? -20 : 0)) {
-            damage.take(*z, 1800,
+        if (d > (z.type == zombie_type::football ? -20 : 0)) {
+            damage.take(z, 1800,
                 zombie_damage_flags::disable_ballon_pop |
                 zombie_damage_flags::not_reduce);
         }
@@ -42,52 +42,53 @@ zombie* plant_squash::find_target(plant& p) {
     int min_d = 0;
     zombie* target = nullptr;
 
-    for (auto &z : scene.zombie_map[p.row]) {
-        if (z->is_not_dying &&
-            !is_target_of_kelp(scene, *z) &&
-            damage(scene).can_be_attacked(*z, p.get_attack_flags(false)))
+    for (auto &z : scene.zombies) {
+        if (z.row == p.row &&
+            z.is_not_dying &&
+            !is_target_of_kelp(scene, z) &&
+            damage(scene).can_be_attacked(z, p.get_attack_flags(false)))
         {
-            if (z->status == zombie_status::pole_valuting_jumpping ||
-                z->status == zombie_status::snorkel_jump_in_the_pool ||
-                z->status == zombie_status::dophin_jump_in_pool ||
-                z->status == zombie_status::dophin_ride ||
-                z->status == zombie_status::dophin_jump)
+            if (z.status == zombie_status::pole_valuting_jumpping ||
+                z.status == zombie_status::snorkel_jump_in_the_pool ||
+                z.status == zombie_status::dophin_jump_in_pool ||
+                z.status == zombie_status::dophin_ride ||
+                z.status == zombie_status::dophin_jump)
             {
                 continue;
             }
 
             rect zr;
-            z->get_hit_box(zr);
+            z.get_hit_box(zr);
 
-            if (z->status == zombie_status::pole_valuting_running &&
+            if (z.status == zombie_status::pole_valuting_running &&
                 zr.x < p.x + 20)
             {
                 continue;
             }
 
-            int d = z->is_eating ? 110 : 70;
+            int d = z.is_eating ? 110 : 70;
             if (-pr.get_overlap_len(zr) > d) {
                 continue;
             }
 
             int b = pr.x;
 
-            if (z->status == zombie_status::pole_vaulting_walking ||
-                z->status == zombie_status::pole_valuting_running ||
-                z->status == zombie_status::dophin_walk_in_pool ||
-                z->type == zombie_type::imp ||
-                z->type == zombie_type::football)
+            if (z.status == zombie_status::pole_vaulting_walking ||
+                z.status == zombie_status::pole_valuting_running ||
+                z.status == zombie_status::dophin_walk_in_pool ||
+                z.type == zombie_type::imp ||
+                z.type == zombie_type::football)
             {
                 b -= 60;
             }
 
-            if (!z->is_walk_right() && zr.width + zr.x < b) {
+            if (!z.is_walk_right() && zr.width + zr.x < b) {
                 continue;
             }
 
             if (target == nullptr || d < min_d) {
                 min_d = d;
-                target = z;
+                target = &z;
             }
         }
     }

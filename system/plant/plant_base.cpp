@@ -114,97 +114,92 @@ zombie* plant_base::find_target(plant& p, unsigned int row, bool is_alt_attack) 
     double weight = 0;
     zombie* result = nullptr;
 
-    unsigned int l, u;
-    if (p.type == plant_type::gloomshroom) {
-        l = row > 0 ? row - 1 : 0;
-        u = row < scene.rows - 1 ? row + 1 : scene.rows - 1;
-    } else if (p.type == plant_type::cattail) {
-        l = 0;
-        u = scene.rows - 1;
-    } else {
-        l = u = row;
-    }
+    for (auto& z : scene.zombies) {
+        if ((!z.is_not_dying || is_target_of_kelp(scene, z)) &&
+            (p.type == plant_type::potato_mine ||
+                p.type == plant_type::chomper ||
+                p.type == plant_type::tangle_kelp))
+        {
+            continue;
+        }
 
-    for (; l <= u; l++) {
-        for (auto& z : scene.zombie_map[l]) {
-            if ((!z->is_not_dying || is_target_of_kelp(scene, *z)) &&
-                (p.type == plant_type::potato_mine ||
-                 p.type == plant_type::chomper ||
-                 p.type == plant_type::tangle_kelp))
+        int diff = static_cast<int>(z.row) - static_cast<int>(row);
+        int overlap = 0;
+        if (p.type == plant_type::gloomshroom) {
+            if (abs(diff) > 1) {
+                continue;
+            }
+        } else if (diff != 0 && p.type != plant_type::cattail) {
+            continue;
+        }
+
+        if (!damage(scene).can_be_attacked(z, flags)) {
+            continue;
+        }
+
+        if (p.type == plant_type::chomper) {
+            if (z.status == zombie_status::digger_walk_right) {
+                pr.x += 20;
+                pr.width -= 20;
+            } else if (z.status == zombie_status::pogo_with_stick ||
+                z.type == zombie_type::bungee && z.bungee_col == p.col)
             {
                 continue;
             }
 
-            if (!damage(scene).can_be_attacked(*z, flags)) {
+            if (z.is_eating || p.status == plant_status::chomper_bite_begin) {
+                overlap = 60;
+            }
+        } else if (p.type == plant_type::potato_mine) {
+            if (z.type == zombie_type::pogo && z.has_item_or_walk_left ||
+                z.status == zombie_status::pole_valuting_jumpping ||
+                z.status == zombie_status::pole_valuting_running)
+            {
                 continue;
             }
 
-            int overlap = 0;
-
-            if (p.type == plant_type::chomper) {
-                if (z->status == zombie_status::digger_walk_right) {
-                    pr.x += 20;
-                    pr.width -= 20;
-                } else if (z->status == zombie_status::pogo_with_stick ||
-                   z->type == zombie_type::bungee && z->bungee_col == p.col)
-                {
-                    continue;
-                }
-
-                if (z->is_eating || p.status == plant_status::chomper_bite_begin) {
-                    overlap = 60;
-                }
-            } else if (p.type == plant_type::potato_mine) {
-                if (z->type == zombie_type::pogo && z->has_item_or_walk_left ||
-                    z->status == zombie_status::pole_valuting_jumpping ||
-                    z->status == zombie_status::pole_valuting_running)
-                {
-                    continue;
-                }
-
-                if (z->type != zombie_type::pole_vaulting) {
-                    pr.x += 40;
-                    pr.width -= 40;
-                }
-
-                if (z->type == zombie_type::bungee && z->bungee_col != p.col) {
-                    continue;
-                }
-
-                if (z->is_eating) {
-                    overlap = 30;
-                }
+            if (z.type != zombie_type::pole_vaulting) {
+                pr.x += 40;
+                pr.width -= 40;
             }
 
-            if (z->status != zombie_status::pole_valuting_jumpping &&
-                (p.type != plant_type::tangle_kelp || z->is_in_water))
-            {
-                rect zr;
-                z->get_hit_box(zr);
+            if (z.type == zombie_type::bungee && z.bungee_col != p.col) {
+                continue;
+            }
 
-                if (pr.get_overlap_len(zr) >= -overlap) {
-                    double w = -zr.x;
+            if (z.is_eating) {
+                overlap = 30;
+            }
+        }
 
-                    if (p.type == plant_type::cattail) {
-                        auto x1 = zr.x + zr.width / 2;
-                        auto y1 = zr.y + zr.height / 2;
-                        auto x2 = p.x + 40;
-                        auto y2 = p.y + 40;
+        if (z.status != zombie_status::pole_valuting_jumpping &&
+            (p.type != plant_type::tangle_kelp || z.is_in_water))
+        {
+            rect zr;
+            z.get_hit_box(zr);
 
-                        auto d = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
-                        w = -d;
+            if (pr.get_overlap_len(zr) >= -overlap) {
+                double w = -zr.x;
 
-                        if (z->status == zombie_status::balloon_flying ||
-                            z->status == zombie_status::balloon_falling)
-                        {
-                            w = 10000 - d;
-                        }
+                if (p.type == plant_type::cattail) {
+                    auto x1 = zr.x + zr.width / 2;
+                    auto y1 = zr.y + zr.height / 2;
+                    auto x2 = p.x + 40;
+                    auto y2 = p.y + 40;
+
+                    auto d = sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+                    w = -d;
+
+                    if (z.status == zombie_status::balloon_flying ||
+                        z.status == zombie_status::balloon_falling)
+                    {
+                        w = 10000 - d;
                     }
+                }
 
-                    if (result == nullptr || w > weight) {
-                        weight = w;
-                        result = z;
-                    }
+                if (result == nullptr || w > weight) {
+                    weight = w;
+                    result = &z;
                 }
             }
         }

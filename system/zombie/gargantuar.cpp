@@ -77,7 +77,7 @@ void zombie_gargantuar::update(zombie& z) {
         }
 
         z.has_item_or_walk_left = false;
-        auto& imp = zombie_factory(scene).create(zombie_type::imp, false);
+        auto& imp = zombie_factory(scene).create(zombie_type::imp);
 
         imp.row = z.row;
         imp.status = zombie_status::imp_flying;
@@ -88,8 +88,6 @@ void zombie_gargantuar::update(zombie& z) {
         imp.dx = 3.0f;
         imp.dy = 88.0f;
         imp.d2y = static_cast<float>(d2y / 3 * 0.5 * 0.05000000074505806);
-
-        scene.zombie_map[imp.row].insert(&imp);
 
         reanim.set(imp, zombie_reanim_name::anim_thrown, reanim_type::once, 18);
         reanim.update_progress(imp.reanim);

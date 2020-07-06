@@ -10,7 +10,7 @@ namespace pvz_emulator::system {
 
 using namespace pvz_emulator::object;
 
-zombie& zombie_factory::create(zombie_type type, bool update_map)
+zombie& zombie_factory::create(zombie_type type)
 {
 	auto row = get_spawn_row(type);
 
@@ -106,10 +106,6 @@ zombie& zombie_factory::create(zombie_type type, bool update_map)
 		assert(false);
 	}
 
-	if (update_map && !z.is_dead) {
-	    scene.zombie_map[z.row].insert(&z);
-	}
-
 	return z;
 }
 
@@ -118,8 +114,8 @@ void zombie_factory::create_roof_lurking(
 	unsigned int row,
 	unsigned int col)
 {
-	auto& b = create(zombie_type::bungee, false);
-	auto& z = create(type, false);
+	auto& b = create(zombie_type::bungee);
+	auto& z = create(type);
 
 	b.bungee_col = col;
 	b.row = row;
@@ -133,9 +129,6 @@ void zombie_factory::create_roof_lurking(
 	z.y = zombie_init_y(scene.type, z, row);
 	z.action = zombie_action::fall_from_sky;
 	reanim.set(z, zombie_reanim_name::anim_idle, reanim_type::repeat, 0);
-
-	scene.zombie_map[row].insert(&z);
-    scene.zombie_map[row].insert(&b);
 }
 
 void zombie_factory::create_pool_or_night_lurking(
@@ -143,7 +136,7 @@ void zombie_factory::create_pool_or_night_lurking(
 	unsigned int row,
 	unsigned int col)
 {
-	auto& z = create(type, false);
+	auto& z = create(type);
 	
 	z.x = static_cast<float>(80 * col + 15);
 	z.y = zombie_init_y(scene.type, z, row);
@@ -158,8 +151,6 @@ void zombie_factory::create_pool_or_night_lurking(
 	if (scene.type != scene_type::night) {
 		z.action = zombie_action::none;
 	}
-
-	scene.zombie_map[z.row].insert(&z);
 }
 
 void zombie_factory::create_lurking(
@@ -214,8 +205,6 @@ void zombie_factory::destroy(object::zombie& z) {
 			}
 		}
 	}
-
-	scene.zombie_map[z.row].erase(&z);
 }
 
 bool zombie_factory::can_spawn_at_row(zombie_type type, unsigned int row) {

@@ -136,8 +136,8 @@ void zombie_bungee::update(zombie& z) {
             break;
         }
 
-        if (auto umbrella = find_umbrella(z)) {
-            damage(scene).activate_plant(*umbrella);
+        if (auto umberalla = find_umbrella(z)) {
+            damage(scene).activate_plant(*umberalla);
             z.status = zombie_status::bungee_raise;
         } else if (z.dy <= 0) {
             z.dy = 0;

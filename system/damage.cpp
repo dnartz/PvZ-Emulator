@@ -418,18 +418,18 @@ void damage::activate_plant(object::plant& p) {
         return;
 
     case plant_type::jalapeno:
-        for (auto& z : scene.zombie_map[p.row]) {
-            if (!can_be_attacked(*z, flags)) {
+        for (auto& z : scene.zombies) {
+            if (z.row != p.row || !can_be_attacked(z, flags)) {
                 continue;
             }
 
-            debuff.remove_freeze(*z);
+            debuff.remove_freeze(z);
 
-            if (z->countdown.slow > 0) {
-                debuff.remove_slow(*z);
+            if (z.countdown.slow > 0) {
+                debuff.remove_slow(z);
             }
 
-            take_ash_attack(*z);
+            take_ash_attack(z);
         }
 
         for (auto& item : scene.griditems) {
@@ -508,42 +508,34 @@ void damage::range_attack(object::plant& p, unsigned int flags) {
 
     auto pf = p.get_attack_flags(false);
 
-    unsigned int l, u;
+    for (auto& z : scene.zombies) {
+        auto diff = abs(static_cast<int>(z.row) - static_cast<int>(p.row));
+        if (diff > 1 || !can_be_attacked(z, pf)) {
+            continue;
+        }
 
-    if (p.type == plant_type::gloomshroom) {
-        l = p.row == 0 ? 0 : p.row - 1;
-        u = std::min(scene.rows - 1, p.row + 1);
-    } else {
-        l = u = p.row;
-    }
+        rect zr;
+        z.get_hit_box(zr);
 
-    for (; l <= u; l++) {
-        for (auto &z : scene.zombie_map[l]) {
-            if (!can_be_attacked(*z, pf)) {
-                continue;
-            }
+        if ((p.type == plant_type::gloomshroom && diff <= 1 || diff == 0) &&
+            pr.get_overlap_len(zr) > 0)
+        {
+            unsigned int d = 20;
 
-            rect zr;
-            z->get_hit_box(zr);
+            if ((z.type == zombie_type::zomboni ||
+                z.type == zombie_type::catapult) &&
+                flags & zombie_damage_flags::spike)
+            {
+                d = 1800;
 
-            if (pr.get_overlap_len(zr) > 0) {
-                unsigned int d = 20;
-
-                if ((z->type == zombie_type::zomboni ||
-                     z->type == zombie_type::catapult) &&
-                    flags & zombie_damage_flags::spike)
-                {
-                    d = 1800;
-
-                    if (p.type == plant_type::spikerock) {
-                        spikerock.reduce_life(p);
-                    } else {
-                        plant_factory.destroy(p);
-                    }
+                if (p.type == plant_type::spikerock) {
+                    spikerock.reduce_life(p);
+                } else {
+                    plant_factory.destroy(p);
                 }
-
-                take(*z, d, flags);
             }
+
+            take(z, d, flags);
         }
     }
 }
@@ -557,28 +549,24 @@ void damage::take_instant_kill(
     bool is_ash_attack,
     unsigned char flags)
 {
-    unsigned int l = grid_radius < row ? row - grid_radius : 0;
-    unsigned int u = std::min(
-        scene.rows - 1, static_cast<unsigned int>(grid_radius + row));
+    for (auto& z : scene.zombies) {
+        if (!can_be_attacked(z, flags)) {
+            continue;
+        }
 
-    for (; l <= u; l++) {
-        for (auto &z : scene.zombie_map[l]) {
-            if (!can_be_attacked(*z, flags)) {
-                continue;
-            }
+        rect rect;
+        z.get_hit_box(rect);
 
-            rect rect;
-            z->get_hit_box(rect);
-
-            if (rect.is_overlap_with_circle(x, y, radius)) {
-                if (is_ash_attack) {
-                    take_ash_attack(*z);
-                } else {
-                    take(*z,
-                         1800,
-                         zombie_damage_flags::disable_ballon_pop |
-                         zombie_damage_flags::not_reduce);
-                }
+        if (abs(static_cast<int>(z.row) - row) <= grid_radius &&
+            rect.is_overlap_with_circle(x, y, radius))
+        {
+            if (is_ash_attack) {
+                take_ash_attack(z);
+            } else {
+                take(z,
+                    1800,
+                    zombie_damage_flags::disable_ballon_pop |
+                    zombie_damage_flags::not_reduce);
             }
         }
     }

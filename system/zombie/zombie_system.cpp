@@ -18,27 +18,28 @@ zombie* zombie_system::find_hypno_enemy(object::zombie& z) {
     rect zr;
     z.get_attack_box(zr);
 
-    for (auto & enemy : scene.zombie_map[z.row]) {
-        if (z.is_hypno == enemy->is_hypno ||
-            enemy->status == zombie_status::balloon_flying ||
-            enemy->status == zombie_status::balloon_falling ||
-            enemy->status == zombie_status::digger_dig ||
-            enemy->status == zombie_status::bungee_target_drop ||
-            enemy->status == zombie_status::bungee_body_drop ||
-            enemy->status == zombie_status::bungee_raise ||
-            enemy->action == zombie_action::fall_from_sky ||
-            enemy->has_death_status() ||
-            !enemy->is_not_dying)
+    for (auto & enemy : scene.zombies) {
+        if (z.is_hypno == enemy.is_hypno ||
+            enemy.row != z.row ||
+            enemy.status == zombie_status::balloon_flying ||
+            enemy.status == zombie_status::balloon_falling ||
+            enemy.status == zombie_status::digger_dig ||
+            enemy.status == zombie_status::bungee_target_drop ||
+            enemy.status == zombie_status::bungee_body_drop ||
+            enemy.status == zombie_status::bungee_raise ||
+            enemy.action == zombie_action::fall_from_sky ||
+            enemy.has_death_status() ||
+            !enemy.is_not_dying)
         {
             continue;
         }
 
         rect er;
-        enemy->get_hit_box(er);
+        enemy.get_hit_box(er);
 
         auto d = zr.get_overlap_len(er);
-        if (d >= 20 || d >= 0 && enemy->is_eating) {
-            return enemy;
+        if (d >= 20 || d >= 0 && enemy.is_eating) {
+            return &enemy;
         }
     }
 
@@ -260,8 +261,6 @@ void zombie_system::set_garlic_row_switch(zombie& z) {
     if (z.time_since_ate_garlic == 170) {
         reanim.update_status(z);
 
-        scene.zombie_map[z.row].erase(&z);
-
         switch (scene.type) {
         case scene_type::fog:
         case scene_type::pool: {
@@ -297,8 +296,6 @@ void zombie_system::set_garlic_row_switch(zombie& z) {
                 break;
             }
         }
-
-        scene.zombie_map[z.row].insert(&z);
     }
 }
 
