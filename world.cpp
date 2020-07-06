@@ -114,6 +114,7 @@ void world::get_available_actions(
     }
 
     action_masks.resize(actions.size() + 1, 0);
+    std::fill(action_masks.begin(), action_masks.end(), 0);
     action_masks.back() = 1;
 
     std::set<std::pair<unsigned int, unsigned int>> imitater_type_actions;
