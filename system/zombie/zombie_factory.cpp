@@ -106,7 +106,7 @@ zombie& zombie_factory::create(zombie_type type, bool update_map)
 		assert(false);
 	}
 
-	if (update_map) {
+	if (update_map && !z.is_dead) {
 	    scene.zombie_map[z.row].insert(&z);
 	}
 
