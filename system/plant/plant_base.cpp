@@ -117,7 +117,7 @@ zombie* plant_base::find_target(plant& p, unsigned int row, bool is_alt_attack) 
     unsigned int l, u;
     if (p.type == plant_type::gloomshroom) {
         l = row > 0 ? row - 1 : 0;
-        u = row <= scene.rows - 1 ? row + 1 : scene.rows - 1;
+        u = row < scene.rows - 1 ? row + 1 : scene.rows - 1;
     } else if (p.type == plant_type::cattail) {
         l = 0;
         u = scene.rows - 1;
