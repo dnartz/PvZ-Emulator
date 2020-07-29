@@ -37,6 +37,10 @@ scene::scene(const scene& s) :
             plant_map[p.row][p.col].content = &p;
         }
     }
+
+    for (auto& z : zombies) {
+        zombie_map[z.row].insert(&z);
+    }
 }
 
 #ifdef PVZEMU_BUILD_DEBUGGER
@@ -281,6 +285,10 @@ void scene::reset() {
     spawn.countdown.next_wave_initial = 600;
 
     memset(&plant_map, 0, sizeof(plant_map));
+
+    for (auto &m : zombie_map) {
+        m.clear();
+    }
 
     sun.sun = 9990;
     sun.natural_sun_generated = 0;

@@ -55,45 +55,53 @@ bool plant_magnetshroom::attack_zombie(plant& p) {
     zombie* target = nullptr;
     double dist = 0;
 
-    for (auto& z : scene.zombies) {
-        rect zr;
-        z.get_hit_box(zr);
+    unsigned int l = 2 < p.row ? p.row - 2 : 0;
+    unsigned int u = std::min(
+        scene.rows - 1, static_cast<unsigned int>(2 + p.row));
 
-        auto row_diff = abs(static_cast<int>(p.row) - static_cast<int>(z.row));
+    for (; l <= u; l++) {
+        auto diff = abs(static_cast<int>(p.row) - static_cast<int>(l));
 
-        if (z.is_hypno ||
-            !z.is_not_dying ||
-            z.action != zombie_action::none ||
-            z.status == zombie_status::rising_from_ground ||
-            z.has_death_status() ||
-            zr.x > 800 ||
-            row_diff > 2)
-        {
-            continue;
-        }
-        
-        if (z.status == zombie_status::digger_dig ||
-            z.status == zombie_status::digger_dizzy ||
-            z.status == zombie_status::digger_walk_right ||
-            z.type == zombie_type::pogo)
-        {
-            if (!z.has_item_or_walk_left) {
+        for (auto &z : scene.zombie_map[l]) {
+            if (z->is_hypno ||
+                !z->is_not_dying ||
+                z->action != zombie_action::none ||
+                z->status == zombie_status::rising_from_ground ||
+                z->has_death_status())
+            {
                 continue;
             }
-        } else if (z.accessory_1.type != zombie_accessories_type_1::bucket &&
-            z.accessory_1.type != zombie_accessories_type_1::football_cap &&
-            z.accessory_2.type != zombie_accessories_type_2::screen_door &&
-            z.accessory_2.type != zombie_accessories_type_2::ladder &&
-            z.type != zombie_type::jack_in_the_box)
-        {
-            continue;
-        }
 
-        if (zr.is_overlap_with_circle(p.x, p.y, z.is_eating ? 320 : 270)) {
-            auto d = sqrt(pow(p.x - z.x, 2) + pow(p.y - z.y, 2)) + row_diff * 80;
-            if (target == nullptr || dist > d) {
-                target = &z;
-                dist = d;
+            if (z->status == zombie_status::digger_dig ||
+                z->status == zombie_status::digger_dizzy ||
+                z->status == zombie_status::digger_walk_right ||
+                z->type == zombie_type::pogo)
+            {
+                if (!z->has_item_or_walk_left) {
+                    continue;
+                }
+            } else if (z->accessory_1.type != zombie_accessories_type_1::bucket &&
+                z->accessory_1.type != zombie_accessories_type_1::football_cap &&
+                z->accessory_2.type != zombie_accessories_type_2::screen_door &&
+                z->accessory_2.type != zombie_accessories_type_2::ladder &&
+                z->type != zombie_type::jack_in_the_box)
+            {
+                continue;
+            }
+
+            rect zr;
+            z->get_hit_box(zr);
+
+            if (zr.x > 800) {
+                continue;
+            }
+
+            if (zr.is_overlap_with_circle(p.x, p.y, z->is_eating ? 320 : 270)) {
+                auto d = sqrt(pow(p.x - z->x, 2) + pow(p.y - z->y, 2)) + diff * 80;
+                if (target == nullptr || dist > d) {
+                    target = z;
+                    dist = d;
+                }
             }
         }
     }
@@ -202,24 +210,27 @@ void plant_scaredyshroom::update(plant & p) {
     }
 
     bool found_scared = false;
-    for (auto& z : scene.zombies) {
-        auto diff = abs(static_cast<int>(p.row) - static_cast<int>(z.row));
+    unsigned int l = 1 < p.row ? p.row - 1 : 0;
+    unsigned int u = std::min(
+        scene.rows - 1, static_cast<unsigned int>(1 + p.row));
+    for (; l <= u; l++) {
+        for (auto &z: scene.zombie_map[l]) {
+            if (!z->is_hypno &&
+                !z->is_dead &&
+                !z->has_death_status())
+            {
+                rect zr;
+                z->get_hit_box(zr);
 
-        if (!z.is_hypno &&
-            !z.is_dead &&
-            !z.has_death_status() &&
-            diff <= 1)
-        {
-            rect zr;
-            z.get_hit_box(zr);
-
-            if (zr.is_overlap_with_circle(p.x, p.y + 20, 120)) {
-                found_scared = true;
-                break;
+                if (zr.is_overlap_with_circle(p.x, p.y + 20, 120)) {
+                    found_scared = true;
+                    goto found;
+                }
             }
         }
     }
 
+found:
     switch (p.status) {
     case plant_status::wait:
         if (found_scared) {

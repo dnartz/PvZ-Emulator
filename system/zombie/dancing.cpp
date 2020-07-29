@@ -88,7 +88,7 @@ void zombie_dancing::create_backup_dancers(zombie& z) {
             }
         }
 
-        auto& backup = zombie_factory(scene).create(zombie_type::backup_dancer);
+        auto& backup = zombie_factory(scene).create(zombie_type::backup_dancer, false);
 
         backup.row = row;
 
@@ -108,6 +108,8 @@ void zombie_dancing::create_backup_dancers(zombie& z) {
         reanim.set_fps(backup, 0);
 
         backup.is_hypno = z.is_hypno;
+
+        scene.zombie_map[backup.row].insert(&backup);
 
         z.partners[i] = static_cast<int>(scene.zombies.get_index(backup));
     }
