@@ -314,7 +314,6 @@ const char* plant::type_to_string(plant_type type) {
     }
 }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 void plant::to_json(
     scene& scene,
     rapidjson::Writer<rapidjson::StringBuffer>& writer)
@@ -506,6 +505,5 @@ const char* plant::status_to_string(plant_status status) {
         return nullptr;
     }
 }
-#endif // PVZEMU_BUILD_DEBUGGER
 
 }

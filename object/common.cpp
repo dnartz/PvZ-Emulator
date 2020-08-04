@@ -1,10 +1,8 @@
 #include <cmath>
 #include <algorithm>
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-#endif // PVZEMU_BUILD_DEBUGGER
 
 #include "common.h"
 #include "scene.h"
@@ -50,7 +48,6 @@ float rect::get_overlap_len(const rect& r) {
     }
 }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 void rect::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.StartObject();
     writer.Key("x");
@@ -63,7 +60,6 @@ void rect::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.Int(height);
     writer.EndObject();
 }
-#endif // PVZEMU_BUILD_DEBUGGER
 
 bool reanim::is_in_progress(double p) {
     if (prev_progress <= progress) {
@@ -73,7 +69,6 @@ bool reanim::is_in_progress(double p) {
     }
 }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 void reanim::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.StartObject();
 
@@ -141,7 +136,6 @@ void griditem::to_json(
 
     writer.EndObject();
 }
-#endif
 
 void reanim::get_frame_status(reanim_frame_status& rfs) const {
     float current_frame = progress * (n_frames - 1) + begin_frame;

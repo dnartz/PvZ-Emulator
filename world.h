@@ -95,9 +95,7 @@ public:
         std::vector<int>& done,
 		unsigned int frames = 1);
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 	void to_json(std::string& s);
-#endif // PVZEMU_BUILD_DEBUGGER
 
 	bool select_plants(
 		const std::vector<object::plant_type>& cards,

@@ -212,7 +212,6 @@ float zombie::get_height_bias() const {
     return -200;
 }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 void zombie::to_json(
     scene& scene,
     rapidjson::Writer<rapidjson::StringBuffer>& writer)
@@ -538,6 +537,5 @@ const char* zombie::accessories_type_to_string(zombie_accessories_type_2 type)
         return nullptr;
     }
 }
-#endif // PVZEMU_BUILD_DEBUGGER
 
 }

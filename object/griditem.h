@@ -1,8 +1,6 @@
 #pragma once
-#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-#endif // PVZEMU_BUILD_DEBUGGER
 
 namespace pvz_emulator::object {
 
@@ -29,11 +27,9 @@ public:
         return is_disappeared;
     }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(
         scene& scene,
         rapidjson::Writer<rapidjson::StringBuffer>& writer);
-#endif // PVZEMU_BUILD_DEBUGGER
 };
 
 }

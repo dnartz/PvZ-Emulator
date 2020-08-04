@@ -1,8 +1,6 @@
 #pragma once
-#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-#endif // PVZEMU_BUILD_DEBUGGER
 
 namespace pvz_emulator::object {
 
@@ -88,14 +86,12 @@ public:
 
     unsigned int get_flags_with_zombie(const zombie& z) const;
 
-#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(
         object::scene& scene,
         rapidjson::Writer<rapidjson::StringBuffer>& writer);
 
     static const char* type_to_string(projectile_type type);
     static const char* motion_type_to_string(projectile_motion_type type);
-#endif // PVZEMU_BUILD_DEBUGGER
 };
 
 }

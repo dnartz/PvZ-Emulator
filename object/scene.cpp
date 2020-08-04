@@ -1,5 +1,4 @@
 #include "scene.h"
-#include "scene.h"
 
 namespace pvz_emulator::object {
 
@@ -39,7 +38,6 @@ scene::scene(const scene& s) :
     }
 }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.StartObject();
 
@@ -258,7 +256,6 @@ void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
 
     writer.EndObject();
 }
-#endif // PVZEMU_BUILD_DEBUGGER
 
 void scene::reset() {
     rng = std::mt19937(std::random_device()());

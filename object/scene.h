@@ -3,10 +3,8 @@
 #include <random>
 #include <cassert>
 
-#ifdef PVZEMU_BUILD_DEBUGGER
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
-#endif // PVZEMU_BUILD_DEBUGGER
 
 #include "object/obj_list.h"
 #include "object/griditem.h"
@@ -161,9 +159,7 @@ public:
         return type == scene_type::pool || type == scene_type::fog ?  6 : 5;
     }
 
-#ifdef PVZEMU_BUILD_DEBUGGER
     void to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer);
-#endif // PVZEMU_BUILD_DEBUGGER
 
     void reset();
 
