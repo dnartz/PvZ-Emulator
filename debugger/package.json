@@ -14,7 +14,7 @@
     "@types/node": "^8.0.14",
     "css-loader": "^3.5.3",
     "html-webpack-plugin": "^4.3.0",
-    "react-dev-utils": "^10.2.1",
+    "react-dev-utils": "^11.0.4",
     "source-map-loader": "^0.2.4",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.2",
