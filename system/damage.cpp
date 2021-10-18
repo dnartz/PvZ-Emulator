@@ -466,12 +466,12 @@ void damage::activate_plant(object::plant& p) {
                 } else {
                     z.countdown.freeze = rng.randint(201) + 400;
                 }
+
+                take(z, 20, static_cast<unsigned int>(
+                    zombie_damage_flags::ignore_accessory_2));
+
+                reanim.update_fps(z);
             }
-
-            take(z, 20, static_cast<unsigned int>(
-                zombie_damage_flags::ignore_accessory_2));
-
-            reanim.update_fps(z);
         }
 
         scene.spawn.countdown.pool = 300;
