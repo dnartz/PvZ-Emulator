@@ -85,7 +85,7 @@ void zombie_pogo::update(object::zombie& z) {
             if (z.status == zombie_status::pogo_idle_before_target) {
                 z.status = zombie_status::pogo_jump_across;
                 z.countdown.action = 80;
-                z.dx = (z.int_x - z.x + 60) / 80;
+                z.dx = (z.int_x - target->x + 60) / 80;
             } else {
                 z.status = zombie_status::pogo_idle_before_target;
                 z.dx = 0;
