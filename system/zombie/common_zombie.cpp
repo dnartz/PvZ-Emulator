@@ -160,11 +160,11 @@ bool zombie_base::can_attack_plant(zombie& z, plant& p, zombie_attack_type type)
     }
 
     case pvz_emulator::system::zombie_attack_type::place_ladder:
-        if (z.status != zombie_status::ladder_walking &&
-            z.status != zombie_status::ladder_placing &&
-            p.type != plant_type::tallnut &&
+        if ((z.status != zombie_status::ladder_walking &&
+            z.status != zombie_status::ladder_placing) ||
+            (p.type != plant_type::tallnut &&
             p.type != plant_type::pumpkin &&
-            p.type != plant_type::wallnut)
+            p.type != plant_type::wallnut))
 
         {
             return false;
