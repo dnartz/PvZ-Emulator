@@ -95,7 +95,7 @@ void zombie_system::update_eating_plants(zombie& z, plant &p) {
                     p.hp -= 4;
 
                     if (scene.is_iz && p.type == plant_type::sunflower && 
-                        (prev_hp + 24) / 25 != (p.hp + 24) / 25) {
+                        (prev_hp / 38 != p.hp / 38 || p.hp <= 0)) {
                         scene.sun.sun = std::min(9990u, scene.sun.sun + 25u);
                     }
 
