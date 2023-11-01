@@ -215,7 +215,7 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("projectiles", &scene::projectiles)
         .def_readonly("plant_map", &scene::plant_map)
         .def_readonly("spawn", &scene::spawn)
-        .def_readwrite("sun", &scene::sun)
+        .def_readonly("sun", &scene::sun)
         .def_readonly("ice_path", &scene::ice_path)
         .def_readonly("cards", &scene::cards)
         .def_readonly("is_game_over", &scene::is_game_over)
@@ -228,7 +228,8 @@ PYBIND11_MODULE(pvzemu, m) {
         .def("is_water_grid", &scene::is_water_grid)
         .def("get_max_row", &scene::get_max_row)
         .def("reset", (void (scene::*)(void)) & scene::reset)
-        .def("reset", (void (scene::*)(scene_type)) & scene::reset);
+        .def("reset", (void (scene::*)(scene_type)) & scene::reset)
+        .def("set_sun", (void (scene:*)(unsigned int)) & scene::set_sun);
 
     py::class_<decltype(scene::zombies)>(m, "ZombieList")
         .def("__iter__", [](decltype(scene::zombies) &s) {

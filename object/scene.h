@@ -101,6 +101,7 @@ public:
             natural_sun_generated(0),
             natural_sun_countdown(0) {}
     } sun;
+    void set_sun(unsigned int sun);
 
     struct ice_path_data {
         std::array<unsigned int, 6> countdown;

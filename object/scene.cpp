@@ -38,6 +38,10 @@ scene::scene(const scene& s) :
     }
 }
 
+void scene::set_sun(unsigned int sun) {
+    this->sun.sun = std::min(9990u, sun);
+}
+
 void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.StartObject();
 
