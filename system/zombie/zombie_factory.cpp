@@ -14,8 +14,6 @@ zombie& zombie_factory::create(zombie_type type, int row, int col)
 {
 	if (row == -1) {
 		row = static_cast<int>(get_spawn_row(type));
-	} else {
-		row -= 1;
 	}
 
 	auto& z = scene.zombies.alloc();
@@ -111,7 +109,7 @@ zombie& zombie_factory::create(zombie_type type, int row, int col)
 	}
 
 	if (col != -1) {
-		z.x = 10 + col * 80;
+		z.x = 10 + (col - 1) * 80;
 		z.int_x = static_cast<int>(z.x);
 	}
 
