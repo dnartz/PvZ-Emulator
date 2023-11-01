@@ -48,7 +48,7 @@ setup(
                 "pybind.cpp",
                 "world.cpp"
             ]),
-        include_dirs=[GetPybindInclude(), "./"],
+        include_dirs=[GetPybindInclude(), "./", "./lib/"],
         language="c++"
     )],
     setup_requires=['pybind11>=2.5.0'],
