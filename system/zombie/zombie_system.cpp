@@ -91,7 +91,14 @@ void zombie_system::update_eating_plants(zombie& z, plant &p) {
                 p.type != plant_type::blover)
             {
                 if (z.countdown.slow <= 0 || z.time_since_spawn % 2 == 0) {
+                    auto prev_hp = p.hp;
                     p.hp -= 4;
+
+                    if (scene.is_iz && p.type == plant_type::sunflower && 
+                        (prev_hp + 24) / 25 != (p.hp + 24) / 25) {
+                        scene.sun.sun = std::min(9990u, scene.sun.sun + 25u);
+                    }
+
                     p.countdown.eaten = 50;
 
                     if (p.hp <= 0) {

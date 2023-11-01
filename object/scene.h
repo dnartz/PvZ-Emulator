@@ -134,6 +134,7 @@ public:
 
     bool stop_spawn;
     bool enable_split_pea_bug;
+    bool is_iz;
 
     scene(scene_type t) : type(t),
         rng(std::random_device()()),
@@ -143,7 +144,8 @@ public:
         is_zombie_dance(false),
         is_future_enabled(false),
         stop_spawn(false),
-        enable_split_pea_bug(true) {}
+        enable_split_pea_bug(true),
+        is_iz(false) {}
 
     scene(const scene& s);
 

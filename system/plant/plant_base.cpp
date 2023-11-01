@@ -326,7 +326,7 @@ void sun_plant_base::produce_sun(object::plant & p) {
         return;
     }
 
-    if (--p.countdown.generate <= 0) {
+    if (!scene.is_iz && --p.countdown.generate <= 0) {
         sun sun(scene);
 
         p.countdown.generate = p.max_boot_delay - 150 + rng.randint(151);
