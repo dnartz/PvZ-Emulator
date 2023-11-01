@@ -30,7 +30,7 @@ public:
         rng(s),
         subsystems(s) {}
 
-    object::zombie& create(object::zombie_type type);
+    object::zombie& create(object::zombie_type type, int row = -1, int col = -1);
     void create_lurking(object::zombie_type type, unsigned int row, unsigned int col);
 
     void destroy(object::zombie& z);

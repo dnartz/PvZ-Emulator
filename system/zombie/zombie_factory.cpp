@@ -10,9 +10,13 @@ namespace pvz_emulator::system {
 
 using namespace pvz_emulator::object;
 
-zombie& zombie_factory::create(zombie_type type)
+zombie& zombie_factory::create(zombie_type type, int row, int col)
 {
-	auto row = get_spawn_row(type);
+	if (row == -1) {
+		row = static_cast<int>(get_spawn_row(type));
+	} else {
+		row -= 1;
+	}
 
 	auto& z = scene.zombies.alloc();
 
@@ -104,6 +108,11 @@ zombie& zombie_factory::create(zombie_type type)
 
 	default:
 		assert(false);
+	}
+
+	if (col != -1) {
+		z.y = 10 + col * 80;
+		z.int_y = static_cast<int>(z.y);
 	}
 
 	return z;
