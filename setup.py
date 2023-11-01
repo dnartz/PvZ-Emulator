@@ -19,7 +19,7 @@ class BuildExt(build_ext):
         if self.compiler.compiler_type == "unix":
             opts = ['-g3', '-O3', '-fvisibility=hidden', '-std=c++17']
         else:
-            opts = ['/O2', '/Oi', '/Ot', '/arch', '/Zi']
+            opts = ['/O2', '/Oi', '/Ot', '/Zi', '/std:c++17']
 
         if sys.platform == 'darwin':
             opts.append('-stdlib=libc++')
