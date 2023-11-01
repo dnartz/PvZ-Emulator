@@ -96,6 +96,7 @@ public:
 		unsigned int frames = 1);
 
 	void to_json(std::string& s);
+	std::string get_json();
 
 	bool select_plants(
 		const std::vector<object::plant_type>& cards,

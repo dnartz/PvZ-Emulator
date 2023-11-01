@@ -208,6 +208,12 @@ void world::to_json(std::string& s) {
     s = sb.GetString();
 }
 
+std::string world::get_json() {
+    std::string s;
+    to_json(s);
+    return s;
+}
+
 using namespace pvz_emulator::object;
 
 bool world::select_plants(
