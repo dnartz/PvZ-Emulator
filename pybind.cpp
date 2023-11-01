@@ -229,7 +229,7 @@ PYBIND11_MODULE(pvzemu, m) {
         .def("get_max_row", &scene::get_max_row)
         .def("reset", (void (scene::*)(void)) & scene::reset)
         .def("reset", (void (scene::*)(scene_type)) & scene::reset)
-        .def("set_sun", (void (scene:*)(unsigned int)) & scene::set_sun);
+        .def("set_sun", (void (scene::*)(unsigned int)) & scene::set_sun);
 
     py::class_<decltype(scene::zombies)>(m, "ZombieList")
         .def("__iter__", [](decltype(scene::zombies) &s) {
