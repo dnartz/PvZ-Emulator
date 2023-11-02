@@ -19,7 +19,8 @@ scene::scene(const scene& s) :
     is_zombie_dance(s.is_zombie_dance),
     is_future_enabled(s.is_future_enabled),
     stop_spawn(s.stop_spawn),
-    enable_split_pea_bug(s.enable_split_pea_bug)
+    enable_split_pea_bug(s.enable_split_pea_bug),
+    is_iz(s.is_iz)
 {
     memset(&plant_map, 0, sizeof(plant_map));
 
@@ -107,97 +108,99 @@ void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     }
     writer.EndArray();
 
-    writer.Key("spawn");
-    writer.StartObject();
+    if (!stop_spawn) {
+        writer.Key("spawn");
+        writer.StartObject();
 
-    writer.Key("spawn_list");
-    writer.StartArray();
-    for (auto& wave : spawn.spawn_list) {
+        writer.Key("spawn_list");
         writer.StartArray();
-        for (auto& type : wave) {
-            writer.String(zombie::type_to_string(type));
+        for (auto& wave : spawn.spawn_list) {
+            writer.StartArray();
+            for (auto& type : wave) {
+                writer.String(zombie::type_to_string(type));
+            }
+            writer.EndArray();
         }
         writer.EndArray();
+
+        writer.Key("total_flags");
+        writer.Uint(spawn.total_flags);
+
+        writer.Key("wave");
+        writer.Uint(spawn.wave);
+
+        writer.Key("hp");
+        writer.StartObject();
+
+        writer.Key("initial");
+        writer.Uint(spawn.hp.initial);
+
+        writer.Key("threshold");
+        writer.Uint(spawn.hp.threshold);
+        writer.EndObject();
+
+        writer.Key("countdown");
+        writer.StartObject();
+
+        writer.Key("next_wave");
+        writer.Uint(spawn.countdown.next_wave);
+
+        writer.Key("next_wave_initial");
+        writer.Uint(spawn.countdown.next_wave_initial);
+
+        writer.Key("lurking_squad");
+        writer.Uint(spawn.countdown.lurking_squad);
+
+        writer.Key("hugewave_fade");
+        writer.Uint(spawn.countdown.hugewave_fade);
+
+        writer.Key("endgame");
+        writer.Uint(spawn.countdown.hugewave_fade);
+
+        writer.Key("pool");
+        writer.Uint(spawn.countdown.pool);
+        writer.EndObject();
+
+        static const zombie_type ALL_ZOMBIES[] = {
+            zombie_type::zombie,
+            zombie_type::flag,
+            zombie_type::conehead,
+            zombie_type::pole_vaulting,
+            zombie_type::buckethead,
+            zombie_type::newspaper,
+            zombie_type::screendoor,
+            zombie_type::football,
+            zombie_type::dancing,
+            zombie_type::backup_dancer,
+            zombie_type::ducky_tube,
+            zombie_type::snorkel,
+            zombie_type::zomboni,
+            zombie_type::dolphin_rider,
+            zombie_type::jack_in_the_box,
+            zombie_type::balloon,
+            zombie_type::digger,
+            zombie_type::pogo,
+            zombie_type::yeti,
+            zombie_type::bungee,
+            zombie_type::ladder,
+            zombie_type::catapult,
+            zombie_type::gargantuar,
+            zombie_type::imp,
+            zombie_type::giga_gargantuar,
+        };
+
+        writer.Key("spawn_flags");
+        writer.StartObject();
+        for (auto& type : ALL_ZOMBIES) {
+            writer.Key(zombie::type_to_string(type));
+            writer.Bool(spawn.spawn_flags[static_cast<int>(type)]);
+        }
+        writer.EndObject();
+
+        writer.Key("is_hugewave_shown");
+        writer.Bool(spawn.is_hugewave_shown);
+        writer.EndObject();
     }
-    writer.EndArray();
-
-    writer.Key("total_flags");
-    writer.Uint(spawn.total_flags);
-
-    writer.Key("wave");
-    writer.Uint(spawn.wave);
-
-    writer.Key("hp");
-    writer.StartObject();
-
-    writer.Key("initial");
-    writer.Uint(spawn.hp.initial);
-
-    writer.Key("threshold");
-    writer.Uint(spawn.hp.threshold);
-    writer.EndObject();
-
-    writer.Key("countdown");
-    writer.StartObject();
-
-    writer.Key("next_wave");
-    writer.Uint(spawn.countdown.next_wave);
-
-    writer.Key("next_wave_initial");
-    writer.Uint(spawn.countdown.next_wave_initial);
-
-    writer.Key("lurking_squad");
-    writer.Uint(spawn.countdown.lurking_squad);
-
-    writer.Key("hugewave_fade");
-    writer.Uint(spawn.countdown.hugewave_fade);
-
-    writer.Key("endgame");
-    writer.Uint(spawn.countdown.hugewave_fade);
-
-    writer.Key("pool");
-    writer.Uint(spawn.countdown.pool);
-    writer.EndObject();
-
-    static const zombie_type ALL_ZOMBIES[] = {
-        zombie_type::zombie,
-        zombie_type::flag,
-        zombie_type::conehead,
-        zombie_type::pole_vaulting,
-        zombie_type::buckethead,
-        zombie_type::newspaper,
-        zombie_type::screendoor,
-        zombie_type::football,
-        zombie_type::dancing,
-        zombie_type::backup_dancer,
-        zombie_type::ducky_tube,
-        zombie_type::snorkel,
-        zombie_type::zomboni,
-        zombie_type::dolphin_rider,
-        zombie_type::jack_in_the_box,
-        zombie_type::balloon,
-        zombie_type::digger,
-        zombie_type::pogo,
-        zombie_type::yeti,
-        zombie_type::bungee,
-        zombie_type::ladder,
-        zombie_type::catapult,
-        zombie_type::gargantuar,
-        zombie_type::imp,
-        zombie_type::giga_gargantuar,
-    };
-
-    writer.Key("spawn_flags");
-    writer.StartObject();
-    for (auto& type : ALL_ZOMBIES) {
-        writer.Key(zombie::type_to_string(type));
-        writer.Bool(spawn.spawn_flags[static_cast<int>(type)]);
-    }
-    writer.EndObject();
-
-    writer.Key("is_hugewave_shown");
-    writer.Bool(spawn.is_hugewave_shown);
-    writer.EndObject();
 
     writer.Key("sun");
     writer.StartObject();
@@ -258,6 +261,9 @@ void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
     writer.Key("stop_spawn");
     writer.Bool(stop_spawn);
 
+    writer.Key("is_iz");
+    writer.Bool(is_iz);
+
     writer.EndObject();
 }
 
@@ -270,6 +276,7 @@ void scene::reset() {
     is_game_over = false;
     stop_spawn = false;
     enable_split_pea_bug = true;
+    is_iz = false;
 
     zombies.clear();
     plants.clear();
