@@ -762,7 +762,12 @@ bool zombie_system::update_entering_home(object::zombie& z) {
     }
 
     if (z.int_x < threshold && z.is_not_dying) {
-        return true;
+        if (scene.is_iz) {
+            zombie_factory.destroy(z);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     if (z.int_x < threshold + 70 && !z.is_not_dying) {
