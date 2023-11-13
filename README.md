@@ -10,7 +10,7 @@ To build the Python module with CMake, add flags `-DPVZEMU_BUILD_PYBIND=True -DP
 
 You can install through `pip` as well:
 ```shell script
-python -m pip install git+https://github.com/dnartz/PvZ-Emulator
+python -m pip install git+https://github.com/Rottenham/PvZ-Emulator
 ```
 
 ## Usage
