@@ -109,7 +109,7 @@ zombie& zombie_factory::create(zombie_type type, int row, int col)
 	}
 
 	if (col != -1) {
-		z.x = 10 + (col + 1) * 80;
+		z.x = 10 + col * 80;
 		z.int_x = static_cast<int>(z.x);
 	}
 
