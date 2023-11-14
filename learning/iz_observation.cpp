@@ -65,9 +65,11 @@ std::tuple<std::vector<float>, int, int> iz_observation::create(world& w)
 
     int i = 0;
     int zombie_count = 0;
+    std::vector<zombie*> zombies_to_be_destroyed;
     for (auto& z : scene.zombies) {
         if (z.x < eat_brain_thres) {
             scene.brains[z.row] = false;
+            zombies_to_be_destroyed.push_back(&z);
             continue;
         }
         if (z.is_dead || !z.is_not_dying) {
@@ -78,15 +80,21 @@ std::tuple<std::vector<float>, int, int> iz_observation::create(world& w)
         ob[i++] = (get_zombie_num(z.type));
         ob[i++] = z.x / 650.0f;
         ob[i++] = static_cast<float>(z.row) / scene.rows;
-        ob[i++] = static_cast<float>(z.hp) / z.max_hp;
+        ob[i++] = static_cast<float>(z.hp) * 0.66 / z.max_hp;
         ob[i++] = static_cast<float>(z.accessory_1.hp) / std::max(1u, z.accessory_1.max_hp);
         ob[i++] = static_cast<float>(z.countdown.slow) / 2000.0f;
     }
 
+    for (auto z : zombies_to_be_destroyed) {
+        w.zombie_factory.destroy(*z);
+    }
+
     i = num_zombies * zombie_size;
     int plant_count = 0;
+    std::vector<plant> plants_to_be_destroyed;
     for (auto& p : scene.plants) {
         if (p.status == plant_status::squash_crushed) {
+            plants_to_be_destroyed.push_back(p);
             continue;
         }
         plant_count++;
@@ -95,6 +103,10 @@ std::tuple<std::vector<float>, int, int> iz_observation::create(world& w)
         ob[i++] = static_cast<float>(p.hp) / p.max_hp;
         ob[i++] = static_cast<float>(p.row) / scene.rows;
         ob[i++] = static_cast<float>(p.col) / 9.0f;
+    }
+
+    for (auto p : plants_to_be_destroyed) {
+        w.plant_factory.destroy(p);
     }
 
     i = num_zombies * zombie_size + num_plants * plant_size;
