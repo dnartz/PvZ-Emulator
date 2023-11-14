@@ -13,40 +13,45 @@ PYBIND11_MAKE_OPAQUE(std::vector<int>);
 PYBIND11_MAKE_OPAQUE(std::vector<float>);
 PYBIND11_MAKE_OPAQUE(pvz_emulator::world::batch_action_masks);
 
-PYBIND11_MODULE(pvzemu, m) {
+PYBIND11_MODULE(pvzemu, m)
+{
     py::class_<std::vector<int>>(m, "IntVector")
         .def(py::init<>())
         .def("__getitem__", [](const std::vector<int>& v, std::vector<int>::size_type i) {
             return v[i];
-        }).def("__len__", [](const std::vector<int>& v) { return v.size(); })
-        .def("__iter__", [](std::vector<int>& v) {
-            return py::make_iterator(v.begin(), v.end());
-        }, py::keep_alive<0, 1>());
+        })
+        .def("__len__", [](const std::vector<int>& v) { return v.size(); })
+        .def(
+            "__iter__", [](std::vector<int>& v) {
+                return py::make_iterator(v.begin(), v.end());
+            },
+            py::keep_alive<0, 1>());
 
     py::class_<std::vector<float>>(m, "FloatVector")
         .def(py::init<>())
-        .def("__getitem__", [](
-            const std::vector<float>& v,
-            std::vector<float>::size_type i)
-        {
+        .def("__getitem__", [](const std::vector<float>& v, std::vector<float>::size_type i) {
             return v[i];
-        }).def("__len__", [](const std::vector<float>& v) { return v.size(); })
-        .def("__iter__", [](std::vector<float>& v) {
-            return py::make_iterator(v.begin(), v.end());
-        }, py::keep_alive<0, 1>());
+        })
+        .def("__len__", [](const std::vector<float>& v) { return v.size(); })
+        .def(
+            "__iter__", [](std::vector<float>& v) {
+                return py::make_iterator(v.begin(), v.end());
+            },
+            py::keep_alive<0, 1>());
 
     py::class_<world::batch_action_masks>(m, "BatchActionMasks")
         .def(py::init<>())
-        .def("__getitem__", [](
-            world::batch_action_masks &v,
-            world::batch_action_masks ::size_type i) -> world::action_masks&
-        {
+        .def("__getitem__", [](world::batch_action_masks& v, world::batch_action_masks ::size_type i) -> world::action_masks& {
             return v[i];
-        }).def("__len__", [](const world::batch_action_masks & v) {
+        })
+        .def("__len__", [](const world::batch_action_masks& v) {
             return v.size();
-        }).def("__iter__", [](world::batch_action_masks & v) {
-            return py::make_iterator(v.begin(), v.end());
-        }, py::keep_alive<0, 1>());
+        })
+        .def(
+            "__iter__", [](world::batch_action_masks& v) {
+                return py::make_iterator(v.begin(), v.end());
+            },
+            py::keep_alive<0, 1>());
 
     py::class_<world>(m, "World")
         .def_readwrite("scene", &world::scene)
@@ -61,20 +66,20 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("griditem_factory", &world::griditem_factory)
         .def_readonly("zombie", &world::zombie)
         .def_readonly("projectile", &world::projectile)
-        .def("update", (bool (world::*)(void)) & world::update)
-        .def("update", (bool (world::*)(const std::tuple<int, int, int>&)) & world::update)
+        .def("update", (bool(world::*)(void)) & world::update)
+        .def("update", (bool(world::*)(const std::tuple<int, int, int>&)) & world::update)
         .def("get_available_actions", &world::get_available_actions)
         .def_static("update_all", &world::update_all)
         .def(py::init<scene_type>())
         .def("select_plants", &world::select_plants)
         .def("plant",
-            (bool (world::*)(unsigned int, unsigned int, unsigned int)) & world::plant)
+            (bool(world::*)(unsigned int, unsigned int, unsigned int)) & world::plant)
         .def("plant",
-            (bool (world::*)(plant_type, unsigned int, unsigned int)) & world::plant)
+            (bool(world::*)(plant_type, unsigned int, unsigned int)) & world::plant)
         .def("check_build", &world::check_build)
-        .def("reset", (void (world::*)(void)) & world::reset)
-        .def("reset", (void (world::*)(scene_type)) & world::reset)
-        .def("get_json", (std::string (world::*)(void)) & world::get_json);
+        .def("reset", (void(world::*)(void)) & world::reset)
+        .def("reset", (void(world::*)(scene_type)) & world::reset)
+        .def("get_json", (std::string(world::*)(void)) & world::get_json);
 
     py::class_<learning::observation_factory>(m, "ObservationFactory")
         .def(py::init<
@@ -82,29 +87,26 @@ PYBIND11_MODULE(pvzemu, m) {
             unsigned int,
             unsigned int,
             unsigned int,
-            unsigned int
-        >())
-        .def("create", (void (learning::observation_factory::*)(
-            world &world,
-            const world::action_masks &action_masks,
-            float *ob
-        )) & learning::observation_factory::create)
-        .def("create", (void (learning::observation_factory::*)(
-            world &world,
-            const world::action_masks &action_masks,
-            std::vector<float> &ob
-        )) & learning::observation_factory::create)
-        .def("create", (void (learning::observation_factory::*)(
-            std::vector<world *> &worlds,
-            const world::batch_action_masks& action_masks,
-            std::vector<float> &ob
-        )) & learning::observation_factory::create)
+            unsigned int>())
+        .def("create", (void(learning::observation_factory::*)(world & world, const world::action_masks& action_masks, float* ob)) & learning::observation_factory::create)
+        .def("create", (void(learning::observation_factory::*)(world & world, const world::action_masks& action_masks, std::vector<float>& ob)) & learning::observation_factory::create)
+        .def("create", (void(learning::observation_factory::*)(std::vector<world*> & worlds, const world::batch_action_masks& action_masks, std::vector<float>& ob)) & learning::observation_factory::create)
         .def_readonly("num_zombies", &learning::observation_factory::num_zombies)
         .def_readonly("num_plants", &learning::observation_factory::num_plants)
         .def_readonly("num_projectiles", &learning::observation_factory::num_projectiles)
         .def_readonly("num_griditems", &learning::observation_factory::num_griditems)
         .def_readonly("num_ice_paths", &learning::observation_factory::num_ice_paths)
         .def_readonly("single_size", &learning::observation_factory::single_size);
+
+    py::class_<learning::iz_observation>(m, "IZObservation")
+        .def(py::init<
+            scene_type,
+            unsigned int,
+            unsigned int>())
+        .def("create", (std::tuple<std::vector<float>, int, int>(learning::iz_observation::*)(world & world)) & learning::iz_observation::create)
+        .def_readonly("num_zombies", &learning::iz_observation::num_zombies)
+        .def_readonly("num_plants", &learning::iz_observation::num_plants)
+        .def_readonly("single_size", &learning::iz_observation::single_size);
 
     py::enum_<scene_type>(m, "SceneType")
         .value("day", scene_type::day)
@@ -227,32 +229,40 @@ PYBIND11_MODULE(pvzemu, m) {
         .def(py::init<scene_type>())
         .def("is_water_grid", &scene::is_water_grid)
         .def("get_max_row", &scene::get_max_row)
-        .def("reset", (void (scene::*)(void)) & scene::reset)
-        .def("reset", (void (scene::*)(scene_type)) & scene::reset)
-        .def("set_sun", (void (scene::*)(unsigned int)) & scene::set_sun);
+        .def("reset", (void(scene::*)(void)) & scene::reset)
+        .def("reset", (void(scene::*)(scene_type)) & scene::reset)
+        .def("set_sun", (void(scene::*)(unsigned int)) & scene::set_sun);
 
     py::class_<decltype(scene::zombies)>(m, "ZombieList")
-        .def("__iter__", [](decltype(scene::zombies) &s) {
-            return py::make_iterator(s.begin(), s.end());
-        }, py::keep_alive<0, 1>())
+        .def(
+            "__iter__", [](decltype(scene::zombies)& s) {
+                return py::make_iterator(s.begin(), s.end());
+            },
+            py::keep_alive<0, 1>())
         .def("__len__", &decltype(scene::zombies)::size);
 
     py::class_<decltype(scene::plants)>(m, "PlantList")
-        .def("__iter__", [](decltype(scene::plants) &s) {
-            return py::make_iterator(s.begin(), s.end());
-        }, py::keep_alive<0, 1>())
+        .def(
+            "__iter__", [](decltype(scene::plants)& s) {
+                return py::make_iterator(s.begin(), s.end());
+            },
+            py::keep_alive<0, 1>())
         .def("__len__", &decltype(scene::plants)::size);
 
     py::class_<decltype(scene::griditems)>(m, "GriditemList")
-        .def("__iter__", [](decltype(scene::griditems) &s) {
-            return py::make_iterator(s.begin(), s.end());
-        }, py::keep_alive<0, 1>())
+        .def(
+            "__iter__", [](decltype(scene::griditems)& s) {
+                return py::make_iterator(s.begin(), s.end());
+            },
+            py::keep_alive<0, 1>())
         .def("__len__", &decltype(scene::griditems)::size);
 
     py::class_<decltype(scene::projectiles)>(m, "ProjectileList")
-        .def("__iter__", [](decltype(scene::projectiles) &s) {
-            return py::make_iterator(s.begin(), s.end());
-        }, py::keep_alive<0, 1>())
+        .def(
+            "__iter__", [](decltype(scene::projectiles)& s) {
+                return py::make_iterator(s.begin(), s.end());
+            },
+            py::keep_alive<0, 1>())
         .def("__len__", &decltype(scene::projectiles)::size);
 
     py::class_<scene::card_data>(m, "Card")
@@ -420,15 +430,10 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("c", &decltype(zombie::garlic_tick)::c);
 
     py::class_<decltype(zombie::catapult_or_jackson)>(m, "ZombieUnionCatapultOrJackson")
-        .def_property("n_basketballs", [](decltype(zombie::catapult_or_jackson)& u) {
-                return u.n_basketballs;
-        }, [](decltype(zombie::catapult_or_jackson) &u, unsigned int v) {
-                u.n_basketballs = v;
-        }).def_property("summon_countdown", [](decltype(zombie::catapult_or_jackson)& u) {
-            return u.summon_countdown;
-        }, [](decltype(zombie::catapult_or_jackson)& u, unsigned int v) {
-            u.summon_countdown = v;
-        });
+        .def_property(
+            "n_basketballs", [](decltype(zombie::catapult_or_jackson)& u) { return u.n_basketballs; }, [](decltype(zombie::catapult_or_jackson)& u, unsigned int v) { u.n_basketballs = v; })
+        .def_property(
+            "summon_countdown", [](decltype(zombie::catapult_or_jackson)& u) { return u.summon_countdown; }, [](decltype(zombie::catapult_or_jackson)& u, unsigned int v) { u.summon_countdown = v; });
 
     py::class_<zombie>(m, "Zombie")
         .def_readonly("type", &zombie::type)
@@ -627,7 +632,7 @@ PYBIND11_MODULE(pvzemu, m) {
     py::class_<decltype(plant::split_pea_attack_flags)>(m, "PlantSplitPeaAttackFlags")
         .def_readonly("front", &decltype(plant::split_pea_attack_flags)::front)
         .def_readonly("back", &decltype(plant::split_pea_attack_flags)::back);
-    
+
     py::enum_<projectile_type>(m, "ProjectileType")
         .value("none", projectile_type::none)
         .value("pea", projectile_type::pea)
