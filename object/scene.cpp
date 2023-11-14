@@ -11,6 +11,7 @@ scene::scene(const scene& s) :
     plants(s.plants),
     griditems(s.griditems),
     projectiles(s.projectiles),
+    brains(s.brains),
     spawn(s.spawn),
     sun(s.sun),
     ice_path(s.ice_path),
@@ -107,6 +108,16 @@ void scene::to_json(rapidjson::Writer<rapidjson::StringBuffer>& writer) {
         proj.to_json(*this, writer);
     }
     writer.EndArray();
+
+    if (is_iz) {
+        writer.Key("brains");
+        writer.StartArray();
+        for (const auto& b : brains) {
+            writer.Bool(b);
+        }
+        writer.EndArray();
+    }
+    
 
     if (!stop_spawn) {
         writer.Key("spawn");
@@ -282,6 +293,7 @@ void scene::reset() {
     plants.clear();
     griditems.clear();
     projectiles.clear();
+    brains = { true, true, true, true, true, true };
 
     memset(&spawn, 0, sizeof(spawn));
     spawn.total_flags = 1000;

@@ -50,6 +50,7 @@ public:
     obj_list<object::plant, 512> plants;
     obj_list<object::griditem, 128> griditems;
     obj_list<object::projectile, 1024> projectiles;
+    std::array<bool, 6> brains = {true, true, true, true, true, true};
 
     std::array<std::array<grid_plant_status, 9>, 6> plant_map;
 
