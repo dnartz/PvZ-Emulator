@@ -77,11 +77,11 @@ std::tuple<std::vector<float>, int, int> iz_observation::create(world& w)
         zombie_count++;
 
         ob[i++] = (get_zombie_num(z.type));
-        ob[i++] = z.x / 650.0;
+        ob[i++] = z.x / 650.0f;
         ob[i++] = static_cast<float>(z.row) / scene.rows;
         ob[i++] = static_cast<float>(z.hp) / z.max_hp;
         ob[i++] = static_cast<float>(z.accessory_1.hp) / std::max(1u, z.accessory_1.max_hp);
-        ob[i++] = static_cast<float>(z.countdown.slow) / 2000.0;
+        ob[i++] = static_cast<float>(z.countdown.slow) / 2000.0f;
     }
 
     i = num_zombies * zombie_size;
@@ -95,7 +95,7 @@ std::tuple<std::vector<float>, int, int> iz_observation::create(world& w)
         ob[i++] = (get_plant_num(p.type));
         ob[i++] = static_cast<float>(p.hp) / p.max_hp;
         ob[i++] = static_cast<float>(p.row) / scene.rows;
-        ob[i++] = static_cast<float>(p.col) / 9;
+        ob[i++] = static_cast<float>(p.col) / 9.0f;
     }
 
     i = num_zombies * zombie_size + num_plants * plant_size;

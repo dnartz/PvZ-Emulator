@@ -3,6 +3,7 @@
 
 #include "world.h"
 #include "learning/observation_factory.h"
+#include "learning/iz_observation.h"
 
 namespace py = pybind11;
 
