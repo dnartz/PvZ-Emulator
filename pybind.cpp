@@ -101,7 +101,6 @@ PYBIND11_MODULE(pvzemu, m)
 
     py::class_<learning::iz_observation>(m, "IZObservation")
         .def(py::init<
-            scene_type,
             unsigned int,
             unsigned int>())
         .def("create", (std::tuple<std::vector<float>, int, int>(learning::iz_observation::*)(world & world)) & learning::iz_observation::create)

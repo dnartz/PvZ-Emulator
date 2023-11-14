@@ -49,7 +49,6 @@ const unsigned int iz_observation::plant_size = 4;
 const unsigned int iz_observation::meta_size = 6;
 
 iz_observation::iz_observation(
-    scene_type type,
     unsigned int num_zombies,
     unsigned int num_plants)
     : num_zombies(num_zombies)

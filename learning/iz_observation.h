@@ -16,7 +16,6 @@ public:
     static const unsigned int meta_size;
 
     iz_observation(
-        pvz_emulator::object::scene_type type,
         unsigned int num_zombies,
         unsigned int num_plants);
 
