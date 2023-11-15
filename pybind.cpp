@@ -11,7 +11,7 @@ using namespace pvz_emulator;
 using namespace pvz_emulator::object;
 
 PYBIND11_MAKE_OPAQUE(std::vector<int>);
-PYBIND11_MAKE_OPAQUE(std::vector<float>);
+// PYBIND11_MAKE_OPAQUE(std::vector<float>);
 PYBIND11_MAKE_OPAQUE(pvz_emulator::world::batch_action_masks);
 
 PYBIND11_MODULE(pvzemu, m)
@@ -28,17 +28,17 @@ PYBIND11_MODULE(pvzemu, m)
             },
             py::keep_alive<0, 1>());
 
-    py::class_<std::vector<float>>(m, "FloatVector")
-        .def(py::init<>())
-        .def("__getitem__", [](const std::vector<float>& v, std::vector<float>::size_type i) {
-            return v[i];
-        })
-        .def("__len__", [](const std::vector<float>& v) { return v.size(); })
-        .def(
-            "__iter__", [](std::vector<float>& v) {
-                return py::make_iterator(v.begin(), v.end());
-            },
-            py::keep_alive<0, 1>());
+    // py::class_<std::vector<float>>(m, "FloatVector")
+    //     .def(py::init<>())
+    //     .def("__getitem__", [](const std::vector<float>& v, std::vector<float>::size_type i) {
+    //         return v[i];
+    //     })
+    //     .def("__len__", [](const std::vector<float>& v) { return v.size(); })
+    //     .def(
+    //         "__iter__", [](std::vector<float>& v) {
+    //             return py::make_iterator(v.begin(), v.end());
+    //         },
+    //         py::keep_alive<0, 1>());
 
     py::class_<world::batch_action_masks>(m, "BatchActionMasks")
         .def(py::init<>())
