@@ -10,103 +10,105 @@ namespace pvz_emulator::system {
 
 using namespace pvz_emulator::object;
 
-zombie& zombie_factory::create(zombie_type type)
+zombie& zombie_factory::create(zombie_type type, std::optional<unsigned int> spawn_wave)
 {
-	auto row = get_spawn_row(type);
+    auto row = get_spawn_row(type);
 
-	auto& z = scene.zombies.alloc();
+    auto& z = scene.zombies.alloc();
 
-	switch (type) {
+    auto wave = spawn_wave ? spawn_wave.value() : scene.spawn.wave;
+
+    switch (type) {
     case zombie_type::zombie:
     case zombie_type::conehead:
     case zombie_type::buckethead:
     case zombie_type::screendoor:
     case zombie_type::flag:
     case zombie_type::ducky_tube:
-		subsystems.zombie.init(z, type, row);
+        subsystems.zombie.init(z, type, row);
         break;
 
     case zombie_type::pole_vaulting:
-		subsystems.pole_vaulting.init(z, row);
+        subsystems.pole_vaulting.init(z, row);
         break;
 
     case zombie_type::newspaper:
-		subsystems.newspaper.init(z, row);
+        subsystems.newspaper.init(z, row);
         break;
 
     case zombie_type::football:
-		subsystems.football.init(z, row);
+        subsystems.football.init(z, row);
         break;
 
     case zombie_type::dancing:
-		subsystems.dancing.init(z, row);
+        subsystems.dancing.init(z, row);
         break;
 
     case zombie_type::backup_dancer:
-		subsystems.backup_dancer.init(z, row);
+        subsystems.backup_dancer.init(z, row, wave);
         break;
 
     case zombie_type::snorkel:
-		subsystems.snorkel.init(z, row);
+        subsystems.snorkel.init(z, row);
         break;
 
     case zombie_type::zomboni:
-		subsystems.zomboni.init(z, row);
+        subsystems.zomboni.init(z, row);
         break;
 
     case zombie_type::dolphin_rider:
-		subsystems.dolphin_rider.init(z, row);
+        subsystems.dolphin_rider.init(z, row);
         break;
 
     case zombie_type::jack_in_the_box:
-		subsystems.jack_in_the_box.init(z, row);
+        subsystems.jack_in_the_box.init(z, row);
         break;
 
     case zombie_type::balloon:
-		subsystems.balloon.init(z, row);
+        subsystems.balloon.init(z, row);
         break;
 
     case zombie_type::digger:
-		subsystems.digger.init(z, row);
+        subsystems.digger.init(z, row);
         break;
 
     case zombie_type::pogo:
-		subsystems.pogo.init(z, row);
+        subsystems.pogo.init(z, row);
         break;
 
     case zombie_type::yeti:
-		subsystems.yeti.init(z, row);
+        subsystems.yeti.init(z, row);
         break;
 
     case zombie_type::bungee:
-		subsystems.bungee.init(z, row);
-		break;
+        subsystems.bungee.init(z, row);
+        break;
 
     case zombie_type::ladder:
-		subsystems.ladder.init(z, row);
+        subsystems.ladder.init(z, row);
         break;
 
     case zombie_type::catapult:
-		subsystems.catapult.init(z, row);
+        subsystems.catapult.init(z, row);
         break;
 
     case zombie_type::gargantuar:
-		subsystems.gargantuar.init(z, zombie_type::gargantuar, row);
+        subsystems.gargantuar.init(z, zombie_type::gargantuar, row);
         break;
 
     case zombie_type::giga_gargantuar:
-		subsystems.gargantuar.init(z, zombie_type::giga_gargantuar, row);
+        subsystems.gargantuar.init(z, zombie_type::giga_gargantuar, row);
         break;
 
     case zombie_type::imp:
-		subsystems.imp.init(z, row);
+        subsystems.imp.init(z, row, wave);
         break;
 
-	default:
-		assert(false);
-	}
+    default:
+        assert(false);
+    }
 
-	return z;
+    return z;
 }
 
 void zombie_factory::create_roof_lurking(

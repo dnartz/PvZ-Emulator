@@ -1,4 +1,6 @@
 #pragma once
+#include <optional>
+
 #include "object/scene.h"
 #include "object/zombie.h"
 #include "system/rng.h"
@@ -30,7 +32,9 @@ public:
         rng(s),
         subsystems(s) {}
 
-    object::zombie& create(object::zombie_type type);
+    object::zombie& create(
+        object::zombie_type type,
+        std::optional<unsigned int> spawn_wave = std::nullopt);
     void create_lurking(object::zombie_type type, unsigned int row, unsigned int col);
 
     void destroy(object::zombie& z);

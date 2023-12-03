@@ -1,5 +1,6 @@
 #pragma once
 #include <array>
+#include <optional>
 #include <utility>
 #include <unordered_map>
 
@@ -31,7 +32,11 @@ public:
 
     object::plant* find_target(object::zombie &z, zombie_attack_type type);
 
-    void init(object::zombie& z, object::zombie_type type, unsigned int row);
+    void init(
+        object::zombie& z,
+        object::zombie_type type,
+        unsigned int row,
+        std::optional<unsigned int> spawn_wave = std::nullopt);
 
     long double predict_after(object::zombie& z, float cs);
 
@@ -225,7 +230,7 @@ public:
 
     void update(object::zombie& z);
 
-    void init(object::zombie &z, unsigned int row);
+    void init(object::zombie &z, unsigned int row, unsigned int spawn_wave);
     zombie_backup_dancer(object::scene& s) : zombie_dancer_base(s) {}
 };
 
@@ -235,7 +240,7 @@ public:
 
     void update(object::zombie& z);
 
-    void init(object::zombie &z, unsigned int row);
+    void init(object::zombie &z, unsigned int row, unsigned int spawn_wave);
     zombie_imp(object::scene& s) : zombie_base(s) {}
 };
 

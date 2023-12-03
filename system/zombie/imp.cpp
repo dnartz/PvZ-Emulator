@@ -30,10 +30,10 @@ void zombie_imp::update(object::zombie& z) {
     }
 }
 
-void zombie_imp::init(zombie &z, unsigned int row) {
+void zombie_imp::init(zombie &z, unsigned int row, unsigned int spawn_wave) {
     z._ground = _ground.data();
 
-    zombie_base::init(z, zombie_type::imp, row);
+    zombie_base::init(z, zombie_type::imp, row, spawn_wave);
 
     reanim.set(z, zombie_reanim_name::anim_walk, reanim_type::repeat, 12);
 
