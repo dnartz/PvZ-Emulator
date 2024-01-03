@@ -7,14 +7,24 @@ namespace pvz_emulator::system {
 
 using namespace pvz_emulator::object;
 
-void zombie_base::init(object::zombie &z, zombie_type type, unsigned int row) {
+void zombie_base::init(
+    object::zombie &z,
+    zombie_type type,
+    unsigned int row,
+    std::optional<unsigned int> spawn_wave)
+{
     z.type = type;
 
     z.status = zombie_status::walking;
     z.action = zombie_action::none;
 
     z.row = row;
-    z.spawn_wave = scene.spawn.wave;
+    
+    if (spawn_wave) {
+        z.spawn_wave = spawn_wave.value();
+    } else {
+        z.spawn_wave = scene.spawn.wave;
+    }
 
     z.hp = 270;
 

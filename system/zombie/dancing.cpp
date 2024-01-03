@@ -88,7 +88,7 @@ void zombie_dancing::create_backup_dancers(zombie& z) {
             }
         }
 
-        auto& backup = zombie_factory(scene).create(zombie_type::backup_dancer);
+        auto& backup = zombie_factory(scene).create(zombie_type::backup_dancer, z.spawn_wave);
 
         backup.row = row;
 
