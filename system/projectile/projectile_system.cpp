@@ -433,9 +433,9 @@ void projectile_system::do_other_motion(projectile& proj) {
 
             get_vector_cos_and_sin(
                 static_cast<float>(
-                    zr.x + zr.width / 2.0 - proj.attack_box.width / 2 - proj.x),
+                    zr.x + zr.width / 2.0 - proj.attack_box.width / 2.0 - proj.x),
                 static_cast<float>(
-                    zr.y + zr.height / 2 - proj.attack_box.height / 2 - proj.y),
+                    zr.y + zr.height / 2.0 - proj.attack_box.height / 2.0 - proj.y),
                 a2[0],
                 a2[1]);
 
@@ -447,8 +447,8 @@ void projectile_system::do_other_motion(projectile& proj) {
                 res[0],
                 res[1]);
 
-            proj.dx = res[0] * 2;
-            proj.dy2 = res[1] * 2;
+            proj.dx = res[0] * 2.0;
+            proj.dy2 = res[1] * 2.0;
         }
         proj.y += proj.dy2;
         proj.x += proj.dx;
