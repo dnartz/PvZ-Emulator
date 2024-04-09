@@ -21,8 +21,8 @@ observation_factory::observation_factory(
         unsigned int num_griditems) :
     num_zombies(num_zombies),
     num_plants(num_plants),
-    num_griditems(num_griditems),
     num_projectiles(num_projectiles),
+    num_griditems(num_griditems),
     num_ice_paths(type == scene_type::night ? 0 :
         type == scene_type::pool || type == scene_type::fog ? 6 : 5),
     single_size(

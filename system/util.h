@@ -37,6 +37,6 @@ enum class zombie_attack_type {
     place_ladder = 3
 };
 
-bool is_target_of_kelp(object::scene& s, object::zombie& z);
+bool is_target_of_kelp(object::scene& s, const object::zombie& z);
 
 }

@@ -75,7 +75,7 @@ void plant::get_hit_box(rect& rect) {
     }
 }
 
-void plant::get_attack_box(rect& rect, bool is_alt_attack) {
+void plant::get_attack_box(rect& rect, bool is_alt_attack) const {
     if (is_alt_attack && type == plant_type::split_pea) {
         rect.x = 0;
         rect.y = y;
@@ -166,7 +166,7 @@ void plant::get_attack_box(rect& rect, bool is_alt_attack) {
     }
 }
 
-unsigned int plant::get_attack_flags(bool is_alt_attack) {
+unsigned int plant::get_attack_flags(bool is_alt_attack) const {
     switch (type) {
     case plant_type::cactus:
         return is_alt_attack ?

@@ -3,7 +3,7 @@
 #include "object/scene.h"
 #include "system/rng.h"
 
-#define TRIVAL_INIT(base, name) \
+#define TRIVIAL_INIT(base, name) \
     void init(object::plant& p, unsigned int row, unsigned int col) {\
         base ## _base::init(p, object::plant_type::name, row, col);\
     }\
@@ -24,7 +24,7 @@ protected:
 
 public:
     object::zombie*
-    find_target(object::plant& p, unsigned int row, bool is_alt_attack);
+    find_target(const object::plant& p, unsigned int row, bool is_alt_attack);
 
     plant_base(object::scene& s) : scene(s), rng(s) {}
     void set_launch_countdown(object::plant& p, bool is_alt_attack);
@@ -81,13 +81,13 @@ public:
 class plant_pea_shooter : public pea_base {
 public:
     static const std::pair<float, float> PEA_OFFSETS[104];
-    TRIVAL_INIT(pea, pea_shooter)
+    TRIVIAL_INIT(pea, pea_shooter)
     plant_pea_shooter(object::scene &s) : pea_base(s) {}
 };
 
 class plant_sunflower : public sun_plant_base {
 public:
-    TRIVAL_INIT(plant, sunflower)
+    TRIVIAL_INIT(plant, sunflower)
     plant_sunflower(object::scene& s) : plant_base(s), sun_plant_base(s) {}
 };
 
@@ -106,7 +106,7 @@ public:
 
 class plant_wallnut : public plant_base {
 public:
-    TRIVAL_INIT(plant, wallnut)
+    TRIVIAL_INIT(plant, wallnut)
     plant_wallnut(object::scene& s): plant_base(s) {}
 };
 
@@ -120,7 +120,7 @@ public:
 class plant_snow_pea : public pea_base {
 public:
     static const std::pair<float, float> PEA_OFFSETS[104];
-    TRIVAL_INIT(pea, snow_pea)
+    TRIVIAL_INIT(pea, snow_pea)
     plant_snow_pea(object::scene& s) : pea_base(s) {}
 };
 
@@ -134,13 +134,13 @@ public:
 class plant_repeater: public pea_base {
 public:
     static const std::pair<float, float> PEA_OFFSETS[104];
-    TRIVAL_INIT(pea, repeater)
+    TRIVIAL_INIT(pea, repeater)
     plant_repeater(object::scene& s): pea_base(s) {}
 };
 
 class plant_puffshroom: public puff_mushroom_base {
 public:
-    TRIVAL_INIT(puff_mushroom, puffshroom)
+    TRIVIAL_INIT(puff_mushroom, puffshroom)
     plant_puffshroom(object::scene& s): plant_base(s), puff_mushroom_base(s) {}
 };
 
@@ -156,7 +156,7 @@ public:
 
 class plant_fumeshroom: public mushroom_base {
 public:
-    TRIVAL_INIT(mushroom, fumeshroom)
+    TRIVIAL_INIT(mushroom, fumeshroom)
     plant_fumeshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
@@ -169,7 +169,7 @@ public:
 
 class plant_hypnoshroom: public mushroom_base {
 public:
-    TRIVAL_INIT(mushroom, hypnoshroom)
+    TRIVIAL_INIT(mushroom, hypnoshroom)
     plant_hypnoshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
@@ -188,14 +188,14 @@ public:
 class plant_iceshroom: public mushroom_base {
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(mushroom, iceshroom)
+    TRIVIAL_INIT(mushroom, iceshroom)
     plant_iceshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_doomshroom: public mushroom_base {
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(mushroom, doomshroom)
+    TRIVIAL_INIT(mushroom, doomshroom)
     plant_doomshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
@@ -219,13 +219,13 @@ private:
 
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(plant, squash)
+    TRIVIAL_INIT(plant, squash)
     plant_squash(object::scene& s): plant_base(s) {}
 };
 
 class plant_threepeater: public pea_base {
 public:
-    TRIVAL_INIT(pea, threepeater)
+    TRIVIAL_INIT(pea, threepeater)
     void set_launch_countdown(object::plant& p);
     plant_threepeater(object::scene& s): pea_base(s) {}
 };
@@ -233,7 +233,7 @@ public:
 class plant_tangle_kelp: public plant_base {
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(plant, tangle_kelp)
+    TRIVIAL_INIT(plant, tangle_kelp)
     plant_tangle_kelp(object::scene& s): plant_base(s) {}
 };
 
@@ -256,14 +256,14 @@ private:
     void set_idle_reanim(object::plant& p);
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(plant, spikeweed)
+    TRIVIAL_INIT(plant, spikeweed)
     plant_spikeweed(object::scene& s): plant_base(s) {}
 };
 
 class plant_torchwood: public plant_base {
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(plant, torchwood)
+    TRIVIAL_INIT(plant, torchwood)
     plant_torchwood(object::scene& s): plant_base(s) {}
 };
 
@@ -275,7 +275,7 @@ public:
 
 class plant_seashroom: public puff_mushroom_base {
 public:
-    TRIVAL_INIT(puff_mushroom, puffshroom)
+    TRIVIAL_INIT(puff_mushroom, puffshroom)
     plant_seashroom(object::scene& s): plant_base(s), puff_mushroom_base(s) {}
 };
 
@@ -306,7 +306,7 @@ public:
 class plant_split_pea: public pea_base {
 public:
     static const std::pair<float, float> PEA_OFFSETS[132];
-    TRIVAL_INIT(pea, split_pea)
+    TRIVIAL_INIT(pea, split_pea)
     plant_split_pea(object::scene& s): pea_base(s) {}
 };
 
@@ -316,7 +316,7 @@ private:
 
 public:
     void attack(object::plant& p);
-    TRIVAL_INIT(plant, starfruit)
+    TRIVIAL_INIT(plant, starfruit)
     void set_launch_countdown(object::plant& p);
     plant_starfruit(object::scene& s): plant_base(s) {}
 };
@@ -333,13 +333,13 @@ private:
     void attack_ladder(object::plant& p);
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(mushroom, magnetshroom)
+    TRIVIAL_INIT(mushroom, magnetshroom)
     plant_magnetshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_cabbagepult: public plant_base {
 public:
-    TRIVAL_INIT(plant, cabbagepult)
+    TRIVIAL_INIT(plant, cabbagepult)
     plant_cabbagepult(object::scene& s): plant_base(s) {}
 };
 
@@ -356,7 +356,7 @@ public:
 
 class plant_kernelpult: public plant_base {
 public:
-    TRIVAL_INIT(plant, kernelpult)
+    TRIVIAL_INIT(plant, kernelpult)
     plant_kernelpult(object::scene& s): plant_base(s) {}
 };
 
@@ -369,14 +369,14 @@ public:
 
 class plant_garlic: public plant_base {
 public:
-    TRIVAL_INIT(plant, garlic)
+    TRIVIAL_INIT(plant, garlic)
     plant_garlic(object::scene& s): plant_base(s) {}
 };
 
 class plant_umbrella_leaf: public plant_base {
 public:
     void update(object::plant& p);
-    TRIVAL_INIT(plant, umbrella_leaf)
+    TRIVIAL_INIT(plant, umbrella_leaf)
     plant_umbrella_leaf(object::scene& s): plant_base(s) {}
 };
 
@@ -392,51 +392,51 @@ public:
 
 class plant_melonpult: public plant_base {
 public:
-    TRIVAL_INIT(plant, melonpult)
+    TRIVIAL_INIT(plant, melonpult)
     plant_melonpult(object::scene& s): plant_base(s) {}
 };
 
 class plant_gatling_pea: public pea_base {
 public:
     static const std::pair<float, float> PEA_OFFSETS[93];
-    TRIVAL_INIT(pea, gatling_pea)
+    TRIVIAL_INIT(pea, gatling_pea)
     plant_gatling_pea(object::scene& s): pea_base(s) {}
 };
 
 class plant_twin_sunflower: public sun_plant_base {
 public:
-    TRIVAL_INIT(plant, twin_sunflower)
+    TRIVIAL_INIT(plant, twin_sunflower)
     plant_twin_sunflower(object::scene& s): plant_base(s), sun_plant_base(s) {}
 };
 
 class plant_gloomshroom: public mushroom_base {
 public:
-    TRIVAL_INIT(mushroom, gloomshroom)
+    TRIVIAL_INIT(mushroom, gloomshroom)
     plant_gloomshroom(object::scene& s): plant_base(s), mushroom_base(s) {}
 };
 
 class plant_cattail: public plant_base {
 public:
-    TRIVAL_INIT(plant, cattail)
+    TRIVIAL_INIT(plant, cattail)
     plant_cattail(object::scene& s): plant_base(s) {}
 };
 
 class plant_winter_melon: public plant_base {
 public:
-    TRIVAL_INIT(plant, winter_melon)
+    TRIVIAL_INIT(plant, winter_melon)
     plant_winter_melon(object::scene& s): plant_base(s) {}
 };
 
 class plant_spikerock : public plant_spikeweed {
 public:
     void reduce_life(object::plant& p);
-    TRIVAL_INIT(plant, spikerock)
+    TRIVIAL_INIT(plant, spikerock)
     plant_spikerock(object::scene& s) : plant_spikeweed(s) {}
 };
 
 class plant_gold_magnet: public plant_base {
 public:
-    TRIVAL_INIT(plant, gold_magnet)
+    TRIVIAL_INIT(plant, gold_magnet)
     plant_gold_magnet(object::scene& s): plant_base(s) {}
 };
 
@@ -568,4 +568,4 @@ struct plant_subsystems {
 
 }
 
-#undef TRIVAL_INIT
+#undef TRIVIAL_INIT

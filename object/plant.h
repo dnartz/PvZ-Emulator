@@ -220,9 +220,9 @@ public:
     }
 
     void get_hit_box(rect &rect);
-    void get_attack_box(rect& rect, bool is_alt_attack = false);
+    void get_attack_box(rect& rect, bool is_alt_attack = false) const;
 
-    unsigned int get_attack_flags(bool is_alt_attack = false);
+    unsigned int get_attack_flags(bool is_alt_attack = false) const;
 
     void set_sleep(bool is_sleep);
 

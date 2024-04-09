@@ -105,7 +105,7 @@ void plant_base::init(
     }
 }
 
-zombie* plant_base::find_target(plant& p, unsigned int row, bool is_alt_attack) {
+zombie* plant_base::find_target(const plant& p, unsigned int row, bool is_alt_attack) {
     auto flags = p.get_attack_flags(is_alt_attack);
 
     rect pr;
@@ -114,7 +114,7 @@ zombie* plant_base::find_target(plant& p, unsigned int row, bool is_alt_attack) 
     double weight = 0;
     zombie* result = nullptr;
 
-    for (auto& z : scene.zombies) {
+    for (const auto& z : scene.zombies) {
         if ((!z.is_not_dying || is_target_of_kelp(scene, z)) &&
             (p.type == plant_type::potato_mine ||
                 p.type == plant_type::chomper ||
@@ -199,7 +199,7 @@ zombie* plant_base::find_target(plant& p, unsigned int row, bool is_alt_attack) 
 
                 if (result == nullptr || w > weight) {
                     weight = w;
-                    result = &z;
+                    result = &const_cast<zombie &>(z);
                 }
             }
         }

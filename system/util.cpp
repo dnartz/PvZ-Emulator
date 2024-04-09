@@ -196,7 +196,7 @@ bool is_not_movable(scene& scene, zombie& z) {
     return false;
 }
 
-bool is_target_of_kelp(scene &s, zombie &z) {
+bool is_target_of_kelp(scene &s, const zombie &z) {
     if (s.type != scene_type::fog && s.type != scene_type::pool ||
         z.row != 2 && z.row != 3)
     {
@@ -208,9 +208,10 @@ bool is_target_of_kelp(scene &s, zombie &z) {
     }
 
     for (int i = 0; i < 9; i++) {
-        if (s.plant_map[z.row][i].content &&
-            s.plant_map[z.row][i].content->type == plant_type::tangle_kelp &&
-            s.plant_map[z.row][i].content->target == s.zombies.get_index(z))
+        auto *plant = s.plant_map[z.row][i].content;
+        if (plant &&
+            plant->type == plant_type::tangle_kelp &&
+            plant->target == s.zombies.get_index(z))
         {
             return true;
         }
