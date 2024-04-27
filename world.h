@@ -92,7 +92,7 @@ public:
 		batch_action_masks &batch_action_masks,
         const check_list &build_check_list,
         std::vector<int>& check_result,
-        std::vector<int>& done,
+        std::vector<int>& lose,
 		unsigned int frames = 1);
 
 	void to_json(std::string& s);

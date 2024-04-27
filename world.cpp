@@ -59,6 +59,7 @@ bool world::update() {
 
     if (endgame.update()) {
         spawn.reset();
+        scene.spawn.total_flags++;
         return true;
     } else {
         return false;

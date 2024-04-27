@@ -46,6 +46,10 @@ template<typename T, size_t S> class obj_list {
 		}
 
 		bool operator==(const iterator& other) const {
+			if (&list != &other.list) {
+				return false;
+			}
+
 			if (other.i == i) {
 				return true;
 			}
@@ -71,7 +75,8 @@ template<typename T, size_t S> class obj_list {
 
 	class const_iterator : public iterator {
 	public:
-		using iterator::iterator;
+		const_iterator(int i, const obj_list& l) :
+			iterator(i, const_cast<obj_list&>(l)) {}
 
 		const T& operator*() const {
 			return this->list.a[this->i].t;
@@ -195,7 +200,7 @@ public:
 	}
 
 	const_iterator end() const {
-		return const_iterator(0, *this);
+		return const_iterator(-1, *this);
 	}
 
 	void clear() {

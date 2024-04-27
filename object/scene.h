@@ -85,7 +85,7 @@ public:
         spawn_data() {
             memset(this, 0, sizeof(*this));
 
-            total_flags = 999;
+            total_flags = 1000;
             countdown.next_wave = 600;
             countdown.next_wave_initial = 600;
         }

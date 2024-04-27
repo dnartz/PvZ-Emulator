@@ -369,6 +369,11 @@ unsigned int spawn::get_current_hp() {
 }
 
 void spawn::next_spawn_countdown_update() {
+	if (data.countdown.endgame > 0) {
+		return;
+	}
+
+	assert(data.countdown.next_wave <= 5500);
 	--data.countdown.next_wave;
 
 	if (data.wave == MAX_WAVES) {
@@ -415,6 +420,10 @@ void spawn::next_spawn_countdown_update() {
 
 	++data.wave;
 
+	if (data.wave == 10) {
+		data.total_flags++;
+	}
+
 	data.hp.initial = get_current_hp();
 
 	if (data.wave == MAX_WAVES) {
@@ -454,8 +463,6 @@ void spawn::reset() {
 	data.countdown.lurking_squad =
 		data.countdown.hugewave_fade =
 		data.countdown.endgame = 0;
-
-	data.total_flags++;
 
     gen_spawn_flags();
     gen_spawn_list();
