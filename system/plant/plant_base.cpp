@@ -67,7 +67,7 @@ void plant_base::init(
     p.edible = plant_edible_status::visible_and_edible;
 
     memset(&p.countdown, 0, sizeof(p.countdown));
-    p.countdown.blover_disappear = 200;
+    p.countdown.dead = 200;
 
     p.max_boot_delay =
         plant::EFFECT_INTERVAL_TABLE[static_cast<size_t>(p.type)];

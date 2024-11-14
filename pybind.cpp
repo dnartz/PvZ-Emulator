@@ -619,7 +619,6 @@ PYBIND11_MODULE(pvzemu, m) {
         .def_readonly("awake", &decltype(plant::countdown)::awake)
         .def_readonly("effect", &decltype(plant::countdown)::effect)
         .def_readonly("dead", &decltype(plant::countdown)::dead)
-        .def_readonly("blover_disappear", &decltype(plant::countdown)::blover_disappear);
 
     py::class_<decltype(plant::split_pea_attack_flags)>(m, "PlantSplitPeaAttackFlags")
         .def_readonly("front", &decltype(plant::split_pea_attack_flags)::front)

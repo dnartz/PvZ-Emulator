@@ -178,7 +178,6 @@ public:
         int awake;
         int effect;
         int dead;
-        int blover_disappear;
     } countdown;
 
     object::reanim reanim;
