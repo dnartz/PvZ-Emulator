@@ -138,7 +138,6 @@ export interface Plant {
         awake: number,
         effect: number,
         dead: number,
-        blover_disappear: number
     },
     reanim: Reanim,
     edible: PlantEdibleType,

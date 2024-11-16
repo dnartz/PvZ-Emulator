@@ -448,7 +448,7 @@ void plant_system::update_launch_countdown(plant& p) {
 
 void plant_system::update_countdown_and_status(plant& p) {
     if (p.status == plant_status::work || p.is_smashed) {
-        if (p.countdown.blover_disappear-- < 1) {
+        if (p.countdown.dead-- < 1) {
             plant_factory.destroy(p);
             return;
         }

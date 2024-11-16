@@ -404,8 +404,6 @@ void plant::to_json(
     writer.Key("dead");
     writer.Int(countdown.dead);
 
-    writer.Key("blover_disappear");
-    writer.Int(countdown.blover_disappear);
     writer.EndObject();
 
     writer.Key("reanim");
